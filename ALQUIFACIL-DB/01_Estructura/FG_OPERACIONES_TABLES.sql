@@ -1,2 +1,0 @@
--- FG OPERACIONES
--- Proyecto ALQUIFÁCIL
