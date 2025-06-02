@@ -1,0 +1,2 @@
+-- Reporte HerramientasRetiradas
+-- Proyecto ALQUIFÁCIL

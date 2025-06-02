@@ -1,0 +1,2 @@
+-- Reporte KitsPorTemporada
+-- Proyecto ALQUIFÁCIL
