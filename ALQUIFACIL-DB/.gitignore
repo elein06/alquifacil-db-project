@@ -1,3 +1,15 @@
 # Ignore SQL Server backup files
 *.bak
 *.trn
+*.mdf
+*.ldf
+*.ndf
+*.tmp
+*.log
+~$*
+.vs/
+*.suo
+*.user
+*.sln.docstates
+bin/
+obj/
