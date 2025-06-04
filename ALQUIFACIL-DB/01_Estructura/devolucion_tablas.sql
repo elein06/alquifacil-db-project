@@ -23,3 +23,35 @@ go
 
 exec sp_help Devolucion
 go
+
+-- Tabla intermedia
+
+use ALQUIFACIL
+go
+
+create table DevolucionHerramienta(
+	Id_DevolucionHerramienta int not null,
+	Id_Herramienta int not null,
+	Id_Devolucion int not null,
+	cantidad_Herramientas int null
+)
+on HERRAMIENTAS
+go
+
+alter table DevolucionHerramienta
+add constraint PK_DevolucionHerramienta_Id
+primary key (Id_DevolucionHerramienta)
+go
+
+alter table DevolucionHerramienta
+add constraint FK_DevolucionHerramienta_Herramienta
+foreign key (Id_Herramienta) references Herramienta(Id_Herramienta)
+go
+
+alter table DevolucionHerramienta
+add constraint FK_DevolucionHerramienta_Devolucion
+foreign key (Id_Devolucion) references Devolucion(Id_Devolucion)
+go
+
+exec sp_help DevolucionHerramienta
+go
