@@ -29,7 +29,7 @@ CREATE TABLE ClienteFisico
 
     CONSTRAINT PK_ClienteFisico PRIMARY KEY (id_Cliente),
     CONSTRAINT FK_ClienteFisico_Cliente FOREIGN KEY (id_Cliente) REFERENCES CLIENTE(id_Cliente),
-	CONSTRAINT  CK_ClienteFisico_Tipo (tipo_cliente IN (1,2)) -- 1= recurrente, 2= ocasional
+	CONSTRAINT  CK_ClienteFisico_Tipo CHECK (tipo_cliente IN (1,2)) -- 1= recurrente, 2= ocasional
 )
 ON CLIENTES
 GO
@@ -48,7 +48,7 @@ CREATE TABLE ClienteJuridico
 
     CONSTRAINT PK_ClienteJuridico PRIMARY KEY (id_Cliente),
     CONSTRAINT FK_ClienteJuridico_Cliente FOREIGN KEY (id_Cliente) REFERENCES CLIENTE(id_Cliente),
-	CONSTRAINT CK_ClienteJuridico_Tipo (tipo_cliente IN (1,2)) -- 1= recurrente, 2= ocasional
+	CONSTRAINT CK_ClienteJuridico_Tipo CHECK (tipo_cliente IN (1,2)) -- 1= recurrente, 2= ocasional
 )
 ON CLIENTES
 GO
