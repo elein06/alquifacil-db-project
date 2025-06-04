@@ -101,3 +101,8 @@ GO
 
 exec sp_help KitHerramienta
 go
+
+--Creacion de tablas Estado y Tipo By Orlando
+
+use ALQUIFACIL
+go 
