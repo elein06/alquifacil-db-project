@@ -2,7 +2,8 @@
 
 use ALQUIFACIL
 go
-create table Herramienta(
+create table Herramienta
+(
 	Id_Herramienta int not null,
 	Numero_Serie varchar(50) not null,
 	Anio_Adquisicion int null,
@@ -23,11 +24,109 @@ add constraint PK_Herramienta_Id
 primary key (Id_Herramienta)
 go
 
+--Creacion de tablas Estado y Tipo y sus llaves primarias junto con las llaves foraneas en la tabla Herramienta By Orlando
 
-exec sp_help Herramienta
+--Creacion de tabla Estado
+
+use ALQUIFACIL
+go 
+create table Estado
+(
+id_Estado int not null,
+nombreEstado varchar (50) not null
+)
+on HERRAMIENTAS
+go
+
+--Creacion de Primary key en la tabla Estado
+use ALQUIFACIL
+GO
+alter table Estado
+add constraint PK_Estado_id_Estado
+primary key (id_Estado)
+GO
+
+exec sp_help Estado
+go
+
+--Creacion de tabla Tipo
+
+use ALQUIFACIL
+go 
+create table Tipo
+(
+id_Tipo int not null,
+nombreTipo varchar (50) not null
+)
+on HERRAMIENTAS
+go
+
+--Creacion de Primary key en la tabla Tipo
+
+use ALQUIFACIL
+GO
+alter table Tipo
+add constraint PK_Tipo_id_Tipo
+primary key (id_Tipo)
+GO
+
+exec sp_help Tipo
+go
+
+--Creacion de tabla Categoria y su primary key by Elein
+
+use ALQUIFACIL
+go 
+create table Categoria
+(
+	id_Categoria int not null,
+	nombre_categoria varchar (50) not null
+)
+on HERRAMIENTAS
 go
 
 
+use ALQUIFACIL
+GO
+alter table Categoria
+add constraint PK_Categoria_id
+primary key (id_Categoria)
+GO
+
+exec sp_help Categoria
+go
+
+--Creacion de Foreign Keys en Herramineta
+
+--FK de id_Estado
+use ALQUIFACIL
+GO
+alter table Herramienta
+add constraint FK_Herramienta_id_Estado
+Foreign key (Id_Estado)
+REFERENCES Estado(id_Estado)
+GO
+
+--FK de id_Estado
+use ALQUIFACIL
+GO
+alter table Herramienta
+add constraint FK_Herramienta_id_Tipo
+Foreign key (Id_Tipo)
+REFERENCES Tipo(id_Tipo)
+GO
+
+--FK de id_categoria by Elein
+use ALQUIFACIL
+GO
+alter table Herramienta
+add constraint FK_Herramienta_Categoria_id
+Foreign key (Id_Categoria)
+REFERENCES Categoria(id_Categoria)
+GO
+
+exec sp_help Herramienta
+go
 
 --Creaci�n tabla Kit--
 use ALQUIFACIL
@@ -100,77 +199,4 @@ REFERENCES Herramienta(Id_Herramienta)
 GO
 
 exec sp_help KitHerramienta
-go
-
---Creacion de tablas Estado y Tipo y sus llaves primarias junto con las llaves foraneas en la tabla Herramienta By Orlando
-
---Creacion de tabla Estado
-use ALQUIFACIL
-go 
-
-create table Estado
-(
-id_Estado int not null,
-nombreEstado varchar (50) not null
-)
-on HERRAMIENTAS
-go
-
---Creacion de Primary key en la tabla Estado
-
-use ALQUIFACIL
-GO
-alter table Estado
-add constraint PK_Estado_id_Estado
-primary key (id_Estado)
-GO
-
-exec sp_help Estado
-go
-
---Creacion de tabla Tipo
-use ALQUIFACIL
-go 
-
-create table Tipo
-(
-id_Tipo int not null,
-nombreTipo varchar (50) not null
-)
-on HERRAMIENTAS
-go
-
---Creacion de Primary key en la tabla Tipo
-
-use ALQUIFACIL
-GO
-alter table Tipo
-add constraint PK_Tipo_id_Tipo
-primary key (id_Tipo)
-GO
-
-exec sp_help Tipo
-go
-
---Creacion de Foreign Keys en Herramineta
-
---FK de id_Estado
-use ALQUIFACIL
-GO
-alter table Herramienta
-add constraint FK_Herramienta_id_Estado
-Foreign key (Id_Estado)
-REFERENCES Estado(id_Estado)
-GO
-
---FK de id_Estado
-use ALQUIFACIL
-GO
-alter table Herramienta
-add constraint FK_Herramienta_id_Tipo
-Foreign key (Id_Tipo)
-REFERENCES Tipo(id_Tipo)
-GO
-
-exec sp_help Herramienta
 go
