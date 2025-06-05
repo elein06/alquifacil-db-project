@@ -46,11 +46,18 @@ add constraint PK_DevolucionHerramienta_Id
 primary key (Id_DevolucionHerramienta)
 go
 
+use ALQUIFACIL
+go
+	
 alter table DevolucionHerramienta
 add constraint FK_DevolucionHerramienta_Herramienta
 foreign key (Id_Herramienta) references Herramienta(Id_Herramienta)
 go
 
+	
+use ALQUIFACIL
+go
+	
 alter table DevolucionHerramienta
 add constraint FK_DevolucionHerramienta_Devolucion
 foreign key (Id_Devolucion) references Devolucion(Id_Devolucion)
