@@ -38,6 +38,9 @@ create table DevolucionHerramienta(
 on HERRAMIENTAS
 go
 
+use ALQUIFACIL
+go
+	
 alter table DevolucionHerramienta
 add constraint PK_DevolucionHerramienta_Id
 primary key (Id_DevolucionHerramienta)
