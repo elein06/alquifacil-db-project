@@ -1,6 +1,5 @@
 use ALQUIFACIL
 go
-
 create table Devolucion(
 	Id_Devolucion int not null,
 	estado varchar(50) null,
@@ -11,11 +10,16 @@ create table Devolucion(
 on HERRAMIENTAS
 go
 
+
+use ALQUIFACIL
+go
 alter table Devolucion
 add constraint PK_Devolucion_Id
 primary key (Id_Devolucion)
 go
 
+use ALQUIFACIL
+go
 alter table Devolucion
 add constraint FK_Devolucion_Cliente
 foreign key (id_Cliente) references Cliente(Id_Cliente)
@@ -24,11 +28,10 @@ go
 exec sp_help Devolucion
 go
 
--- Tabla intermedia
+-- Tabla intermedia devolucionHerramienta
 
 use ALQUIFACIL
 go
-
 create table DevolucionHerramienta(
 	Id_DevolucionHerramienta int not null,
 	Id_Herramienta int not null,
@@ -38,17 +41,17 @@ create table DevolucionHerramienta(
 on HERRAMIENTAS
 go
 
+
 use ALQUIFACIL
 go
-	
 alter table DevolucionHerramienta
 add constraint PK_DevolucionHerramienta_Id
 primary key (Id_DevolucionHerramienta)
 go
 
+
 use ALQUIFACIL
 go
-	
 alter table DevolucionHerramienta
 add constraint FK_DevolucionHerramienta_Herramienta
 foreign key (Id_Herramienta) references Herramienta(Id_Herramienta)
@@ -57,7 +60,6 @@ go
 	
 use ALQUIFACIL
 go
-	
 alter table DevolucionHerramienta
 add constraint FK_DevolucionHerramienta_Devolucion
 foreign key (Id_Devolucion) references Devolucion(Id_Devolucion)
