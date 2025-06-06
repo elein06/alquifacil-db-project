@@ -26,15 +26,25 @@ CREATE TABLE ClienteFisico
 	apellido2 varchar(50) NOT NULL,
     telefono varchar(15) null,
 	correo varchar(50) null,
-	tipo_cliente int not null,
-
-    CONSTRAINT PK_ClienteFisico PRIMARY KEY (id_Cliente),
-    CONSTRAINT FK_ClienteFisico_Cliente FOREIGN KEY (id_Cliente) REFERENCES CLIENTE(id_Cliente),
-	CONSTRAINT  CK_ClienteFisico_Tipo CHECK (tipo_cliente IN (1,2)) -- 1= recurrente, 2= ocasional
+	tipo_cliente int not null
 )
 ON CLIENTES
 GO
 
+--creacion de PK
+USE ALQUIFACIL
+GO
+ALTER TABLE ClienteFisico
+ADD CONSTRAINT PK_ClienteFisico 
+PRIMARY KEY (id_Cliente)
+GO
+
+USE ALQUIFACIL
+GO
+ALTER TABLE ClienteFisico
+ADD CONSTRAINT FK_ClienteFisico_Cliente 
+FOREIGN KEY (id_Cliente) REFERENCES CLIENTE(id_Cliente)
+GO
 
 -- Tabla Cliente Juridico
 USE ALQUIFACIL
@@ -46,11 +56,23 @@ CREATE TABLE ClienteJuridico
     razon_social varchar(100) NOT NULL,
     telefono varchar(15) null,
 	correo varchar(50) null,
-	tipo_cliente int NOT NULL,
-
-    CONSTRAINT PK_ClienteJuridico PRIMARY KEY (id_Cliente),
-    CONSTRAINT FK_ClienteJuridico_Cliente FOREIGN KEY (id_Cliente) REFERENCES CLIENTE(id_Cliente),
-	CONSTRAINT CK_ClienteJuridico_Tipo CHECK (tipo_cliente IN (1,2)) -- 1= recurrente, 2= ocasional
+	tipo_cliente int NOT NULL
 )
 ON CLIENTES
+GO
+
+--CREACION DE PK
+
+USE ALQUIFACIL
+GO
+ALTER TABLE ClienteJuridico
+ADD CONSTRAINT PK_ClienteJuridico 
+PRIMARY KEY (id_Cliente)
+GO
+
+USE ALQUIFACIL
+GO
+ALTER TABLE ClienteJuridico
+ADD CONSTRAINT FK_ClienteJuridico_Cliente 
+FOREIGN KEY (id_Cliente) REFERENCES CLIENTE(id_Cliente)
 GO
