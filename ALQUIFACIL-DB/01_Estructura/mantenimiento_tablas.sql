@@ -1,5 +1,6 @@
 -- TABLAS DEL FILEGROUP MANTENIMIENTO
 
+-- Tabla de mantenimiento
 use alquifacil
 go
 create table Mantenimiento
@@ -16,7 +17,7 @@ create table Mantenimiento
 on MANTENIMIENTO
 go
 
-
+-- Llave primaria de mantenimiento
 use alquifacil
 go
 alter table Mantenimiento
@@ -24,10 +25,10 @@ add constraint PK_Mantenimiento_Id
 primary key (Id_Mantenimiento)
 go
 
-
 exec sp_help mantenimiento
 go
 
+-- Tabla de personas responsables del mantenimiento
 use alquifacil
 go
 create table Persona_Responsable(
@@ -39,6 +40,8 @@ create table Persona_Responsable(
 on MANTENIMIENTO
 go
 
+
+-- Llave primaria de persona responsable
 use alquifacil
 go
 alter table Persona_Responsable
@@ -47,6 +50,7 @@ primary key (Id_Persona_Responsable)
 go
 
 
+-- Llave foranea persona responsable a mantenimiento
 use alquifacil
 go
 alter table Mantenimiento
@@ -55,10 +59,9 @@ foreign key (Id_Persona_Responsable)
 references Persona_Responsable(Id_Persona_Responsable);
 go
 
-exec sp_help Persona_Responsable
-go
 
 
+-- Tabla tipo de mantenimiento
 use alquifacil
 go
 create table tipo_mantenimiento
@@ -69,6 +72,8 @@ create table tipo_mantenimiento
 on MANTENIMIENTO
 go
 
+
+-- Llave primaria tipo de mantenimiento
 use alquifacil
 go
 alter table tipo_mantenimiento
@@ -76,6 +81,8 @@ add constraint PK_Tipo_Mantenimiento_Id
 primary key (Id_Tipo_Mantenimiento)
 go
 
+
+-- Llave foranea tipo de mantenimiento a mantenimiento
 use alquifacil
 go
 alter table Mantenimiento
@@ -83,7 +90,3 @@ add constraint FK_Mantenimiento_TipoMantenimiento
 foreign key (Id_Tipo_Mantenimiento)
 references tipo_mantenimiento(Id_Tipo_Mantenimiento);
 go
-
-exec sp_help tipo_mantenimiento
-go
-

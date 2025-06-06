@@ -1,3 +1,5 @@
+
+-- Tabla devolucion
 use ALQUIFACIL
 go
 create table Devolucion(
@@ -11,6 +13,7 @@ on HERRAMIENTAS
 go
 
 
+-- Llave primaria devolucion
 use ALQUIFACIL
 go
 alter table Devolucion
@@ -18,6 +21,7 @@ add constraint PK_Devolucion_Id
 primary key (Id_Devolucion)
 go
 
+-- Llave foranea clientes a devolucion
 use ALQUIFACIL
 go
 alter table Devolucion
@@ -42,6 +46,7 @@ on HERRAMIENTAS
 go
 
 
+-- Llave primaria devolucionHerramienta
 use ALQUIFACIL
 go
 alter table DevolucionHerramienta
@@ -50,6 +55,7 @@ primary key (Id_DevolucionHerramienta)
 go
 
 
+-- Llave foranea devolucionHerramienta a herramienta 
 use ALQUIFACIL
 go
 alter table DevolucionHerramienta
@@ -57,7 +63,8 @@ add constraint FK_DevolucionHerramienta_Herramienta
 foreign key (Id_Herramienta) references Herramienta(Id_Herramienta)
 go
 
-	
+
+-- Llave foranea devolucionHerramienta a Devolucion	
 use ALQUIFACIL
 go
 alter table DevolucionHerramienta

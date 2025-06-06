@@ -14,6 +14,7 @@ GO
 
 --tablas hijas 
 
+-- Tabla Cliente Fisico
 USE ALQUIFACIL
 GO
 CREATE TABLE ClienteFisico
@@ -35,6 +36,7 @@ ON CLIENTES
 GO
 
 
+-- Tabla Cliente Juridico
 USE ALQUIFACIL
 GO
 CREATE TABLE ClienteJuridico
