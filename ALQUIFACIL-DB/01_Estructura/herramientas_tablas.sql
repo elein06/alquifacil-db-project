@@ -154,7 +154,14 @@ GO
 exec sp_help Kit
 go
 
-
+--FK de id_categoria a KIT
+use alquifacil
+go
+alter table kit
+add constraint FK_Kit_Categoria_id
+foreign key (Id_Categoria)
+references Categoria(Id_Categoria)
+go
 
 --Creaci�n tabla intermedia Kit-Herramienta--
 use ALQUIFACIL
