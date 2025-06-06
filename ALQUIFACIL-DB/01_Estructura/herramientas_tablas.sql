@@ -9,13 +9,15 @@ create table Herramienta
 	Anio_Adquisicion int null,
 	Valor_Reposicion money not null,
 	Stock_Herramientas int not null,
+	Marca varchar(50) not null,
+	Modelo varchar(50) not null,
 	Id_Estado int null,
 	Id_Tipo int null,
+	Id_Condicion_Fisica int not null,
 	Id_Categoria int null
 )
 on HERRAMIENTAS
 go
-
 
 use ALQUIFACIL
 go
@@ -96,6 +98,29 @@ GO
 exec sp_help Categoria
 go
 
+--Creacion de tabla CondicionFisica y su primary key 
+
+use ALQUIFACIL
+go 
+create table CondicionFisica
+(
+	Id_Condicion_Fisica int not null,
+	Nombre_Condicion varchar (50) not null
+)
+on HERRAMIENTAS
+go
+
+
+use ALQUIFACIL
+GO
+alter table CondicionFisica
+add constraint PK_CondicionFisica_Id
+primary key (Id_Condicion_Fisica)
+GO
+
+exec sp_help CondicionFisica
+go
+
 --Creacion de Foreign Keys en Herramineta
 
 --FK de id_Estado
@@ -107,13 +132,13 @@ Foreign key (Id_Estado)
 REFERENCES Estado(id_Estado)
 GO
 
---FK de id_Estado
+--FK de Id_Condicion
 use ALQUIFACIL
 GO
 alter table Herramienta
-add constraint FK_Herramienta_id_Tipo
-Foreign key (Id_Tipo)
-REFERENCES Tipo(id_Tipo)
+add constraint FK_Herramienta_id_Condicion_Fisica
+Foreign key (Id_Condicion_Fisica)
+REFERENCES CondicionFisica(Id_Condicion_Fisica )
 GO
 
 --FK de id_categoria by Elein
@@ -123,6 +148,15 @@ alter table Herramienta
 add constraint FK_Herramienta_Categoria_id
 Foreign key (Id_Categoria)
 REFERENCES Categoria(id_Categoria)
+GO
+
+--FK de id_Tipo
+use ALQUIFACIL
+GO
+alter table Herramienta
+add constraint FK_Herramienta_id_Tipo
+Foreign key (Id_Tipo)
+REFERENCES Tipo(id_Tipo)
 GO
 
 exec sp_help Herramienta
