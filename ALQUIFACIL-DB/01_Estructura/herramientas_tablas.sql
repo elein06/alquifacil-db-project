@@ -9,6 +9,8 @@ create table Herramienta
 	Anio_Adquisicion int null,
 	Valor_Reposicion money not null,
 	Stock_Herramientas int not null,
+	Marca varchar(50) not null,
+	Modelo varchar(50) not null,
 	Id_Estado int null,
 	Id_Tipo int null,
 	Id_Categoria int null
