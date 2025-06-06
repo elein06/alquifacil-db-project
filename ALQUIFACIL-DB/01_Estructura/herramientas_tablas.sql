@@ -131,7 +131,6 @@ go
 --Creaci�n tabla Kit--
 use ALQUIFACIL
 GO
-
 CREATE TABLE Kit
 (
 codigo_Kit INT NOT NULL,
@@ -142,6 +141,7 @@ id_Categoria INT NOT NULL
 )
 On HERRAMIENTAS
 GO
+
 
 --Agrego llave primaria a Kit--
 use ALQUIFACIL
@@ -154,7 +154,14 @@ GO
 exec sp_help Kit
 go
 
-
+--FK de id_categoria a KIT
+use alquifacil
+go
+alter table kit
+add constraint FK_Kit_Categoria_id
+foreign key (Id_Categoria)
+references Categoria(Id_Categoria)
+go
 
 --Creaci�n tabla intermedia Kit-Herramienta--
 use ALQUIFACIL
