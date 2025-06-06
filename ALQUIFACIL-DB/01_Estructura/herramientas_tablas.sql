@@ -14,8 +14,7 @@ create table Herramienta
 	Id_Estado int null,
 	Id_Tipo int null,
 	Id_Condicion_Fisica int not null,
-	Id_Categoria int null,
-
+	Id_Categoria int null
 )
 on HERRAMIENTAS
 go
