@@ -59,8 +59,6 @@ foreign key (Id_Persona_Responsable)
 references Persona_Responsable(Id_Persona_Responsable);
 go
 
-exec sp_help Persona_Responsable
-go
 
 
 -- Tabla tipo de mantenimiento
