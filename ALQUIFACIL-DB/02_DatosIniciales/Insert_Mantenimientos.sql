@@ -5,7 +5,7 @@
 -- Insert Persona Responsable
 use ALQUIFACIL
 go
-CREATE PROCEDURE ingresoPersonaResponsable (@_Id_Persona_Responsable int, 
+CREATE PROCEDURE sp_ingresoPersonaResponsable (@_Id_Persona_Responsable int, 
 											@_nombre varchar(50), 
 											@_apellido1 varchar(50), 
 											@_apellido2 varchar(50))
@@ -15,16 +15,16 @@ AS
 PRINT 'EL REGISTRO SE HA INGRESADO CORRECTAMENTE'
 GO
 
-exec ingresoPersonaResponsable '2201','Jose Daniel','Nuñez','Villalobos'
+exec sp_ingresoPersonaResponsable '2201','Jose Daniel','Nuñez','Villalobos'
 go
 
-exec ingresoPersonaResponsable '2202','Luis Orlando','Baltodano','Espinoza'
+exec sp_ingresoPersonaResponsable '2202','Luis Orlando','Baltodano','Espinoza'
 go
 
-exec ingresoPersonaResponsable '2203','Axel','Badilla','Fernández'
+exec sp_ingresoPersonaResponsable '2203','Axel','Badilla','Fernández'
 go
 
-exec ingresoPersonaResponsable '2204','Pablito','Pablero','Poblado'
+exec sp_ingresoPersonaResponsable '2204','Pablito','Pablero','Poblado'
 go
 
 select * from Persona_Responsable
