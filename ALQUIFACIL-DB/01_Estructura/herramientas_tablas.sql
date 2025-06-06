@@ -131,7 +131,6 @@ go
 --Creaci�n tabla Kit--
 use ALQUIFACIL
 GO
-
 CREATE TABLE Kit
 (
 codigo_Kit INT NOT NULL,
@@ -142,6 +141,7 @@ id_Categoria INT NOT NULL
 )
 On HERRAMIENTAS
 GO
+
 
 --Agrego llave primaria a Kit--
 use ALQUIFACIL
