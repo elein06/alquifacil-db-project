@@ -1,5 +1,6 @@
 -- TABLAS DEL FILEGROUP OPERACIONES
 
+-- Crear tabla alquiler
 use alquifacil
 go
 create table Alquiler
@@ -16,6 +17,8 @@ create table Alquiler
 on OPERACIONES
 go
 
+
+-- Llave primaria Alquiler
 use alquifacil
 go
 alter table alquiler
@@ -23,6 +26,8 @@ add constraint PK_num_Contrato
 primary key (num_Contrato)
 go
 
+
+-- Llave foranea cliente a alquiler
 use alquifacil
 go
 alter table alquiler

@@ -1,23 +1,27 @@
 --Creación de los filegroups: HERRAMIENTAS, CLIENTES, OPERACIONES, MANTENIMIENTO
 
+-- Filegroup : Herramientas (herramientas, categoria, estado, tipo, kit)
 USE MASTER
 GO
 ALTER DATABASE ALQUIFACIL
 ADD FILEGROUP HERRAMIENTAS
 GO
 
+-- Filegroup : Clientes (cliente juridico, cliente fisico)
 USE MASTER
 GO
 ALTER DATABASE ALQUIFACIL
 ADD FILEGROUP CLIENTES
 GO
 
+-- Filegroup : Operaciones (alquiler, devolucion)
 USE MASTER
 GO
 ALTER DATABASE ALQUIFACIL
 ADD FILEGROUP OPERACIONES
 GO
 
+-- Filegroup : Mantenimiento (mantenimiento, persona responsable, tipo de mantenimiento)
 USE MASTER
 GO
 ALTER DATABASE ALQUIFACIL
@@ -26,6 +30,7 @@ GO
 
 
 
+-- Datos : Herramientas
 USE MASTER
 GO 
 ALTER DATABASE ALQUIFACIL
@@ -41,6 +46,7 @@ TO FILEGROUP HERRAMIENTAS
 GO
 
 
+-- Datos : Clientes
 USE MASTER
 GO 
 ALTER DATABASE ALQUIFACIL
@@ -56,6 +62,7 @@ TO FILEGROUP CLIENTES
 GO
 
 
+-- Datos : Operaciones
 USE MASTER
 GO 
 ALTER DATABASE ALQUIFACIL
@@ -78,6 +85,7 @@ TO FILEGROUP OPERACIONES
 GO
 
 
+-- Datos : Mantenimiento
 USE MASTER
 GO 
 ALTER DATABASE ALQUIFACIL
