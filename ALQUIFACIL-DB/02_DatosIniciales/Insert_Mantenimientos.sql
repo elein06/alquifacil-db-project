@@ -29,3 +29,30 @@ go
 
 select * from Persona_Responsable
 go
+
+----procedimiento almacenado para ingresar los tipos de mantenimiento
+
+USE ALQUIFACIL
+GO
+CREATE PROCEDURE sp_InsertarTipoMantenimiento (
+	@Id_Tipo_Mantenimiento INT,
+	@nombre_tipo_mantenimiento VARCHAR(50)
+)
+AS
+	INSERT INTO tipo_mantenimiento (Id_Tipo_Mantenimiento, nombre_tipo_mantenimiento)
+	VALUES (@Id_Tipo_Mantenimiento, @nombre_tipo_mantenimiento);
+
+	PRINT 'TIPO DE MANTENIMIENTO REGISTRADO CORRECTAMENTE';
+GO
+
+
+--insertar los 2 tipos de mantenimiento
+
+EXEC sp_InsertarTipoMantenimiento 1, 'Preventivo'
+GO
+
+EXEC sp_InsertarTipoMantenimiento 2, 'Correctivo'
+GO
+
+select * from tipo_mantenimiento
+go
