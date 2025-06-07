@@ -162,7 +162,7 @@ GO
 exec sp_help Herramienta
 go
 
---Creaci�n tabla Kit--
+--Creación tabla Kit--
 use ALQUIFACIL
 GO
 CREATE TABLE Kit
@@ -177,7 +177,7 @@ On HERRAMIENTAS
 GO
 
 
---Agrego llave primaria a Kit--
+--Agrego llave primaria a Kit
 use ALQUIFACIL
 GO
 alter table Kit
@@ -188,7 +188,7 @@ GO
 exec sp_help Kit
 go
 
---FK de id_categoria a KIT
+--FK de id_categoria a kit
 use alquifacil
 go
 alter table kit
@@ -197,47 +197,46 @@ foreign key (Id_Categoria)
 references Categoria(Id_Categoria)
 go
 
---Creaci�n tabla intermedia Kit-Herramienta--
+--Creación tabla intermedia Kit-Herramienta--
 use ALQUIFACIL
-GO
+go
 
-CREATE TABLE KitHerramienta
+create table KitHerramienta
 (
 id_KitHerramienta INT NOT NULL,
 codigo_Kit INT NOT NULL,
 Id_Herramienta INT NOT NULL,
 cantidad_Herramientas INT NOT NULL
 )
-ON HERRAMIENTAS
-GO
+on HERRAMIENTAS
+go
 
 --Agrego llave primaria a KitHerramienta--
-
 use ALQUIFACIL
-GO
+go
 alter table KitHerramienta
 add constraint PK_KitHerramienta_id_KitHerramienta
 primary key (id_KitHerramienta)
-GO
+go
 
 
 
 -- Agrego llaves foráneas a la tabla KitHerramienta
 use ALQUIFACIL
-GO
+go
 alter table KitHerramienta
 add constraint FK_KitHerramienta_codigo_Kit
-Foreign key (codigo_Kit)
-REFERENCES Kit(codigo_Kit)
-GO
+foreign key (codigo_Kit)
+references Kit(codigo_Kit)
+go
 
 use ALQUIFACIL
-GO
+go
 alter table KitHerramienta
 add constraint FK_KitHerramienta_Id_Herramienta
-Foreign key (Id_Herramienta)
-REFERENCES Herramienta(Id_Herramienta)
-GO
+foreign key (Id_Herramienta)
+references Herramienta(Id_Herramienta)
+go
 
 exec sp_help KitHerramienta
 go
