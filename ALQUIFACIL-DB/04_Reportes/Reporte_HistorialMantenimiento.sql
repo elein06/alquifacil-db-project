@@ -1,3 +1,5 @@
+USE ALQUIFACIL
+GO
 SELECT
   Id_Herramienta,
   COUNT(Id_Herramienta) AS Cantidad_Mantenimientos
