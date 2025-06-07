@@ -5,7 +5,7 @@ use alquifacil
 go
 create table Mantenimiento
 (
-	Id_Mantenimiento int not null,
+	Id_Mantenimiento int IDENTITY (1,1) not null,
 	Costo money not null,
 	Fecha_Mantenimiento datetime not null,
 	Modalidad_Servicio varchar(50) null,
@@ -58,7 +58,6 @@ add constraint FK_Mantenimiento_PersonaResponsable
 foreign key (Id_Persona_Responsable)
 references Persona_Responsable(Id_Persona_Responsable);
 go
-
 
 
 -- Tabla tipo de mantenimiento

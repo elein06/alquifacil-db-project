@@ -30,6 +30,7 @@ go
 select * from Persona_Responsable
 go
 
+
 ----procedimiento almacenado para ingresar los tipos de mantenimiento
 
 USE ALQUIFACIL
@@ -55,4 +56,72 @@ EXEC sp_InsertarTipoMantenimiento 2, 'Correctivo'
 GO
 
 select * from tipo_mantenimiento
+go
+
+
+
+-- Procedimiento almacenado para agregar Mantenimientos
+use ALQUIFACIL
+go
+CREATE PROCEDURE sp_ingresoMantenimiento (
+										  @_Costo money,
+										  @_Fecha_Mantenimiento datetime,
+										  @_Modalidad_Servicio varchar(50),
+										  @_Observaciones varchar(256),
+										  @_Id_Tipo_Mantenimiento int,
+										  @_Id_Persona_Responsable int,
+										  @_Id_Herramienta int)
+AS
+	insert into Mantenimiento	(
+								 Costo,
+								 Fecha_Mantenimiento,
+								 Modalidad_Servicio,
+								 Observaciones,
+								 Id_Tipo_Mantenimiento,
+								 Id_Persona_Responsable,
+								 Id_Herramienta)
+
+  						Values  (
+								 @_Costo,
+								 @_Fecha_Mantenimiento,
+						   	     @_Modalidad_Servicio,
+								 @_Observaciones,
+								 @_Id_Tipo_Mantenimiento,
+								 @_Id_Persona_Responsable,
+								 @_Id_Herramienta
+								)
+
+PRINT 'SE HA INGRESADO CORRECTAMENTE UN NUEVO MANTENIMIENTO'
+GO
+
+
+
+-- Insert Mantenimientos
+
+								  --AAAA-DD-MM
+exec sp_ingresoMantenimiento 20000, '2024-07-01', 'Interno', 'Lubricación completa y limpieza.', 1, 2202, 1;
+go
+
+exec sp_ingresoMantenimiento 20000, '2024-04-10', 'Interno', 'Lubricación completa y limpieza', 1, 2201, 2;
+go
+
+exec sp_ingresoMantenimiento 12500, '2024-03-10', 'Externo', 'Reemplazo de cuchillas oxidadas', 2, 2203, 2
+go
+
+exec sp_ingresoMantenimiento 7000, '2024-05-12', 'Interno', 'Cambio de escobillas', 1, 2201, 5
+go
+
+exec sp_ingresoMantenimiento 28000, '2024-06-04', 'Externo', 'Cambio de aceite y ajuste del carburador', 2, 2202, 6
+go
+
+exec sp_ingresoMantenimiento 40000, '2024-16-01', 'Externo', 'Verificación de presión y limpieza', 2, 2202, 5
+go
+
+exec sp_ingresoMantenimiento 40000, '2024-16-01', 'Interno', 'Lubricación de motor', 2, 2202, 3
+go
+
+exec sp_ingresoMantenimiento 10000, '2024-19-06', 'Interno', 'Afilado de hojas', 2, 2204, 4
+go
+
+select * from Mantenimiento
 go
