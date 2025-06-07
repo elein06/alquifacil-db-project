@@ -4,21 +4,22 @@ use ALQUIFACIL
 go
 create table Herramienta
 (
-	Id_Herramienta int not null,
+	Id_Herramienta int IDENTITY (1,1) not null,
 	Numero_Serie varchar(50) not null,
 	Anio_Adquisicion int null,
 	Valor_Reposicion money not null,
 	Stock_Herramientas int not null,
 	Marca varchar(50) not null,
 	Modelo varchar(50) not null,
-	Id_Estado int null,
-	Id_Tipo int null,
-	Id_Condicion_Fisica int null,
-	Id_Categoria int null
+	Id_Estado int not null,
+	Id_Tipo int not null,
+	Id_Condicion_Fisica int not null,
+	Id_Categoria int not null
 )
 on HERRAMIENTAS
 go
 
+-----PK id_herramienta
 use ALQUIFACIL
 go
 alter table Herramienta
@@ -26,10 +27,12 @@ add constraint PK_Herramienta_Id
 primary key (Id_Herramienta)
 go
 
---Creacion de tablas Estado y Tipo y sus llaves primarias junto con las llaves foraneas en la tabla Herramienta By Orlando
+exec sp_help herramienta
+go
+
+--------------Creación de tablas Estado, Tipo, Categoria y CondicionFisica
 
 --Creacion de tabla Estado
-
 use ALQUIFACIL
 go 
 create table Estado
@@ -40,7 +43,7 @@ nombreEstado varchar (50) not null
 on HERRAMIENTAS
 go
 
---Creacion de Primary key en la tabla Estado
+--Creacion de PK en la tabla Estado
 use ALQUIFACIL
 GO
 alter table Estado
@@ -52,7 +55,6 @@ exec sp_help Estado
 go
 
 --Creacion de tabla Tipo
-
 use ALQUIFACIL
 go 
 create table Tipo
@@ -63,8 +65,7 @@ nombreTipo varchar (50) not null
 on HERRAMIENTAS
 go
 
---Creacion de Primary key en la tabla Tipo
-
+--Creacion de PK en la tabla Tipo
 use ALQUIFACIL
 GO
 alter table Tipo
@@ -75,8 +76,7 @@ GO
 exec sp_help Tipo
 go
 
---Creacion de tabla Categoria y su primary key by Elein
-
+--Creacion de tabla Categoria
 use ALQUIFACIL
 go 
 create table Categoria
@@ -87,7 +87,7 @@ create table Categoria
 on HERRAMIENTAS
 go
 
-
+--Creacion de PK 
 use ALQUIFACIL
 GO
 alter table Categoria
@@ -98,8 +98,7 @@ GO
 exec sp_help Categoria
 go
 
---Creacion de tabla CondicionFisica y su primary key 
-
+--Creacion de tabla CondicionFisica
 use ALQUIFACIL
 go 
 create table CondicionFisica
@@ -110,7 +109,7 @@ create table CondicionFisica
 on HERRAMIENTAS
 go
 
-
+--Creacion de la PK
 use ALQUIFACIL
 GO
 alter table CondicionFisica
@@ -121,7 +120,7 @@ GO
 exec sp_help CondicionFisica
 go
 
---Creacion de Foreign Keys en Herramineta
+--------------Creacion de FKs de estas tablas en Herramineta
 
 --FK de id_Estado
 use ALQUIFACIL
@@ -141,7 +140,7 @@ Foreign key (Id_Condicion_Fisica)
 REFERENCES CondicionFisica(Id_Condicion_Fisica )
 GO
 
---FK de id_categoria by Elein
+--FK de id_categoria
 use ALQUIFACIL
 GO
 alter table Herramienta
@@ -162,7 +161,7 @@ GO
 exec sp_help Herramienta
 go
 
---Creación tabla Kit--
+------------------------Creación tabla Kit
 use ALQUIFACIL
 GO
 CREATE TABLE Kit
@@ -175,8 +174,7 @@ id_Categoria INT NOT NULL
 On HERRAMIENTAS
 GO
 
-
---Agrego llave primaria a Kit
+--Agrego llave PK a Kit
 use ALQUIFACIL
 GO
 alter table Kit
@@ -196,13 +194,12 @@ foreign key (Id_Categoria)
 references Categoria(Id_Categoria)
 go
 
---Creación tabla intermedia Kit-Herramienta--
+----------------Creación tabla intermedia Kit-Herramienta--
 use ALQUIFACIL
 go
-
 create table KitHerramienta
 (
-id_KitHerramienta INT NOT NULL,
+id_KitHerramienta INT IDENTITY(1,1) NOT NULL,
 codigo_Kit INT NOT NULL,
 Id_Herramienta INT NOT NULL,
 cantidad_Herramientas INT NOT NULL
@@ -210,7 +207,7 @@ cantidad_Herramientas INT NOT NULL
 on HERRAMIENTAS
 go
 
---Agrego llave primaria a KitHerramienta--
+--Agrego PK a KitHerramienta--
 use ALQUIFACIL
 go
 alter table KitHerramienta
@@ -218,9 +215,7 @@ add constraint PK_KitHerramienta_id_KitHerramienta
 primary key (id_KitHerramienta)
 go
 
-
-
--- Agrego llaves foráneas a la tabla KitHerramienta
+-- Agrego FKs a la tabla KitHerramienta
 use ALQUIFACIL
 go
 alter table KitHerramienta
