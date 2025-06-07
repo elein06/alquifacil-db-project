@@ -5,7 +5,7 @@ use alquifacil
 go
 create table Alquiler
 (
-	num_Contrato int not null,
+	num_Contrato int IDENTITY(1,1) not null,
 	cliente_Asociado varchar(50) not null,
 	fecha_Inicio date not null,
 	fecha_Dev date not null,
@@ -44,7 +44,7 @@ use alquifacil
 go
 create table AlquilerHerramienta
 (
-	id_AlquilerHerramienta int not null,
+	id_AlquilerHerramienta int IDENTITY(1,1) not null,
 	id_Herramienta int not null,
 	num_Contrato int not null,
 	cantidadHerramientas int not null
@@ -87,7 +87,7 @@ use alquifacil
 go
 create table AlquilerKit
 (
-	id_AlquilerKit int not null,
+	id_AlquilerKit int IDENTITY(1,1) not null,
 	codigo_kit int not null,
 	num_contrato int not null
 )
