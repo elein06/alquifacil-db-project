@@ -170,7 +170,6 @@ CREATE TABLE Kit
 codigo_Kit INT NOT NULL,
 nombre VARCHAR(50) NOT NULL,
 tarifa_Diaria_Especial MONEY NOT NULL,
-num_Contrato INT NOT NULL,
 id_Categoria INT NOT NULL
 )
 On HERRAMIENTAS
