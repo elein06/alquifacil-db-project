@@ -53,3 +53,11 @@ CHECK (LTRIM(RTRIM(apellido2)) <> '');
 go
 
 --			TABLA TIPO DE MANTENIMIENTO
+
+-- validar que el nombre del mantenimiento sea preventivo o correctivo
+use ALQUIFACIL
+go
+ALTER TABLE tipo_mantenimiento
+ADD CONSTRAINT CK_TipoMantenimiento_ValidarNombre
+CHECK (nombre_tipo_mantenimiento IN ('Preventivo', 'Correctivo'))
+go
