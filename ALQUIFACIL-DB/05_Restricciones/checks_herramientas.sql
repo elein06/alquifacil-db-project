@@ -78,6 +78,132 @@ DEFAULT 'Excelente' FOR Nombre_Condicion
 go
 
 
+
+
+-- Tabla Kit
+
+--Checks
+
+-- Validar que codigo_Kit sea positivo
+use ALQUIFACIL
+go
+ALTER TABLE Kit
+ADD CONSTRAINT CK_Kit_Codigo_Positivo
+CHECK (codigo_Kit > 0)
+go
+
+
+-- Validar que nombre no sea una cadena vacía
+use ALQUIFACIL
+go
+ALTER TABLE Kit
+ADD CONSTRAINT CK_Kit_Validar_Nombre
+CHECK (LTRIM(RTRIM(nombre)) <> '')
+go
+
+
+-- Validar que tarifa_Diaria_Especial sea mayor o igual a 0
+use ALQUIFACIL
+go
+ALTER TABLE Kit
+ADD CONSTRAINT CK_Kit_Validar_Tarifa
+CHECK (tarifa_Diaria_Especial >= 0)
+go
+
+
+-- Validar que num_Contrato sea un valor válido (positivo)
+use ALQUIFACIL
+go
+ALTER TABLE Kit
+ADD CONSTRAINT CK_Kit_Validar_num_Contrato
+CHECK (num_Contrato > 0)
+go
+
+
+-- Validar que id_Categoria sea válido
+use ALQUIFACIL
+go
+ALTER TABLE Kit
+ADD CONSTRAINT CK_Kit_Validar_id_Categoria
+CHECK (id_Categoria > 0)
+go
+
+--Fin Checks
+
+
+--Defaults 
+
+-- Valor por defecto para nombre
+use ALQUIFACIL
+go
+ALTER TABLE Kit
+ADD CONSTRAINT DF_Kit_Nombre
+DEFAULT 'Kit Sin Nombre' FOR nombre
+go
+
+-- Valor por defecto para tarifa diaria especial
+use ALQUIFACIL
+go
+ALTER TABLE Kit
+ADD CONSTRAINT DF_Kit_Tarifa
+DEFAULT 0.00 FOR tarifa_Diaria_Especial
+
+--Fin Defaults 
+
+
+
+--Tabla KitHerramienta
+
+--Checks
+
+-- Validar que el id de KitHerramienta es positivo
+use ALQUIFACIL
+go
+ALTER TABLE KitHerramienta
+ADD CONSTRAINT CK_KitHerramienta_Id_Positivo
+CHECK (id_KitHerramienta > 0)
+go
+
+
+-- Validar que el código de Kit sea positivo
+use ALQUIFACIL
+go
+ALTER TABLE KitHerramienta
+ADD CONSTRAINT CK_KitHerramienta_codigo_Kit_Positivo
+CHECK (codigo_Kit > 0)
+go
+
+
+-- Validar que el id de Herramienta sea positivo
+use ALQUIFACIL
+go
+ALTER TABLE KitHerramienta
+ADD CONSTRAINT CK_KitHerramienta_Id_Herramienta_Positivo
+CHECK (Id_Herramienta > 0)
+go
+
+-- Validar que la cantidad de herramientas sea positiva 
+use ALQUIFACIL
+go
+ALTER TABLE KitHerramienta
+ADD CONSTRAINT CK_KitHerramienta_Validar_Cantidad
+CHECK (cantidad_Herramientas > 0)
+go
+--Fin Checks
+
+--Defaults
+
+-- Valor por defecto para la cantidad de herramientas
+use ALQUIFACIL
+go
+ALTER TABLE KitHerramienta
+ADD CONSTRAINT DF_KitHerramienta_Cantidad
+DEFAULT 1 FOR cantidad_Herramientas
+go
+
+--Fin Defaults
+
+
 ----CHECKS TABLA CATEGORIA
 
 --verificar que el nombre de la categoria sea uno de las opciones validas
