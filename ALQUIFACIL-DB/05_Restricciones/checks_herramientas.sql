@@ -77,3 +77,21 @@ ADD CONSTRAINT DF_CondicionFisica_Nombre
 DEFAULT 'Excelente' FOR Nombre_Condicion
 go
 
+
+----CHECKS TABLA CATEGORIA
+
+--verificar que el nombre de la categoria sea uno de las opciones validas
+USE ALQUIFACIL
+go
+ALTER TABLE Categoria
+ADD CONSTRAINT CK_Categoria_ValidarNombre
+CHECK (nombre_categoria IN ('Construccion', 'Jardineria', 'Hogar'))
+go
+
+-- Validar que el nombre de la categoria no sean nulo
+use ALQUIFACIL
+go
+ALTER TABLE Categoria
+ADD CONSTRAINT CK_Categoria_ValidarNombreVacio
+CHECK (LTRIM(RTRIM(nombre_categoria)) <> '')
+go
