@@ -31,13 +31,11 @@ AS
     select * from Kit
     go
 
-	
 
 --Procedimiento almacenado para agregar un kitHerramienta
 
 use ALQUIFACIL
 go
-
 create procedure sp_IngresarKitHerramienta
 (
     @_id_KitHerramienta int,
