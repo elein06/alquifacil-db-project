@@ -37,7 +37,7 @@ go
 use ALQUIFACIL
 go
 create table DevolucionHerramienta(
-	Id_DevolucionHerramienta int not null,
+	Id_DevolucionHerramienta int IDENTITY (1,1) not null,
 	Id_Herramienta int not null,
 	Id_Devolucion int not null,
 	cantidad_Herramientas int null
