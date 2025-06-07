@@ -5,12 +5,14 @@ USE ALQUIFACIL
 GO
 CREATE TABLE CLIENTE
 (
-	id_Cliente	int IDENTITY (1,1) not null
+	id_Cliente	int IDENTITY (1,1) not null,
+	telefono VARCHAR(15) NULL,
+	correo VARCHAR(50) NULL,
+	tipo_cliente INT NOT NULL,
 	CONSTRAINT PK_ID_CLIENTE PRIMARY KEY CLUSTERED (id_Cliente)
 )
 ON CLIENTES
 GO
-
 
 --tablas hijas 
 
@@ -23,10 +25,7 @@ CREATE TABLE ClienteFisico
 	ced_fisica varchar(20) not null,
     nombre varchar(50) NOT NULL,
     apellido1 varchar(50) NOT NULL,
-	apellido2 varchar(50) NOT NULL,
-    telefono varchar(15) null,
-	correo varchar(50) null,
-	tipo_cliente int not null
+	apellido2 varchar(50) NOT NULL
 )
 ON CLIENTES
 GO
@@ -53,10 +52,7 @@ CREATE TABLE ClienteJuridico
 (
     id_Cliente int NOT NULL,
 	ced_juridica varchar(20) not null,
-    razon_social varchar(100) NOT NULL,
-    telefono varchar(15) null,
-	correo varchar(50) null,
-	tipo_cliente int NOT NULL
+    razon_social varchar(100) NOT NULL
 )
 ON CLIENTES
 GO
