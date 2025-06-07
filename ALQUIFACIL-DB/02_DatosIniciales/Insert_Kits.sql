@@ -38,23 +38,22 @@ use ALQUIFACIL
 go
 create procedure sp_IngresarKitHerramienta
 (
-    @_id_KitHerramienta int,
     @_codigo_Kit int,
     @_Id_Herramienta int,
     @_cantidad_Herramientas int)
 AS
-    insert into KitHerramienta (id_KitHerramienta, codigo_Kit, Id_Herramienta, cantidad_Herramientas)
-    values (@_id_KitHerramienta, @_codigo_Kit, @_Id_Herramienta, @_cantidad_Herramientas)
+    insert into KitHerramienta (codigo_Kit, Id_Herramienta, cantidad_Herramientas)
+    values (@_codigo_Kit, @_Id_Herramienta, @_cantidad_Herramientas)
     PRINT 'EL KIT DE HERRAMIENTA SE HA REGISTRADO CORRECTAMENTE'
     go
 
-    exec sp_IngresarKitHerramienta '1', '1001', '1', '2'
+    exec sp_IngresarKitHerramienta '1001', '1', '2'
     go
 
-    exec sp_IngresarKitHerramienta '2', '1002', '2', '1'
+    exec sp_IngresarKitHerramienta '1002', '2', '1'
     go
 
-    exec sp_IngresarKitHerramienta '3', '1003', '3', '3'
+    exec sp_IngresarKitHerramienta '1003', '3', '3'
     go
 
     select * from KitHerramienta

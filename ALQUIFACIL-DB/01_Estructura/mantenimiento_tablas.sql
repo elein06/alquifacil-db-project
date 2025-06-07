@@ -28,6 +28,8 @@ go
 exec sp_help mantenimiento
 go
 
+---------------------------creacion de tablas persona_responsable y tipo_mantenimiento
+
 -- Tabla de personas responsables del mantenimiento
 use alquifacil
 go
@@ -40,7 +42,6 @@ create table Persona_Responsable(
 on MANTENIMIENTO
 go
 
-
 -- Llave primaria de persona responsable
 use alquifacil
 go
@@ -48,7 +49,6 @@ alter table Persona_Responsable
 add constraint PK_Persona_Responsable_Id
 primary key (Id_Persona_Responsable)
 go
-
 
 -- Llave foranea persona responsable a mantenimiento
 use alquifacil
@@ -59,6 +59,8 @@ foreign key (Id_Persona_Responsable)
 references Persona_Responsable(Id_Persona_Responsable);
 go
 
+exec sp_help persona_responsable
+go
 
 -- Tabla tipo de mantenimiento
 use alquifacil
@@ -71,7 +73,6 @@ create table tipo_mantenimiento
 on MANTENIMIENTO
 go
 
-
 -- Llave primaria tipo de mantenimiento
 use alquifacil
 go
@@ -80,7 +81,6 @@ add constraint PK_Tipo_Mantenimiento_Id
 primary key (Id_Tipo_Mantenimiento)
 go
 
-
 -- Llave foranea tipo de mantenimiento a mantenimiento
 use alquifacil
 go
@@ -88,4 +88,7 @@ alter table Mantenimiento
 add constraint FK_Mantenimiento_TipoMantenimiento
 foreign key (Id_Tipo_Mantenimiento)
 references tipo_mantenimiento(Id_Tipo_Mantenimiento);
+go
+
+exec sp_help tipo_mantenimiento
 go
