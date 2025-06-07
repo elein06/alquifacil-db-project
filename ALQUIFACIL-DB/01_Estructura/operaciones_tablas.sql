@@ -1,6 +1,6 @@
 -- TABLAS DEL FILEGROUP OPERACIONES
 
--- Crear tabla alquiler
+-- Crear tabla Alquiler
 use alquifacil
 go
 create table Alquiler
@@ -27,7 +27,7 @@ go
 go
 
 
--- Llave foranea cliente a alquiler
+-- Llave foranea Cliente a Alquiler
 use alquifacil
 go
 	alter table alquiler
@@ -39,8 +39,7 @@ go
 exec sp_help alquiler
 go
 
---tabla intermedia AlquilerHerramienta
-
+-- Tabla intermedia AlquilerHerramienta
 use alquifacil
 go
 create table AlquilerHerramienta
@@ -53,6 +52,7 @@ create table AlquilerHerramienta
 on OPERACIONES
 go
 
+-- Llave primaria AlquilerHerramienta
 use alquifacil
 go
 alter table AlquilerHerramienta
@@ -60,6 +60,7 @@ alter table AlquilerHerramienta
 	primary key (id_AlquilerHerramienta)
 go
 
+-- Llave foranea Herramienta a AlquilerHerramienta
 use alquifacil
 go
 	alter table AlquilerHerramienta
@@ -68,6 +69,7 @@ go
 	references Herramienta(Id_Herramienta);
 go
 
+-- Llave foranea Alquiler a AlquilerHerramienta
 use alquifacil
 go
 	alter table AlquilerHerramienta
@@ -80,8 +82,7 @@ exec sp_help AlquilerHerramienta
 go
 
 
---tabla intermedia AlquilerKit
-
+-- Tabla intermedia AlquilerKit
 use alquifacil
 go
 create table AlquilerKit
@@ -100,9 +101,8 @@ add constraint PK_id_AlquilerKit
 primary key (id_AlquilerKit)
 go
 
---asociar con FK a alquiler y a kit
-
-use ALQUIFACIL
+-- Asociar con FK a alquiler y a kit
+use alquifacil
 go
 alter table AlquilerKit
 add constraint FK_Alquilerkit_codigoKit
