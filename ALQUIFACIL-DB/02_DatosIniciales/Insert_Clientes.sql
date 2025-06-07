@@ -122,4 +122,5 @@ GO
 
 
 select * from CLIENTE
+select * from ClienteFisico
 select * from ClienteJuridico

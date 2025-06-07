@@ -114,13 +114,13 @@ go
 exec sp_ingresoMantenimiento 28000, '2024-06-04', 'Externo', 'Cambio de aceite y ajuste del carburador', 2, 2202, 6
 go
 
-exec sp_ingresoMantenimiento 40000, '2024-16-01', 'Externo', 'Verificación de presión y limpieza', 2, 2202, 5
+exec sp_ingresoMantenimiento 40000, '2024-01-16', 'Externo', 'Verificación de presión y limpieza', 2, 2202, 5;
 go
 
-exec sp_ingresoMantenimiento 40000, '2024-16-01', 'Interno', 'Lubricación de motor', 2, 2202, 3
+exec sp_ingresoMantenimiento 40000, '2024-01-16', 'Interno', 'Lubricación de motor', 2, 2202, 3;
 go
 
-exec sp_ingresoMantenimiento 10000, '2024-19-06', 'Interno', 'Afilado de hojas', 2, 2204, 4
+exec sp_ingresoMantenimiento 10000, '2024-06-19', 'Interno', 'Afilado de hojas', 2, 2204, 4;
 go
 
 select * from Mantenimiento

@@ -158,7 +158,7 @@ go
 
 use ALQUIFACIL
 go
-CREATE PROCEDURE sp_ingresoHerramienta @_Id_Herramienta int,
+CREATE PROCEDURE sp_ingresoHerramienta (
 										@_Numero_Serie varchar(50),
 										@_Anio_Adquisicion int,
 										@_Valor_Reposicion money,
@@ -168,11 +168,11 @@ CREATE PROCEDURE sp_ingresoHerramienta @_Id_Herramienta int,
 										@_Id_Estado int,
 										@_Id_Tipo int,
 										@_Id_Condicion_Fisica int,
-										@_Id_Categoria int
+										@_Id_Categoria int)
 AS
-    INSERT INTO Herramienta (Id_Herramienta, Numero_Serie, Anio_Adquisicion, Valor_Reposicion, Stock_Herramientas, Marca, Modelo,
+    INSERT INTO Herramienta (Numero_Serie, Anio_Adquisicion, Valor_Reposicion, Stock_Herramientas, Marca, Modelo,
 							Id_Estado, Id_Tipo, Id_Condicion_Fisica, Id_Categoria)
-	VALUES (@_Id_Herramienta, @_Numero_Serie, @_Anio_Adquisicion, @_Valor_Reposicion, @_Stock_Herramientas, @_Marca, @_Modelo, 
+	VALUES (@_Numero_Serie, @_Anio_Adquisicion, @_Valor_Reposicion, @_Stock_Herramientas, @_Marca, @_Modelo, 
 			@_Id_Estado, @_Id_Tipo, @_Id_Condicion_Fisica, @_Id_Categoria)
 
 PRINT 'LA HERRAMIENTA SE HA INGRESADO CORRECTAMENTE'
@@ -180,22 +180,22 @@ go
 
 --Creacion de Herraminetas
 
-exec sp_ingresoHerramienta 1, 'AC11', 2020, 25000, 5, 'Patito', 'Martillo', 1, 2, 2, 1
+exec sp_ingresoHerramienta 'AC11', 2020, 25000, 5, 'Patito', 'Martillo', 1, 2, 2, 1
 go
 
-exec sp_ingresoHerramienta 2, 'BD12', 2021, 45000, 3, 'Thruper', 'Podadora', 2, 1, 1, 2
+exec sp_ingresoHerramienta 'BD12', 2021, 45000, 3, 'Thruper', 'Podadora', 2, 1, 1, 2
 go
 
-exec sp_ingresoHerramienta 3, 'CD13', 2022, 55000, 6, 'Thruper', 'Aspiradora', 3, 2, 2, 3
+exec sp_ingresoHerramienta 'CD13', 2022, 55000, 6, 'Thruper', 'Aspiradora', 3, 2, 2, 3
 go
 
-exec sp_ingresoHerramienta 4, 'MD14', 2012, 10000, 4, 'Patito', 'Tijeras', 2, 2, 2, 1
+exec sp_ingresoHerramienta 'MD14', 2012, 10000, 4, 'Patito', 'Tijeras', 2, 2, 2, 1
 go
 
-exec sp_ingresoHerramienta 5, 'JK15', 2016, 15000, 6, 'Thruper', 'Taladro', 3, 1, 4, 1
+exec sp_ingresoHerramienta 'JK15', 2016, 15000, 6, 'Thruper', 'Taladro', 3, 1, 4, 1
 go
 
-exec sp_ingresoHerramienta 6, 'GD16', 2016, 15000, 6, 'Thruper', 'Bonba Fumigadora', 4, 3, 4, 2
+exec sp_ingresoHerramienta 'GD16', 2016, 15000, 6, 'Thruper', 'Bonba Fumigadora', 4, 3, 4, 2
 go
 
 
