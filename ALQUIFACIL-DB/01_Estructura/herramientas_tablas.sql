@@ -13,7 +13,7 @@ create table Herramienta
 	Modelo varchar(50) not null,
 	Id_Estado int null,
 	Id_Tipo int null,
-	Id_Condicion_Fisica int not null,
+	Id_Condicion_Fisica int null,
 	Id_Categoria int null
 )
 on HERRAMIENTAS
