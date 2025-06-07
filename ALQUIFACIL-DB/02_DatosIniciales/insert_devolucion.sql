@@ -44,3 +44,39 @@ GO
 
 EXEC sp_InsertarDevolucion 10, 'Completa', 0, 0, 4
 GO
+
+
+USE ALQUIFACIL
+GO
+CREATE PROCEDURE sp_InsertarDevolucionHerramienta (
+    @_id_devolucionherramienta INT,
+    @_id_herramienta INT,
+    @_id_devolucion INT,
+    @_cantidad_herramientas INT = NULL
+)
+AS
+    INSERT INTO DevolucionHerramienta (Id_DevolucionHerramienta, Id_Herramienta, Id_Devolucion, cantidad_Herramientas)
+    VALUES (@_id_devolucionherramienta, @_id_herramienta, @_id_devolucion, @_cantidad_herramientas)
+
+    PRINT 'EL REGISTRO DE DEVOLUCIÓN HERRAMIENTA SE HA REGISTRADO CORRECTAMENTE'
+GO
+
+EXEC sp_InsertarDevolucionHerramienta 1, 1, 10, 2
+GO
+
+EXEC sp_InsertarDevolucionHerramienta 2, 2, 2, 1
+GO
+
+EXEC sp_InsertarDevolucionHerramienta 3, 3, 3, 5
+GO
+
+EXEC sp_InsertarDevolucionHerramienta 4, 4, 4, 3
+GO
+
+EXEC sp_InsertarDevolucionHerramienta 5, 5, 5, 1
+GO
+
+EXEC sp_InsertarDevolucionHerramienta 6, 6, 6, 4
+GO
+
+
