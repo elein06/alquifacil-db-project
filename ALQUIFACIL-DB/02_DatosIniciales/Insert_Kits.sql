@@ -34,18 +34,6 @@ go
 exec sp_IngresarKit 'Kit de Construcción', 20000, 2, 2
 go
 
-exec sp_IngresarKit 1004, 'Kit de Demolición Ligera', 35000, 1
-go
-
-exec sp_IngresarKit 1005, 'Kit de Instalación Eléctrica', 22000, 3
-go
-
-exec sp_IngresarKit 1006, 'Kit de Poda Avanzada', 18000, 2
-go
-
-exec sp_IngresarKit 1007, 'Kit de Fontanería Básica', 16500, 3
-go
-
 exec sp_IngresarKit 'Kit de Bricolaje', 12000, 3, 1
 go
 
@@ -58,21 +46,22 @@ use ALQUIFACIL
 go
 create or alter procedure sp_IngresarKitHerramienta
 (
+	@_Id_Codigo_Kit int,
     @_Id_Herramienta int,
     @_cantidad_Herramientas int)
 AS
-    insert into KitHerramienta (Id_Herramienta, cantidad_Herramientas)
-    values (@_Id_Herramienta, @_cantidad_Herramientas)
+    insert into KitHerramienta (codigo_Kit,Id_Herramienta, cantidad_Herramientas)
+    values (@_Id_Codigo_Kit ,@_Id_Herramienta, @_cantidad_Herramientas)
     PRINT 'EL KIT DE HERRAMIENTA SE HA REGISTRADO CORRECTAMENTE'
 go
 
-exec sp_IngresarKitHerramienta '1', '2'
+exec sp_IngresarKitHerramienta 1,1,  2
 go
 
-exec sp_IngresarKitHerramienta '2', '1'
+exec sp_IngresarKitHerramienta 2,2, 1
 go
 
-exec sp_IngresarKitHerramienta '3', '3'
+exec sp_IngresarKitHerramienta 3,3, 3
 go
 
 select * from KitHerramienta
