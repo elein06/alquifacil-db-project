@@ -1,6 +1,8 @@
 -- Insert Mantenimientos
 -- Proyecto ALQUIFÁCIL
-
+-- Correccion para formatos de fechas
+SET DATEFORMAT YMD;
+GO
 
 -- Insert Persona Responsable
 use ALQUIFACIL
@@ -122,6 +124,34 @@ go
 
 exec sp_ingresoMantenimiento 10000, '2024-06-19', 'Interno', 'Afilado de hojas', 2, 2204, 4;
 go
+
+exec sp_ingresoMantenimiento 18000, '2025-05-20 09:00:00', 'Interno', 'Revisión general de motor y afilado de cuchillas.', 1, 2201, 2;
+go
+
+exec sp_ingresoMantenimiento 65000, '2025-04-10 14:30:00', 'Externo', 'Reparación de embrague y reemplazo de carbones.', 2, 2202, 5;
+go
+
+exec sp_ingresoMantenimiento 25000, '2025-05-30 11:00:00', 'Interno', 'Limpieza de filtro de aire y ajuste de bujías.', 1, 2203, 7;
+go
+
+exec sp_ingresoMantenimiento 150000, '2025-03-25 08:45:00', 'Externo', 'Reemplazo de sistema de encendido y revisión de chasis.', 2, 2202, 4;
+go
+
+exec sp_ingresoMantenimiento 5000, '2025-05-15 10:00:00', 'Interno', 'Revisión y limpieza general del juego de herramientas.', 1, 2204, 3;
+go
+
+exec sp_ingresoMantenimiento 40000, '2025-04-22 13:15:00', 'Interno', 'Cambio de escobillas y ajuste de la guía de corte.', 2, 2201, 8;
+go
+
+exec sp_ingresoMantenimiento 22000, '2025-05-10 10:00:00', 'Interno', 'Chequeo de nivel de aceite y limpieza de bujías.', 1, 2203, 7;
+go
+
+exec sp_ingresoMantenimiento 75000, '2025-04-01 09:00:00', 'Externo', 'Reparación de componentes electrónicos y calibración.', 2, 2202, 5;
+go
+
+exec sp_ingresoMantenimiento 12000, '2025-05-28 14:00:00', 'Interno', 'Revisión de conexiones y estado de batería.', 1, 2204, 10;
+go
+
 
 select * from Mantenimiento
 go
