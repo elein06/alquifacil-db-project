@@ -112,6 +112,3 @@ go
 
 select * from KitHerramienta
 go
-
-    select * from KitHerramienta
-    go
