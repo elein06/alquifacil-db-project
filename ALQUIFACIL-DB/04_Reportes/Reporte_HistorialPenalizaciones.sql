@@ -2,4 +2,3 @@
 
 use ALQUIFACIL
 go
-create procedure sp_VerHistorialPenalizaciones
