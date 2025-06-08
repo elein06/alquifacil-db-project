@@ -6,17 +6,15 @@ go
 create table Alquiler
 (
 	num_Contrato int IDENTITY(1,1) not null,
-	cliente_Asociado varchar(50) not null,
 	fecha_Inicio date not null,
 	fecha_Dev date not null,
 	tarifa_Total_Diaria	money not null,
 	deposito_Garantia money not null,
-	estado_Contrato int not null,
+	estado_Contrato varchar(50) not null,
 	Id_cliente int not null
 )
 on OPERACIONES
 go
-
 
 -- Llave primaria Alquiler
 use alquifacil
@@ -25,7 +23,6 @@ go
 	add constraint PK_num_Contrato
 	primary key (num_Contrato)
 go
-
 
 -- Llave foranea Cliente a Alquiler
 use alquifacil
@@ -80,7 +77,6 @@ go
 
 exec sp_help AlquilerHerramienta
 go
-
 
 -- Tabla intermedia AlquilerKit
 use alquifacil

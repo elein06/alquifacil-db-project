@@ -161,15 +161,16 @@ GO
 exec sp_help Herramienta
 go
 
-------------------------Creación tabla Kit
+-- Creación tabla Kit
 use ALQUIFACIL
 GO
 CREATE TABLE Kit
 (
-codigo_Kit INT NOT NULL,
+codigo_Kit INT IDENTITY(1,1) NOT NULL,
 nombre VARCHAR(50) NOT NULL,
 tarifa_Diaria_Especial MONEY NOT NULL,
-id_Categoria INT NOT NULL
+id_Categoria INT NOT NULL,
+Id_Estado int not null
 )
 On HERRAMIENTAS
 GO
@@ -184,6 +185,15 @@ GO
 
 exec sp_help Kit
 go
+
+--FK de id_Estado a kit
+use ALQUIFACIL
+GO
+alter table Kit
+add constraint FK_Kit_id_Estado
+Foreign key (Id_Estado)
+REFERENCES Estado(id_Estado)
+GO
 
 --FK de id_categoria a kit
 use alquifacil
