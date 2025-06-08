@@ -166,7 +166,7 @@ use ALQUIFACIL
 GO
 CREATE TABLE Kit
 (
-codigo_Kit INT NOT NULL,
+codigo_Kit INT IDENTITY(1,1) NOT NULL,
 nombre VARCHAR(50) NOT NULL,
 tarifa_Diaria_Especial MONEY NOT NULL,
 id_Categoria INT NOT NULL,

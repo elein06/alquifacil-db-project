@@ -74,7 +74,7 @@ exec sp_RegistrarAlquileresConHerramientas
     @_deposito_Garantia = 15000,
     @_estado_Contrato = 'activo',
     @_Id_cliente = 1,
-	@_id_Herramienta = 1,
+	@_id_Herramienta = 7,
 	@_cantidadHerramientas = 4
 
 -- Proceso para AlquilerKit
@@ -90,20 +90,28 @@ create or alter procedure sp_RegistrarAlquileresConKits
     @_estado_Contrato varchar(50),
     @_Id_cliente int,
 	-- kit
-	@_codigo_kit int
+	@_codigo_Kit int
 as
 begin
     set nocount on;
 
+	declare @estadoKit int;
     declare @nuevoIdAlquiler int;
 
     -- Verificar si el kit ya existe 
-    select codigo_kit = @_codigo_kit
+    select @estadoKit = Id_Estado
     from Kit
+    where codigo_Kit = @_codigo_Kit;
 
-    if @_codigo_kit is null
+    if @estadoKit is null
     begin
         print 'El kit no existe.';
+        return;
+    end
+
+	if @estadoKit != 1
+    begin
+        print 'El kit ya esta alquilado.';
         return;
     end
 
@@ -134,4 +142,4 @@ exec sp_RegistrarAlquileresConKits
     @_deposito_Garantia = 15000,
     @_estado_Contrato = 'activo',
     @_Id_cliente = 3,
-	@_codigo_kit = '1003'
+	@_codigo_Kit = 2

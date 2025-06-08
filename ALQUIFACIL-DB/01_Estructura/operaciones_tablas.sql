@@ -115,20 +115,3 @@ references Alquiler(num_contrato)
 go
 
 exec sp_help alquilerKit
-
-USE ALQUIFACIL;
-GO
-ALTER TABLE AlquilerKit
-DROP CONSTRAINT FK_Alquilerkit_codigoKit;
-GO
-
-USE ALQUIFACIL
-GO
-ALTER TABLE AlquilerKit
-DROP CONSTRAINT FK_Alquilerkit_numContrato;
-GO
-
-USE ALQUIFACIL
-GO
-DROP TABLE AlquilerKit
-GO
