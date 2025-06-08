@@ -37,9 +37,6 @@ go
 exec sp_IngresarKit 'Kit de Bricolaje', 12000, 3, 1
 go
 
-select * from Kit
-go
-
 
 --Procedimiento almacenado para agregar un kitHerramienta
 use ALQUIFACIL
@@ -65,4 +62,7 @@ exec sp_IngresarKitHerramienta 3,3, 3
 go
 
 select * from KitHerramienta
+go
+
+select * from Kit
 go
