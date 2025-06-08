@@ -30,6 +30,14 @@ ADD CONSTRAINT CK_Alquiler_Deposito_Garantia_Positive
 CHECK (deposito_Garantia >= 0);
 go
 
+-- Validar que num_Contrato sea un valor válido (positivo)
+use ALQUIFACIL
+go
+ALTER TABLE AlquilerKit
+ADD CONSTRAINT CK_Kit_Validar_num_Contrato
+CHECK (num_Contrato > 0)
+go
+
 -- Estado de contrato solo activo o inactivo
 ALTER TABLE Alquiler
 ADD CONSTRAINT CK_Alquiler_Estado_Contrato_Valido
