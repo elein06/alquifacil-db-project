@@ -49,7 +49,6 @@ go
 exec sp_IngresarKit 'Kit de Bricolaje', 12000, 3, 1
 go
 
-
 select * from Kit
 go
 
