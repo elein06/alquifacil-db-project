@@ -111,15 +111,6 @@ CHECK (tarifa_Diaria_Especial >= 0)
 go
 
 
--- Validar que num_Contrato sea un valor válido (positivo)
-use ALQUIFACIL
-go
-ALTER TABLE Kit
-ADD CONSTRAINT CK_Kit_Validar_num_Contrato
-CHECK (num_Contrato > 0)
-go
-
-
 -- Validar que id_Categoria sea válido
 use ALQUIFACIL
 go

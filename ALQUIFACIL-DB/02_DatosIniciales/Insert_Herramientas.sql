@@ -199,6 +199,46 @@ exec sp_ingresoHerramienta 'GD16', 2016, 15000, 6, 'Thruper', 'Bonba Fumigadora'
 go
 
 
+exec sp_ingresoHerramienta 'AC11', 2020, 25000, 5, 'Patito', 'Martillo', 1, 2, 2, 1
+go
+
+-- Herramienta eléctrica de jardinería
+exec sp_ingresoHerramienta 'ELJARD001', 2022, 120000, 3, 'Bosch', 'Podadora Eléctrica GX200', 1, 1, 1, 2
+go
+
+-- Herramienta manual para hogar
+exec sp_ingresoHerramienta 'HOGARMAN02', 2019, 15000, 10, 'Truper', 'Set de Destornilladores', 1, 2, 2, 3
+go
+
+-- Herramienta motorizada de construcción (en mantenimiento)
+exec sp_ingresoHerramienta 'MOTCON03', 2021, 500000, 1, 'Honda', 'Compactador de Placa HR500', 3, 3, 3, 1
+go
+
+-- Herramienta eléctrica de construcción (alquilada)
+exec sp_ingresoHerramienta 'ELCON04', 2023, 85000, 2, 'DeWalt', 'Taladro Percutor DCD999', 2, 1, 1, 1
+go
+
+-- Herramienta manual de jardinería (buena condición)
+exec sp_ingresoHerramienta 'MANJARD05', 2018, 8000, 15, 'Fiskars', 'Tijera de Podar PowerGear', 1, 2, 2, 2
+go
+
+-- Herramienta motorizada de jardinería (disponible)
+exec sp_ingresoHerramienta 'MOTJARD06', 2024, 250000, 2, 'Stihl', 'Desbrozadora FS 250', 1, 3, 1, 2
+go
+
+-- Herramienta eléctrica para hogar (regular)
+exec sp_ingresoHerramienta 'ELHOGAR07', 2020, 45000, 4, 'Black+Decker', 'Sierra Caladora KS500', 1, 1, 3, 3
+go
+
+-- Herramienta manual de construcción (dada de baja)
+exec sp_ingresoHerramienta 'MANCON08', 2017, 10000, 0, 'Bellota', 'Nivel de Burbuja 60cm', 4, 2, 4, 1
+go
+
+-- Herramienta eléctrica de jardinería (en mantenimiento)
+exec sp_ingresoHerramienta 'ELJARD09', 2021, 95000, 1, 'Greenworks', 'Soplador de Hojas G-MAX 40V', 3, 1, 3, 2
+go
+
+
 select * from Categoria
 Select * from Estado
 Select * from Tipo
