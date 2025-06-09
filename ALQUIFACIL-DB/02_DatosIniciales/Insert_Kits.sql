@@ -1,68 +1,80 @@
 -- Insert Kits
 -- Proyecto ALQUIFÁCIL
 
---Procedimiento almacenado para agregar un kit 
+--Proceso almacenado para agregar un kit con herramientas
 use ALQUIFACIL
 go
-create or alter procedure sp_IngresarKit
-(
-    @_nombre varchar(50),
-    @_tarifa_Diaria_Especial money,
-    @_id_Categoria int,
-	@_Id_Estado int)
+
+CREATE OR ALTER PROCEDURE sp_IngresarKitConHerramientas
+
+    @_nombre VARCHAR(50),
+    @_tarifa_Diaria_Especial MONEY,
+    @_id_Categoria INT,
+    @_Id_Estado INT,
+    @_Id_Herramienta INT,
+    @_cantidad_Herramientas INT
 AS
-	if @_Id_Estado = 3
-    begin
-        print 'El kit no puede registrarse como en mantenimiento. No se puede registrar el kit.';
-        return;
-    end
+BEGIN
+    SET NOCOUNT ON;
 
-	if @_Id_Estado = 4
-    begin
-        print 'El kit no puede registrarse como dao de baja. No se puede registrar el kit.';
-        return;
-    end
+    DECLARE @stockDisponible INT;
+    DECLARE @estadoHerramienta INT;
+    DECLARE @nuevoIdKit INT;
 
-    insert into Kit (nombre, tarifa_Diaria_Especial, id_Categoria, Id_Estado)
-    values (@_nombre, @_tarifa_Diaria_Especial, @_id_Categoria, @_Id_Estado)
-    PRINT 'EL KIT SE HA REGISTRADO CORRECTAMENTE'
+-- Obtener stock y estado actual 
+    SELECT 
+        @stockDisponible = Stock_Herramientas
+        FROM Herramienta
+		where @_Id_Herramienta = Id_Herramienta
+
+	SELECT 
+        @_Id_Estado = Id_Estado
+        FROM Kit
+
+	IF @_cantidad_Herramientas > @stockDisponible 
+    BEGIN
+        PRINT 'No hay suficientes herramientas en inventario';
+        RETURN;
+    END
+
+       IF @_Id_Estado = 2
+    BEGIN
+        PRINT 'El kit no puede registrarse como alquilado. No se puede registrar el kit.';
+        RETURN;
+    END
+
+    IF @_Id_Estado = 3
+    BEGIN
+        PRINT 'El kit no puede registrarse como en mantenimiento. No se puede registrar el kit.';
+        RETURN;
+    END
+
+    IF @_Id_Estado = 4
+    BEGIN
+        PRINT 'El kit no puede registrarse como dado de baja. No se puede registrar el kit.';
+        RETURN;
+    END
+
+	INSERT INTO Kit (nombre, tarifa_Diaria_Especial, id_Categoria, Id_Estado)
+    VALUES (@_nombre, @_tarifa_Diaria_Especial, @_id_Categoria, @_Id_Estado);
+
+    SET @nuevoIdKit = SCOPE_IDENTITY();
+  
+    INSERT INTO KitHerramienta (codigo_Kit, Id_Herramienta, cantidad_Herramientas)
+    VALUES (@nuevoIdKit, @_Id_Herramienta, @_cantidad_Herramientas);
+
+	UPDATE Herramienta
+    SET Stock_Herramientas = Stock_Herramientas + @_cantidad_Herramientas
+    WHERE Id_Herramienta = @_id_Herramienta; 
+
+    PRINT 'EL KIT SE HA REGISTRADO CORRECTAMENTE';
+END
 go
 
-exec sp_IngresarKit 'Kit de Jardinería', 15000, 1, 1
-go
-
-exec sp_IngresarKit 'Kit de Construcción', 20000, 2, 2
-go
-
-exec sp_IngresarKit 'Kit de Bricolaje', 12000, 3, 1
-go
-
-select * from Kit
-go
-
-
---Procedimiento almacenado para agregar un kitHerramienta
-use ALQUIFACIL
-go
-create or alter procedure sp_IngresarKitHerramienta
-(
-	@_Id_Codigo_Kit int,
-    @_Id_Herramienta int,
-    @_cantidad_Herramientas int)
-AS
-    insert into KitHerramienta (codigo_Kit,Id_Herramienta, cantidad_Herramientas)
-    values (@_Id_Codigo_Kit ,@_Id_Herramienta, @_cantidad_Herramientas)
-    PRINT 'EL KIT DE HERRAMIENTA SE HA REGISTRADO CORRECTAMENTE'
-go
-
-exec sp_IngresarKitHerramienta 1, 1,  2
-go
-
-exec sp_IngresarKitHerramienta 2, 2, 1
-go
-
-exec sp_IngresarKitHerramienta 3, 3, 3
-go
-
-select * from KitHerramienta
-go
+exec sp_IngresarKitConHerramientas
+  @_nombre = 'Kit de Construccion',
+  @_tarifa_Diaria_Especial = 12000,
+  @_id_Categoria = 2,
+  @_Id_Estado = 1,
+  @_Id_Herramienta = 6,
+  @_cantidad_Herramientas = 2
