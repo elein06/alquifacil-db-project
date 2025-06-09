@@ -52,13 +52,13 @@ AS
     PRINT 'EL KIT DE HERRAMIENTA SE HA REGISTRADO CORRECTAMENTE'
 go
 
-exec sp_IngresarKitHerramienta 1,1,  2
+exec sp_IngresarKitHerramienta 1, 1,  2
 go
 
-exec sp_IngresarKitHerramienta 2,2, 1
+exec sp_IngresarKitHerramienta 2, 2, 1
 go
 
-exec sp_IngresarKitHerramienta 3,3, 3
+exec sp_IngresarKitHerramienta 3, 3, 3
 go
 
 select * from KitHerramienta
