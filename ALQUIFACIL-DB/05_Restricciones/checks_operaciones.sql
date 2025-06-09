@@ -41,7 +41,7 @@ go
 -- Estado de contrato solo activo o inactivo
 ALTER TABLE Alquiler
 ADD CONSTRAINT CK_Alquiler_Estado_Contrato_Valido
-CHECK (estado_Contrato IN (0, 1))
+CHECK (estado_Contrato IN ('activo',' finalizado', 'con penalización'))
 go
 
 -- Fecha de inicio actual o mayor a actual
