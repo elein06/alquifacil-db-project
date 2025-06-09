@@ -18,3 +18,5 @@ as
 	 WHERE
         devolucion.cargos_Por_Dia_Atraso > 0;
 go
+
+exec sp_VerHistorialDiasDeRetraso

@@ -80,3 +80,72 @@ EXEC sp_RegistrarDevolucionConHerramienta
 
 select * from Devolucion
 go
+
+-- Devolucion de un kit
+USE ALQUIFACIL
+GO
+
+CREATE OR ALTER PROCEDURE sp_RegistrarKitDevolucion
+ 
+
+    @_estado VARCHAR(50),
+    @_costo_reparacion MONEY,
+    @_cargos_por_dia_atraso MONEY,
+    @_id_cliente INT,
+    @_codigo_Kit INT
+
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @estadoKit INT;
+    DECLARE @nuevoIdDevolucionKit INT;
+	
+
+    -- Verificar si la herramienta existe y obtener su estado
+    SELECT @estadoKit = Id_Estado
+    FROM Kit
+    WHERE codigo_Kit = @_codigo_Kit;
+
+
+    IF @estadoKit IS NULL
+    BEGIN
+        PRINT 'Kit no existe.';
+        RETURN;
+    END
+
+	  IF @estadoKit = 1
+    BEGIN
+        PRINT 'El kit no se ha prestado. Error al registrar devolucion';
+        RETURN;
+    END
+
+    -- Insertar la devolución (ID autogenerado)
+    INSERT INTO Devolucion(estado, costo_Reparacion, cargos_Por_Dia_Atraso, id_Cliente)
+    VALUES (@_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @_id_cliente);
+
+    -- Obtener el nuevo ID de devolución
+    SET @nuevoIdDevolucionKit = SCOPE_IDENTITY();
+
+    -- Insertar en la tabla intermedia (ID también autogenerado)
+    INSERT INTO Kit_Devolucion (codigo_Kit, id_Devolucion)
+    VALUES (@_codigo_Kit, @nuevoIdDevolucionKit);
+
+    -- Cambiar el estado de la herramienta a "disponible"
+    UPDATE Kit
+    SET Id_Estado = 1
+    WHERE codigo_Kit = @_codigo_Kit;
+
+    PRINT 'Devolución registrada correctamente';
+END
+GO
+
+EXEC sp_RegistrarKitDevolucion
+    @_estado = 'Devuelto en buen estado',
+    @_costo_reparacion = 0,
+    @_cargos_por_dia_atraso = 12.000,
+    @_id_cliente = 4,
+	@_codigo_Kit = 2
+
+select * from Devolucion
+go
