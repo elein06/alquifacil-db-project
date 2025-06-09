@@ -1,7 +1,7 @@
 USE ALQUIFACIL;
 GO
 
-CREATE PROCEDURE ObtenerCantidadMantenimientos
+CREATE PROCEDURE sp_VerCantidadMantenimientos
 AS
 BEGIN
   SELECT
@@ -18,4 +18,4 @@ BEGIN
 END;
 GO
 
-EXEC ObtenerCantidadMantenimientos;
+EXEC sp_VerCantidadMantenimientos;

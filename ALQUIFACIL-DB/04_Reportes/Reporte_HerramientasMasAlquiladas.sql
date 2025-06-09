@@ -1,7 +1,7 @@
 USE ALQUIFACIL;
 GO
 
-CREATE OR ALTER PROCEDURE ObtenerCantidadAlquiladas
+CREATE OR ALTER PROCEDURE sp_VerCantidadAlquiladas
 AS
 BEGIN
   SELECT
@@ -20,4 +20,4 @@ END;
 GO
 
 
-EXEC ObtenerCantidadAlquiladas;
+EXEC sp_VerCantidadAlquiladas;

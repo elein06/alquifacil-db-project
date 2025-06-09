@@ -3,7 +3,7 @@
 USE ALQUIFACIL;
 GO
 
-CREATE PROCEDURE ObtenerCantidadDevoluciones
+CREATE OR ALTER PROCEDURE sp_VerCantidadDevoluciones
 AS
 BEGIN
   SELECT
@@ -26,10 +26,10 @@ GO
 USE ALQUIFACIL;
 GO
 
-CREATE PROCEDURE sp_ReporteRotacionHerramientas
-    @FechaInicio DATETIME,
-    @FechaFin DATETIME,
-    @IdCategoria INT
+CREATE OR ALTER PROCEDURE sp_VerReporteRotacionHerramientas
+    @FechaInicio DATETIME = NULL,
+    @FechaFin DATETIME = NULL,
+    @IdCategoria INT = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -61,13 +61,13 @@ BEGIN
 
     -- Insertar datos en las tablas temporales
     INSERT INTO #TempAlquiladas
-    EXEC ObtenerCantidadAlquiladas;
+    EXEC sp_VerCantidadAlquiladas;
 
     INSERT INTO #TempMantenimientos
-    EXEC ObtenerCantidadMantenimientos;
+    EXEC sp_VerCantidadMantenimientos;
 
     INSERT INTO #TempDevoluciones
-    EXEC ObtenerCantidadDevoluciones;
+    EXEC sp_VerCantidadDevoluciones;
 
     -- Consulta final que combina los resultados
     SELECT 
@@ -111,6 +111,5 @@ BEGIN
 END;
 GO
 
-exec sp_ReporteRotacionHerramientas 
+exec sp_VerReporteRotacionHerramientas 
 go
-drop procedure sp_ReporteRotacionHerramientas
