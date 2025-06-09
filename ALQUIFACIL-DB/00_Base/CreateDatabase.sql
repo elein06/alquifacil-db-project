@@ -1,8 +1,15 @@
 -- Creación de la base de datos
 -- Proyecto ALQUIFÁCIL
 
-USE MASTER 
+USE MASTER
 GO
+
+IF EXISTS (SELECT name FROM sys.databases WHERE name = 'ALQUIFACIL')
+BEGIN
+    DROP DATABASE ALQUIFACIL;
+END
+
+
 CREATE DATABASE ALQUIFACIL
 ON PRIMARY --archivo primario
 (
@@ -21,3 +28,4 @@ LOG ON --archivo log
     FILEGROWTH = 64MB
 )
 GO
+

@@ -27,9 +27,6 @@ BEGIN
         FROM Herramienta
 		where @_Id_Herramienta = Id_Herramienta
 
-	SELECT 
-        @_Id_Estado = Id_Estado
-        FROM Kit
 
 	IF @_cantidad_Herramientas > @stockDisponible 
     BEGIN
@@ -83,3 +80,4 @@ exec sp_IngresarKitConHerramientas
   @_Id_Estado = 1,
   @_Id_Herramienta = 6,
   @_cantidad_Herramientas = 2
+  GO
