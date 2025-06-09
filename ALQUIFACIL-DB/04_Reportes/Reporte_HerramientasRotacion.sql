@@ -27,9 +27,9 @@ USE ALQUIFACIL;
 GO
 
 CREATE PROCEDURE sp_ReporteRotacionHerramientas
-    @FechaInicio DATETIME = NULL,
-    @FechaFin DATETIME = NULL,
-    @IdCategoria INT = NULL
+    @FechaInicio DATETIME,
+    @FechaFin DATETIME,
+    @IdCategoria INT
 AS
 BEGIN
     SET NOCOUNT ON;
