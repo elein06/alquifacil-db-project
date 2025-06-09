@@ -33,7 +33,6 @@ ALTER TABLE Herramienta
 ADD CONSTRAINT DF_Stock_Herramientas
 DEFAULT 1 FOR Stock_Herramientas
 go
-
 -- Tabla TIPO
 -- Validar que el tipo sea uno de los permitidos
 use ALQUIFACIL
