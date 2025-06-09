@@ -238,6 +238,10 @@ go
 exec sp_ingresoHerramienta 'ELJARD09', 2021, 95000, 1, 'Greenworks', 'Soplador de Hojas G-MAX 40V', 3, 1, 3, 2
 go
 
+-- Herramienta eléctrica de jardinería (disponible, en mal estado)
+exec sp_ingresoHerramienta 'JERUNDIO', 2025, 130000, 3, 'Greenworks', 'Soplador viejas mayores', 1, 1, 4, 2
+go
+
 
 select * from Categoria
 Select * from Estado

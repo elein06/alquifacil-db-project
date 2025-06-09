@@ -1,7 +1,5 @@
-
 -- Insert Alquileres
 -- Proyecto ALQUIFÁCIL
-
 
 -- Proceso almacenado para agregar Alquiler de una Herramienta
 USE ALQUIFACIL;
@@ -83,8 +81,8 @@ exec sp_RegistrarAlquileresConHerramientas
     @_deposito_Garantia = 15000,
     @_estado_Contrato = 'Activo',
     @_Id_cliente = 1,
-	@_id_Herramienta = 1,
-	@_cantidadHerramientas = 4
+	@_id_Herramienta = 17,
+	@_cantidadHerramientas = 2
 
 
 -- Proceso almacenado para agregar un Alquiler de un Kit
