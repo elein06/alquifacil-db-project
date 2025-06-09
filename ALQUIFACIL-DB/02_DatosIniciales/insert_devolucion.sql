@@ -14,10 +14,15 @@ BEGIN
 
     DECLARE @estadoHerramienta INT;
     DECLARE @nuevoIdDevolucion INT;
+	DECLARE @cantidadHerramientasAlquiladas INT;
 
     -- Verificar si la herramienta existe y obtener su estado
     SELECT @estadoHerramienta = Id_Estado
     FROM Herramienta
+    WHERE Id_Herramienta = @_id_herramienta;
+
+	SELECT @cantidadHerramientasAlquiladas = cantidadHerramientas
+    FROM AlquilerHerramienta
     WHERE Id_Herramienta = @_id_herramienta;
 
     IF @estadoHerramienta IS NULL
@@ -26,9 +31,9 @@ BEGIN
         RETURN;
     END
 
-    IF @estadoHerramienta != 2
+	  IF @_cantidad_herramientas != @cantidadHerramientasAlquiladas
     BEGIN
-        PRINT 'La herramienta no está alquilada. No se puede registrar la devolución.';
+        PRINT 'Cantidad de herramientas incorrecta';
         RETURN;
     END
 
@@ -46,6 +51,10 @@ BEGIN
     -- Cambiar el estado de la herramienta a "disponible"
     UPDATE Herramienta
     SET Id_Estado = 1
+    WHERE Id_Herramienta = @_id_herramienta;
+
+	Update Herramienta
+	SET Stock_Herramientas = Stock_Herramientas + @cantidadHerramientasAlquiladas
     WHERE Id_Herramienta = @_id_herramienta;
 
     PRINT 'Devolución registrada correctamente y estado de herramienta actualizado.';
