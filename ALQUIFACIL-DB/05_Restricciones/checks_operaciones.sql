@@ -30,7 +30,7 @@ ADD CONSTRAINT CK_Alquiler_Deposito_Garantia_Positive
 CHECK (deposito_Garantia >= 0)
 go
 
--- Validar que num_Contrato sea un valor válido (positivo)
+-- Validar que num_Contrato sea un valor vï¿½lido (positivo)
 use ALQUIFACIL
 go
 ALTER TABLE AlquilerKit
@@ -54,11 +54,11 @@ ADD CONSTRAINT CK_Alquiler_Fecha_Inicio_Actual_O_Futura
 CHECK (fecha_Inicio >= CAST(GETDATE() AS DATE))
 go
 
--- Fecha de devolucion no mayor a 1 año
+-- Fecha de devolucion no mayor a 1 aï¿½o
 use ALQUIFACIL
 go
 ALTER TABLE Alquiler
-ADD CONSTRAINT CK_Alquiler_Fecha_Dev_Maximo_1_Año
+ADD CONSTRAINT CK_Alquiler_Fecha_Dev_Maximo_1_Aï¿½o
 CHECK (fecha_Dev <= DATEADD(DAY, 365, fecha_Inicio))
 go
 

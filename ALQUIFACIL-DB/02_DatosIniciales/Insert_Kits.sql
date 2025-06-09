@@ -71,6 +71,11 @@ BEGIN
 END
 go
 
+select * from KitHerramienta
+go
+select * from Kit
+go
+
 exec sp_IngresarKitConHerramientas
   @_nombre = 'Kit de Construccion',
   @_tarifa_Diaria_Especial = 12000,
