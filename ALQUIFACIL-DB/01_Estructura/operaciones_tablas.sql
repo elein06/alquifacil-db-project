@@ -115,3 +115,42 @@ references Alquiler(num_contrato)
 go
 
 exec sp_help alquilerKit
+
+
+
+-- Kit_Devolucion
+
+USE ALQUIFACIL
+GO
+
+CREATE TABLE Kit_Devolucion (
+    Id_Kit_Devolucion INT IDENTITY(1,1) NOT NULL,
+    codigo_Kit INT NOT NULL,
+    Id_Devolucion INT NOT NULL
+)
+ON OPERACIONES
+GO
+
+
+ALTER TABLE Kit_Devolucion
+ADD CONSTRAINT PK_Kit_Devolucion
+PRIMARY KEY (Id_Kit_Devolucion)
+GO
+
+
+ALTER TABLE Kit_Devolucion
+ADD CONSTRAINT FK_Kit_Devolucion_Kit
+FOREIGN KEY (codigo_Kit)
+REFERENCES Kit(codigo_Kit)
+GO
+
+
+ALTER TABLE Kit_Devolucion
+ADD CONSTRAINT FK_Kit_Devolucion_Devolucion
+FOREIGN KEY (Id_Devolucion)
+REFERENCES Devolucion(Id_Devolucion)
+GO
+
+
+EXEC sp_help Kit_Devolucion
+GO
