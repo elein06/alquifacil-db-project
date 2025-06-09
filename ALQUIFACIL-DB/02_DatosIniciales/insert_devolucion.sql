@@ -69,6 +69,15 @@ EXEC sp_RegistrarDevolucionConHerramienta
     @_id_herramienta = 2,
     @_cantidad_herramientas = 10;
 
+EXEC sp_RegistrarDevolucionConHerramienta
+    @_estado = 'Devuelto en buen estado',
+    @_costo_reparacion = 0,
+    @_cargos_por_dia_atraso = 26.000,
+    @_id_cliente = 20,
+    @_id_herramienta = 6,
+    @_cantidad_herramientas = 1;
+
+
 select * from Devolucion
 go
 
