@@ -5,7 +5,7 @@ USE ALQUIFACIL
 GO
 CREATE PROCEDURE sp_verClientesFrecuentes
 AS
-    SELECT 
+    SELECT TOP 10
         CLIENTE.id_Cliente,
         CASE 
             WHEN ClienteFisico.id_Cliente IS NOT NULL THEN 'Físico'
