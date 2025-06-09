@@ -2,7 +2,7 @@
 -- Proyecto ALQUIFÁCIL
 
 
---procedimiento almacenado para agregar cliente físico
+--						procedimiento almacenado para agregar cliente físico
 
 USE ALQUIFACIL
 GO
@@ -29,7 +29,8 @@ AS
 GO
 
 
---agregar 10 clientes físicos a la tabla clienteFisico
+
+--										agregar 10 clientes físicos a la tabla clienteFisico
 
 exec sp_InsertarClienteFisico '604790218', 'Elein', 'Rodríguez', 'Chavarría', '60360695', 'rodriguezrayeli06@gmail.com', 1
 GO
@@ -63,7 +64,9 @@ GO
 
 
 
---procedimiento almacenado para agregar cliente jurídico
+
+
+--											procedimiento almacenado para agregar cliente jurídico
 
 USE ALQUIFACIL
 GO
@@ -88,7 +91,7 @@ AS
 GO
 
 
---agregar 10 clientes Jurídicos a la tabla ClienteJuridico
+--											agregar 10 clientes Jurídicos a la tabla ClienteJuridico
 
 EXEC sp_InsertarClienteJuridico '111111111', 'Fundación Monkey Park', '26660000', 'monkeypark@gmail.com', 2
 GO

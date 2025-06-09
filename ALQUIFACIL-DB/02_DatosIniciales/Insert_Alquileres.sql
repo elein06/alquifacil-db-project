@@ -1,7 +1,7 @@
 -- Insert Alquileres
 -- Proyecto ALQUIFÁCIL
 
--- Proceso almacenado para agregar Alquiler de una Herramienta
+--						Proceso almacenado para agregar Alquiler de una Herramienta
 USE ALQUIFACIL;
 GO
 
@@ -21,6 +21,7 @@ BEGIN
     DECLARE @stockDisponible INT;
     DECLARE @estadoHerramienta INT;
     DECLARE @nuevoIdAlquiler INT;
+    DECLARE @nuevoIdCliente INT;
 
     -- Obtener stock y estado actual
     SELECT 
@@ -28,6 +29,17 @@ BEGIN
         @estadoHerramienta = Id_Estado
     FROM Herramienta
     WHERE Id_Herramienta = @_id_Herramienta;
+	
+	select @nuevoIdCliente = id_Cliente
+	from CLIENTE 
+	where id_Cliente = @_Id_cliente 
+
+	
+    IF @nuevoIdCliente IS NULL
+    BEGIN
+        PRINT 'Ese cliente no existe.';
+        RETURN;
+    END
 
     IF @stockDisponible IS NULL
     BEGIN
@@ -35,11 +47,11 @@ BEGIN
         RETURN;
     END
 
-    IF @estadoHerramienta IN (3, 4)
-    BEGIN
-        PRINT 'La herramienta está en mantenimiento o dada de baja. No se puede alquilar.';
-        RETURN;
-    END
+    if @estadoHerramienta != 1
+    begin
+        print 'Esa herramienta no está disponible.';
+        return;
+    end
 
     IF @_cantidadHerramientas > @stockDisponible
     BEGIN
@@ -56,6 +68,8 @@ BEGIN
     -- Insertar detalle de alquiler
     INSERT INTO AlquilerHerramienta(Id_Herramienta, num_Contrato, cantidadHerramientas)
     VALUES (@_id_Herramienta, @nuevoIdAlquiler, @_cantidadHerramientas);
+
+
 
     -- Actualizar el stock
     UPDATE Herramienta
@@ -80,12 +94,12 @@ exec sp_RegistrarAlquileresConHerramientas
     @_tarifa_Total_Diaria = 20000,
     @_deposito_Garantia = 15000,
     @_estado_Contrato = 'Activo',
-    @_Id_cliente = 1,
-	@_id_Herramienta = 17,
-	@_cantidadHerramientas = 2
+    @_Id_cliente = 2,
+	@_id_Herramienta = 4,
+	@_cantidadHerramientas = 1
 
 
--- Proceso almacenado para agregar un Alquiler de un Kit
+--								Proceso almacenado para agregar un Alquiler de un Kit
 
 use ALQUIFACIL
 go
@@ -98,18 +112,43 @@ create or alter procedure sp_RegistrarAlquileresConKits
     @_estado_Contrato varchar(50),
     @_Id_cliente int,
 	-- kit
-	@_codigo_Kit int
+	@_codigo_Kit int,
+	@_cantidadHerramientasEnKit int,
+	@_id_Herramienta int
 as
 begin
     set nocount on;
 
 	declare @estadoKit int;
     declare @nuevoIdAlquiler int;
+    DECLARE @idHerramientasKit INT;
+    DECLARE @_cantidadAlquilarEnKit INT;
+    DECLARE @nuevoIdCliente INT;
 
     -- Verificar si el kit ya existe 
     select @estadoKit = Id_Estado
     from Kit
     where codigo_Kit = @_codigo_Kit;
+
+	select 
+		@idHerramientasKit = Id_Herramienta 
+	from KitHerramienta 
+	where Id_Herramienta = @_id_Herramienta;
+
+	select @_cantidadAlquilarEnKit = cantidad_Herramientas 
+	from KitHerramienta
+	where Id_Herramienta = @_id_Herramienta;
+
+	select @nuevoIdCliente = id_Cliente
+	from CLIENTE 
+	where id_Cliente = @_Id_cliente 
+
+	
+    IF @nuevoIdCliente IS NULL
+    BEGIN
+        PRINT 'Ese cliente no existe.';
+        RETURN;
+    END
 
     if @estadoKit is null
     begin
@@ -119,9 +158,21 @@ begin
 
 	if @estadoKit != 1
     begin
-        print 'El kit ya esta alquilado.';
+        print 'El kit no está disponible.';
         return;
     end
+
+	if @idHerramientasKit is null 
+	BEGIN
+        PRINT 'Esa herramienta no pertenece a ese kit.';
+        RETURN;
+    END
+
+	if @_cantidadHerramientasEnKit > @_cantidadAlquilarEnKit
+	BEGIN
+        PRINT 'No hay suficientes herramientas en el kit';
+        RETURN;
+    END
 
     -- Insertar el alquiler (ID autogenerado)
     insert into Alquiler(fecha_Inicio, fecha_Dev, tarifa_Total_Diaria, deposito_Garantia, estado_Contrato, Id_cliente)
@@ -131,8 +182,8 @@ begin
     set @nuevoIdAlquiler = SCOPE_IDENTITY();
 
     -- Insertar en la tabla intermedia (Sin ID autogenerado)
-    insert into AlquilerKit(codigo_kit, num_Contrato)
-    values (@_codigo_kit, @nuevoIdAlquiler);
+    insert into AlquilerKit(codigo_kit, num_Contrato, cantidadHerramientasEnKit)
+    values (@_codigo_kit, @nuevoIdAlquiler, @_cantidadHerramientasEnKit);
 
     -- Cambiar el estado del kit a "no disponible"
     update Kit
@@ -149,5 +200,11 @@ exec sp_RegistrarAlquileresConKits
     @_tarifa_Total_Diaria = 20000,
     @_deposito_Garantia = 15000,
     @_estado_Contrato = 'activo',
-    @_Id_cliente = 3,
-	@_codigo_Kit = 3
+    @_Id_cliente = 19,
+	@_codigo_Kit = 8, 
+	@_cantidadHerramientasEnKit = 2,
+	@_id_Herramienta = 5
+
+select * from kit
+select * from Herramienta
+select * from KitHerramienta

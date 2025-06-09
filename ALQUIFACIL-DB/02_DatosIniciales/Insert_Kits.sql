@@ -53,31 +53,44 @@ BEGIN
     END
 
 	INSERT INTO Kit (nombre, tarifa_Diaria_Especial, id_Categoria, Id_Estado)
-    VALUES (@_nombre, @_tarifa_Diaria_Especial, @_id_Categoria, @_Id_Estado);
+    VALUES			(@_nombre, @_tarifa_Diaria_Especial, @_id_Categoria, @_Id_Estado);
 
     SET @nuevoIdKit = SCOPE_IDENTITY();
-  
+
     INSERT INTO KitHerramienta (codigo_Kit, Id_Herramienta, cantidad_Herramientas)
-    VALUES (@nuevoIdKit, @_Id_Herramienta, @_cantidad_Herramientas);
+    VALUES						(@nuevoIdKit, @_Id_Herramienta, @_cantidad_Herramientas);
 
 	UPDATE Herramienta
-    SET Stock_Herramientas = Stock_Herramientas + @_cantidad_Herramientas
+    SET Stock_Herramientas = Stock_Herramientas - @_cantidad_Herramientas
     WHERE Id_Herramienta = @_id_Herramienta; 
 
     PRINT 'EL KIT SE HA REGISTRADO CORRECTAMENTE';
 END
 go
 
+
+exec sp_IngresarKitConHerramientas
+  @_nombre = 'Kit de Construccion',
+  @_tarifa_Diaria_Especial = 12000,
+  @_id_Categoria = 1,
+  @_Id_Estado = 1,
+  @_Id_Herramienta = 6,
+  @_cantidad_Herramientas = 2
+ GO
+
+exec sp_IngresarKitConHerramientas
+  @_nombre = 'Kit de Jardineria',
+  @_tarifa_Diaria_Especial = 22000,
+  @_id_Categoria = 2,
+  @_Id_Estado = 1,
+  @_Id_Herramienta = 5,
+  @_cantidad_Herramientas = 2
+GO
+
 select * from KitHerramienta
 go
 select * from Kit
 go
 
-exec sp_IngresarKitConHerramientas
-  @_nombre = 'Kit de Construccion',
-  @_tarifa_Diaria_Especial = 12000,
-  @_id_Categoria = 2,
-  @_Id_Estado = 1,
-  @_Id_Herramienta = 6,
-  @_cantidad_Herramientas = 2
-  GO
+select * from Herramienta
+select * from Estado

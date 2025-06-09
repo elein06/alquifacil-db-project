@@ -9,7 +9,7 @@ create table Devolucion(
 	cargos_Por_Dia_Atraso money null,
 	id_Cliente int null
 )
-on HERRAMIENTAS
+on OPERACIONES
 go
 
 
@@ -42,7 +42,7 @@ create table DevolucionHerramienta(
 	Id_Devolucion int not null,
 	cantidad_Herramientas int null
 )
-on HERRAMIENTAS
+on OPERACIONES
 go
 
 
@@ -74,3 +74,42 @@ go
 
 exec sp_help DevolucionHerramienta
 go
+
+
+
+-- Devolucion Kit
+
+USE ALQUIFACIL
+GO
+CREATE TABLE DevolucionKit (
+    Id_Devolucion_Kit INT IDENTITY(1,1) NOT NULL,
+    codigo_Kit INT NOT NULL,
+    Id_Devolucion INT NOT NULL,
+	cantidadDevolucionHerramientas int not null
+)
+ON OPERACIONES
+GO
+
+
+ALTER TABLE DevolucionKit
+ADD CONSTRAINT PK_Id_Devolucion_Kit
+PRIMARY KEY (Id_Devolucion_Kit)
+GO
+
+
+ALTER TABLE DevolucionKit
+ADD CONSTRAINT FK_Kit_Devolucion_Kit
+FOREIGN KEY (codigo_Kit)
+REFERENCES Kit(codigo_Kit)
+GO
+
+
+ALTER TABLE DevolucionKit
+ADD CONSTRAINT FK_Kit_Devolucion_Devolucion
+FOREIGN KEY (Id_Devolucion)
+REFERENCES Devolucion(Id_Devolucion)
+GO
+
+
+EXEC sp_help DevolucionKit
+GO

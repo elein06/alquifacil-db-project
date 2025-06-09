@@ -1,151 +1,167 @@
-USE ALQUIFACIL
+-- Insert Alquileres
+-- Proyecto ALQUIFÁCIL
+
+-- Proceso almacenado para agregar Alquiler de una Herramienta
+USE ALQUIFACIL;
 GO
 
-CREATE OR ALTER PROCEDURE sp_RegistrarDevolucionConHerramienta
-    @_estado VARCHAR(50),
-    @_costo_reparacion MONEY,
-    @_cargos_por_dia_atraso MONEY,
-    @_id_cliente INT,
-    @_id_herramienta INT,
-    @_cantidad_herramientas INT
+CREATE OR ALTER PROCEDURE sp_RegistrarAlquileresConHerramientas
+    @_fecha_Inicio DATE,
+    @_fecha_Dev DATE,
+    @_tarifa_Total_Diaria MONEY,
+    @_deposito_Garantia MONEY,
+    @_estado_Contrato VARCHAR(50),
+    @_Id_cliente INT,
+    @_id_Herramienta INT,
+    @_cantidadHerramientas INT
 AS
 BEGIN
     SET NOCOUNT ON;
 
+    DECLARE @stockDisponible INT;
     DECLARE @estadoHerramienta INT;
-    DECLARE @nuevoIdDevolucion INT;
-	DECLARE @cantidadHerramientasAlquiladas INT;
+    DECLARE @nuevoIdAlquiler INT;
+    DECLARE @nuevoIdCliente INT;
 
-    -- Verificar si la herramienta existe y obtener su estado
-    SELECT @estadoHerramienta = Id_Estado
+    -- Obtener stock y estado actual
+    SELECT 
+        @stockDisponible = Stock_Herramientas,
+        @estadoHerramienta = Id_Estado
     FROM Herramienta
-    WHERE Id_Herramienta = @_id_herramienta;
+    WHERE Id_Herramienta = @_id_Herramienta;
+	
+	select @nuevoIdCliente = id_Cliente
+	from CLIENTE 
+	where id_Cliente = @_Id_cliente 
 
-	SELECT @cantidadHerramientasAlquiladas = cantidadHerramientas
-    FROM AlquilerHerramienta
-    WHERE Id_Herramienta = @_id_herramienta;
+    IF @nuevoIdCliente IS NULL
+    BEGIN
+        PRINT 'Ese cliente no existe.';
+        RETURN;
+    END
 
-    IF @estadoHerramienta IS NULL
+    IF @stockDisponible IS NULL
     BEGIN
         PRINT 'Herramienta no existe.';
         RETURN;
     END
 
-	  IF @_cantidad_herramientas != @cantidadHerramientasAlquiladas
+    IF @estadoHerramienta != 2
+    begin
+        print 'Esa herramienta no está alquilada.';
+        return;
+    end
+
+    IF @_cantidadHerramientas > @stockDisponible
     BEGIN
-        PRINT 'Cantidad de herramientas incorrecta';
+        PRINT 'No hay suficientes unidades disponibles para alquilar.';
         RETURN;
     END
 
-    -- Insertar la devolución (ID autogenerado)
-    INSERT INTO Devolucion (estado, costo_Reparacion, cargos_Por_Dia_Atraso, id_Cliente)
-    VALUES (@_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @_id_cliente);
+    -- Insertar contrato de alquiler
+    INSERT INTO Alquiler(fecha_Inicio, fecha_Dev, tarifa_Total_Diaria, deposito_Garantia, estado_Contrato, Id_cliente)
+    VALUES (@_fecha_Inicio, @_fecha_Dev, @_tarifa_Total_Diaria, @_deposito_Garantia, @_estado_Contrato, @_Id_cliente);
 
-    -- Obtener el nuevo ID de devolución
-    SET @nuevoIdDevolucion = SCOPE_IDENTITY();
+    SET @nuevoIdAlquiler = SCOPE_IDENTITY();
 
-    -- Insertar en la tabla intermedia (ID también autogenerado)
-    INSERT INTO DevolucionHerramienta (Id_Herramienta, Id_Devolucion, cantidad_Herramientas)
-    VALUES (@_id_herramienta, @nuevoIdDevolucion, @_cantidad_herramientas);
+    -- Insertar detalle de alquiler
+    INSERT INTO AlquilerHerramienta(Id_Herramienta, num_Contrato, cantidadHerramientas)
+    VALUES (@_id_Herramienta, @nuevoIdAlquiler, @_cantidadHerramientas);
 
-    -- Cambiar el estado de la herramienta a "disponible"
+    -- Actualizar el stock
     UPDATE Herramienta
-    SET Id_Estado = 1
-    WHERE Id_Herramienta = @_id_herramienta;
+    SET Stock_Herramientas = Stock_Herramientas - @_cantidadHerramientas
+    WHERE Id_Herramienta = @_id_Herramienta;
 
-	Update Herramienta
-	SET Stock_Herramientas = Stock_Herramientas + @cantidadHerramientasAlquiladas
-    WHERE Id_Herramienta = @_id_herramienta;
-
-    PRINT 'Devolución registrada correctamente y estado de herramienta actualizado.';
-END
-GO
-
-EXEC sp_RegistrarDevolucionConHerramienta
-    @_estado = 'Devuelto igual que antes',
-    @_costo_reparacion = 5.000,
-    @_cargos_por_dia_atraso = 18.000,
-    @_id_cliente = 1,
-    @_id_herramienta = 17,
-    @_cantidad_herramientas = 2;
-
-EXEC sp_RegistrarDevolucionConHerramienta
-    @_estado = 'Devuelto en buen estado',
-    @_costo_reparacion = 0,
-    @_cargos_por_dia_atraso = 26.000,
-    @_id_cliente = 20,
-    @_id_herramienta = 6,
-    @_cantidad_herramientas = 1;
-
-
-select * from Devolucion
-go
-
--- Devolucion de un kit
-USE ALQUIFACIL
-GO
-
-CREATE OR ALTER PROCEDURE sp_RegistrarKitDevolucion
- 
-
-    @_estado VARCHAR(50),
-    @_costo_reparacion MONEY,
-    @_cargos_por_dia_atraso MONEY,
-    @_id_cliente INT,
-    @_codigo_Kit INT
-
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    DECLARE @estadoKit INT;
-    DECLARE @nuevoIdDevolucionKit INT;
-	
-
-    -- Verificar si la herramienta existe y obtener su estado
-    SELECT @estadoKit = Id_Estado
-    FROM Kit
-    WHERE codigo_Kit = @_codigo_Kit;
-
-
-    IF @estadoKit IS NULL
+    -- Si ya no queda stock, actualizar estado a No Disponible (2)
+    IF (@stockDisponible - @_cantidadHerramientas) = 0
     BEGIN
-        PRINT 'Kit no existe.';
-        RETURN;
+        UPDATE Herramienta
+        SET Id_Estado = 2
+        WHERE Id_Herramienta = @_id_Herramienta;
     END
 
-	  IF @estadoKit = 1
-    BEGIN
-        PRINT 'El kit no se ha prestado. Error al registrar devolucion';
-        RETURN;
-    END
-
-    -- Insertar la devolución (ID autogenerado)
-    INSERT INTO Devolucion(estado, costo_Reparacion, cargos_Por_Dia_Atraso, id_Cliente)
-    VALUES (@_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @_id_cliente);
-
-    -- Obtener el nuevo ID de devolución
-    SET @nuevoIdDevolucionKit = SCOPE_IDENTITY();
-
-    -- Insertar en la tabla intermedia (ID también autogenerado)
-    INSERT INTO Kit_Devolucion (codigo_Kit, id_Devolucion)
-    VALUES (@_codigo_Kit, @nuevoIdDevolucionKit);
-
-    -- Cambiar el estado de la herramienta a "disponible"
-    UPDATE Kit
-    SET Id_Estado = 1
-    WHERE codigo_Kit = @_codigo_Kit;
-
-    PRINT 'Devolución registrada correctamente';
-END
+    PRINT 'Alquiler registrado correctamente.';
+END;
 GO
 
-EXEC sp_RegistrarKitDevolucion
-    @_estado = 'Devuelto en buen estado',
-    @_costo_reparacion = 0,
-    @_cargos_por_dia_atraso = 12.000,
-    @_id_cliente = 4,
-	@_codigo_Kit = 2
+select * from Herramienta
 
-select * from Devolucion
+
+exec sp_RegistrarAlquileresConHerramientas
+    @_fecha_Inicio = '2025-07-24',
+    @_fecha_Dev = '2025-09-07',
+    @_tarifa_Total_Diaria = 20000,
+    @_deposito_Garantia = 15000,
+    @_estado_Contrato = 'Activo',
+    @_Id_cliente = 1,
+	@_id_Herramienta = 1,
+	@_cantidadHerramientas = 2
+
+
+-- Proceso almacenado para agregar un Alquiler de un Kit
+
+use ALQUIFACIL
 go
+create or alter procedure sp_RegistrarAlquileresConKits
+	-- Alquiler
+    @_fecha_Inicio date,
+    @_fecha_Dev date,
+    @_tarifa_Total_Diaria money,
+    @_deposito_Garantia money,
+    @_estado_Contrato varchar(50),
+    @_Id_cliente int,
+	-- kit
+	@_codigo_Kit int
+as
+begin
+    set nocount on;
+
+	declare @estadoKit int;
+    declare @nuevoIdAlquiler int;
+
+    -- Verificar si el kit ya existe 
+    select @estadoKit = Id_Estado
+    from Kit
+    where codigo_Kit = @_codigo_Kit;
+
+    if @estadoKit is null
+    begin
+        print 'El kit no existe.';
+        return;
+    end
+
+	if @estadoKit != 1
+    begin
+        print 'El kit ya esta alquilado.';
+        return;
+    end
+
+    -- Insertar el alquiler (ID autogenerado)
+    insert into Alquiler(fecha_Inicio, fecha_Dev, tarifa_Total_Diaria, deposito_Garantia, estado_Contrato, Id_cliente)
+    values (@_fecha_Inicio, @_fecha_Dev, @_tarifa_Total_Diaria, @_deposito_Garantia, @_estado_Contrato, @_Id_cliente);
+
+    -- Obtener el nuevo ID de alquiler
+    set @nuevoIdAlquiler = SCOPE_IDENTITY();
+
+    -- Insertar en la tabla intermedia (Sin ID autogenerado)
+    insert into AlquilerKit(codigo_kit, num_Contrato)
+    values (@_codigo_kit, @nuevoIdAlquiler);
+
+    -- Cambiar el estado del kit a "no disponible"
+    update Kit
+    set Id_Estado = 2
+    where codigo_kit = @_codigo_kit;
+
+    print 'Alquiler y estado de kit registrados correctamente.';
+end
+go
+
+exec sp_RegistrarAlquileresConKits
+    @_fecha_Inicio = '2025-07-24',
+    @_fecha_Dev = '2025-09-07',
+    @_tarifa_Total_Diaria = 20000,
+    @_deposito_Garantia = 15000,
+    @_estado_Contrato = 'activo',
+    @_Id_cliente = 3,
+	@_codigo_Kit = 3
