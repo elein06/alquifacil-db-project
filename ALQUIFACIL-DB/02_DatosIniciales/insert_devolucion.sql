@@ -54,8 +54,8 @@ GO
 
 EXEC sp_RegistrarDevolucionConHerramienta
     @_estado = 'Devuelto en buen estado',
-    @_costo_reparacion = 100,
-    @_cargos_por_dia_atraso = 12,
+    @_costo_reparacion = 0,
+    @_cargos_por_dia_atraso = 12.000,
     @_id_cliente = 4,
     @_id_herramienta = 2,
     @_cantidad_herramientas = 10;

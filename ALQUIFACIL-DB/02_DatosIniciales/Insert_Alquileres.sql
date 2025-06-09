@@ -1,4 +1,8 @@
--- Proceso de AlquilerHerramienta
+-- Insert Clientes
+-- Proyecto ALQUIFÁCIL
+
+
+-- Proceso almacenado para agregar Alquiler de una Herramienta
 
 use ALQUIFACIL
 go
@@ -58,7 +62,7 @@ begin
     insert into AlquilerHerramienta(Id_Herramienta, num_Contrato, cantidadHerramientas)
     values (@_id_herramienta, @nuevoIdAlquiler, @_cantidadHerramientas);
 
-    -- Cambiar el estado de la herramienta a "no disponible"
+    -- Cambiar el estado de la herramienta a "alquilada"
     update Herramienta
     set Id_Estado = 2
     where Id_Herramienta = @_id_herramienta;
@@ -68,16 +72,16 @@ end
 go
 
 exec sp_RegistrarAlquileresConHerramientas
-    @_fecha_Inicio = '2024-07-24',
-    @_fecha_Dev = '2024-09-07',
+    @_fecha_Inicio = '2025-07-24',
+    @_fecha_Dev = '2025-09-07',
     @_tarifa_Total_Diaria = 20000,
     @_deposito_Garantia = 15000,
-    @_estado_Contrato = 'activo',
+    @_estado_Contrato = 'Activo',
     @_Id_cliente = 1,
-	@_id_Herramienta = 7,
+	@_id_Herramienta = 1,
 	@_cantidadHerramientas = 4
 
--- Proceso para AlquilerKit
+-- Proceso almacenado para agregar un Alquiler de un Kit
 
 use ALQUIFACIL
 go
@@ -136,10 +140,10 @@ end
 go
 
 exec sp_RegistrarAlquileresConKits
-    @_fecha_Inicio = '2024-07-24',
-    @_fecha_Dev = '2024-09-07',
+    @_fecha_Inicio = '2025-07-24',
+    @_fecha_Dev = '2025-09-07',
     @_tarifa_Total_Diaria = 20000,
     @_deposito_Garantia = 15000,
     @_estado_Contrato = 'activo',
     @_Id_cliente = 3,
-	@_codigo_Kit = 2
+	@_codigo_Kit = 3
