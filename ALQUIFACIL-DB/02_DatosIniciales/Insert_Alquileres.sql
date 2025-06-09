@@ -69,3 +69,18 @@ BEGIN
     PRINT 'Alquiler registrado correctamente.';
 END;
 GO
+
+exec sp_RegistrarAlquileresConHerramientas
+    @_fecha_Inicio = '2024-07-24',
+    @_fecha_Dev = '2024-09-07',
+    @_tarifa_Total_Diaria = 20000,
+    @_deposito_Garantia = 15000,
+    @_estado_Contrato = 'activo',
+    @_Id_cliente = 1,
+	@_id_Herramienta = 1,
+	@_cantidadHerramientas = 3
+
+-- Proceso para AlquilerKit
+
+use ALQUIFACIL
+go
