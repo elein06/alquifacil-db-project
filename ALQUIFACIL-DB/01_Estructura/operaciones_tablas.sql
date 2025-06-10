@@ -10,6 +10,7 @@ create table Alquiler
 	fecha_Dev date not null,
 	tarifa_Total_Diaria	money not null,
 	deposito_Garantia money not null,
+	costo_alquiler money not null,
 	estado_Contrato varchar(50) not null,
 	Id_cliente int not null
 )
