@@ -81,11 +81,6 @@ go
 
 
 
-
-
-
-
-
 --								Procedimiento almacenado para agregar Tipo
 
 use ALQUIFACIL
@@ -121,8 +116,6 @@ go
 
 exec sp_ingresoTipo 3, 'Motorizada'
 go
-
-
 
 
 

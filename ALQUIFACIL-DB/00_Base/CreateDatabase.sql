@@ -3,11 +3,19 @@
 
 USE MASTER
 GO
-
 IF EXISTS (SELECT name FROM sys.databases WHERE name = 'ALQUIFACIL')
 BEGIN
-    DROP DATABASE ALQUIFACIL;
+
+	-- Forzar desconexión de todos los usuarios y cancelar transacciones
+	ALTER DATABASE ALQUIFACIL
+	SET SINGLE_USER
+	WITH ROLLBACK IMMEDIATE;
+
+	-- Eliminar la base de datos
+	DROP DATABASE ALQUIFACIL;
+	
 END
+go
 
 
 CREATE DATABASE ALQUIFACIL
