@@ -1,9 +1,6 @@
---insert de devoluciones
---Proyecto ALQUIFACIL
-
-----proceso almacenado para ingresar una devolucion de herramienta
 USE ALQUIFACIL
 GO
+
 CREATE OR ALTER PROCEDURE sp_RegistrarDevolucionConHerramienta
     @_estado VARCHAR(50),
     @_costo_reparacion MONEY,
@@ -24,6 +21,23 @@ BEGIN
     DECLARE @nContrato INT;
     DECLARE @estadoContrato varchar(29);
 	DECLARE @existeContrato INT;
+	DECLARE @costo_alquiler money;
+	DECLARE @tipo_cliente int;
+	DECLARE @_verificarClienteAlquiler INT;
+	DECLARE @id_herramienta int;
+
+
+	SELECT @id_herramienta = id_Herramienta
+	from AlquilerHerramienta
+	where num_Contrato = @_numContrato;
+
+	SELECT @tipo_cliente = tipo_cliente
+	from CLIENTE
+	where id_Cliente = @_id_cliente;
+
+	SELECT @costo_alquiler = costo_alquiler
+	from Alquiler
+	where num_Contrato = @_numContrato;
 	
     SELECT @estadoHerramienta = Id_Estado
     FROM Herramienta
@@ -32,6 +46,10 @@ BEGIN
     SELECT @nContrato = num_Contrato
     FROM alquilerherramienta
     WHERE id_Herramienta = @_id_herramienta;
+
+	SELECT @_verificarClienteAlquiler = Id_cliente
+    FROM Alquiler
+    WHERE num_Contrato = @_numContrato;
 	
     SELECT @estadoContrato = estado_Contrato
     FROM alquiler
@@ -58,6 +76,25 @@ BEGIN
 		PRINT 'No existe este número de contrato';
 		RETURN;
 	END
+
+	IF @id_herramienta != @_id_herramienta
+	BEGIN
+		PRINT 'Esta herramienta no se encuentra en este alquiler';
+		RETURN;
+	END
+	
+	IF @_verificarClienteAlquiler != @_id_cliente
+    BEGIN
+        PRINT 'Este cliente no ha realizado un alquiler.';
+        RETURN;
+    END
+
+	IF @tipo_cliente = 2 AND @costo_alquiler >= 5000
+	BEGIN
+		set @costo_alquiler = @costo_alquiler - 5000
+	END
+
+	SET @costo_alquiler = @costo_alquiler + @_cargos_por_dia_atraso;
 
 	if @estadoContrato = 'Finalizado'
 	BEGIN
@@ -103,8 +140,8 @@ BEGIN
 		END
 
     -- Insertar la devolución (ID autogenerado)
-    INSERT INTO Devolucion (estado, costo_Reparacion, cargos_Por_Dia_Atraso, id_Cliente, numero_contrato_alquiler)
-    VALUES (@_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @_id_cliente, @_numContrato);
+    INSERT INTO Devolucion (estado, costo_Reparacion, cargos_Por_Dia_Atraso, total_a_pagar, id_Cliente, numero_contrato_alquiler)
+    VALUES (@_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @costo_alquiler, @_id_cliente, @_numContrato);
 
     -- Obtener el nuevo ID de devolución
     SET @nuevoIdDevolucion = SCOPE_IDENTITY();
@@ -127,22 +164,11 @@ GO
 EXEC sp_RegistrarDevolucionConHerramienta
     @_estado = 'Devuelto en buen estado',
     @_costo_reparacion = 0,
-    @_cargos_por_dia_atraso = 26.000,
-    @_id_cliente = 1,
-    @_id_herramienta = 16,
+    @_cargos_por_dia_atraso = 2000,
+    @_id_cliente = 2,
+    @_id_herramienta = 6,
     @_cantidad_herramientas = 3,
-	@_numContrato = 1
-
-select * from Herramienta
-go
-select * from alquiler
-go
-select * from AlquilerHerramienta
-go
-select * from Devolucion
-go
-select * from DevolucionHerramienta
-go
+	@_numContrato = 3
 
 -- Devolucion de un kit
 USE ALQUIFACIL
@@ -167,8 +193,23 @@ BEGIN
 	DECLARE @_id_herramienta INT;
 	DECLARE @_verificarClienteAlquiler INT
 	DECLARE @existeContrato INT
+	DECLARE @costo_alquiler money;
+	DECLARE @tipo_cliente int;
+	DECLARE @codigo_kit int;
 
-    -- Verificar si la herramienta existe y obtener su estado
+
+	SELECT @codigo_kit = codigo_kit
+	from AlquilerKit
+	where num_contrato = @_num_Contrat;
+
+    SELECT @tipo_cliente = tipo_cliente
+	from CLIENTE
+	where id_Cliente = @_id_cliente;
+
+	SELECT @costo_alquiler = costo_alquiler
+	from Alquiler
+	where num_Contrato = @_num_Contrat;
+	
     SELECT @_id_herramienta = Id_Herramienta
     FROM KitHerramienta
     WHERE codigo_Kit = @_codigo_Kit;
@@ -193,9 +234,22 @@ BEGIN
 		FROM alquiler
 	WHERE num_Contrato = @_num_Contrat;
 
+	IF @tipo_cliente = 2 AND @costo_alquiler >= 5000
+	BEGIN
+		set @costo_alquiler = @costo_alquiler - 5000
+	END
+
+	SET @costo_alquiler = @costo_alquiler + @_cargos_por_dia_atraso;
+
 	IF @existeContrato IS NULL
 	BEGIN
 		PRINT 'No existe este número de contrato';
+		RETURN;
+	END
+
+	IF @_codigo_Kit != @codigo_kit 
+	BEGIN
+		PRINT 'Este kit no se encuentra en el alquiler registrado';
 		RETURN;
 	END
 
@@ -230,8 +284,8 @@ BEGIN
     END
 
     -- Insertar la devolución (ID autogenerado)
-    INSERT INTO Devolucion(estado, costo_Reparacion, cargos_Por_Dia_Atraso, id_Cliente, numero_contrato_alquiler)
-    VALUES (@_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @_id_cliente, @_num_Contrat);
+    INSERT INTO Devolucion(estado, costo_Reparacion, cargos_Por_Dia_Atraso, total_a_pagar, id_Cliente, numero_contrato_alquiler)
+    VALUES (@_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @costo_alquiler, @_id_cliente, @_num_Contrat);
 
     -- Obtener el nuevo ID de devolución
     SET @nuevoIdDevolucionKit = SCOPE_IDENTITY();
@@ -255,15 +309,9 @@ GO
 EXEC sp_RegistrarKitDevolucion
     @_estado = 'Devuelto en mal estado',
     @_costo_reparacion = 0,
-    @_cargos_por_dia_atraso = 12.000,
+    @_cargos_por_dia_atraso = 2000,
     @_id_cliente = 1,
     @_codigo_Kit = 1,
-    @_num_Contrat = 12,
+    @_num_Contrat = 7,
 	@_cantidadDevolucionHerramientas = 2;
 
-select * from alquiler
-go
-select * from AlquilerKit
-select * from Herramienta
-select * from KitHerramienta
-select * from Alquiler
