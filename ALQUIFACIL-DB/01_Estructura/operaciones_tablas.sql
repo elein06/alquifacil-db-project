@@ -127,6 +127,7 @@ create table Devolucion(
 	estado varchar(50) null,
 	costo_Reparacion money null,
 	cargos_Por_Dia_Atraso money null,
+	total_a_pagar money null,
 	id_Cliente int not null,
 	numero_contrato_alquiler int not null
 )
