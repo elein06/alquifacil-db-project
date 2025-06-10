@@ -1,7 +1,7 @@
 -- Checks de filegroup mantenimietno 
 
 
---			TABLA MANTENIMIENTO
+---------------CHECKS TABLA MANTENIMIENTO
 -- Costo no puede ser negativo
 use ALQUIFACIL
 go
@@ -28,7 +28,7 @@ go
 
 
 
---			TABLA PERSONA RESPONSABLE}
+--		Checks TABLA PERSONA RESPONSABLE
 
 -- Validar que nombre y apellidos no sean nulos
 use ALQUIFACIL
@@ -52,7 +52,7 @@ ADD CONSTRAINT CK_PersonaResponsable_Validar_Apellido2
 CHECK (LTRIM(RTRIM(apellido2)) <> '');
 go
 
---			TABLA TIPO DE MANTENIMIENTO
+--		CHECKS TABLA TIPO DE MANTENIMIENTO
 
 -- validar que el nombre del mantenimiento sea preventivo o correctivo
 use ALQUIFACIL

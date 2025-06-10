@@ -80,9 +80,7 @@ BEGIN
 END;
 GO
 
-select * from Herramienta
-
-
+--registrar un alquiler de herramienta
 exec sp_RegistrarAlquileresConHerramientas
     @_fecha_Inicio = '2025-07-24',
     @_fecha_Dev = '2025-09-07',
@@ -200,6 +198,7 @@ begin
 end
 go
 
+--registrar un alquiler de un kit 
 exec sp_RegistrarAlquileresConKits
     @_fecha_Inicio = '2025-07-24',
     @_fecha_Dev = '2025-09-07',
