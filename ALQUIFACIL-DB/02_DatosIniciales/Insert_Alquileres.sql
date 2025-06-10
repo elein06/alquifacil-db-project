@@ -46,9 +46,9 @@ BEGIN
         RETURN;
     END
 
-    IF @estadoHerramienta != 2
+    IF @estadoHerramienta != 1
     begin
-        print 'Esa herramienta no está alquilada.';
+        print 'Esa herramienta no disponible.';
         return;
     end
 
@@ -74,12 +74,7 @@ BEGIN
     WHERE Id_Herramienta = @_id_Herramienta;
 
     -- Si ya no queda stock, actualizar estado a No Disponible (2)
-    IF (@stockDisponible - @_cantidadHerramientas) = 0
-    BEGIN
-        UPDATE Herramienta
-        SET Id_Estado = 2
-        WHERE Id_Herramienta = @_id_Herramienta;
-    END
+    
 
     PRINT 'Alquiler registrado correctamente.';
 END;
@@ -95,8 +90,8 @@ exec sp_RegistrarAlquileresConHerramientas
     @_deposito_Garantia = 15000,
     @_estado_Contrato = 'Activo',
     @_Id_cliente = 1,
-	@_id_Herramienta = 1,
-	@_cantidadHerramientas = 2
+	@_id_Herramienta = 16,
+	@_cantidadHerramientas = 3
 
 
 -- Proceso almacenado para agregar un Alquiler de un Kit
@@ -112,18 +107,43 @@ create or alter procedure sp_RegistrarAlquileresConKits
     @_estado_Contrato varchar(50),
     @_Id_cliente int,
 	-- kit
-	@_codigo_Kit int
+	@_codigo_Kit int,
+	@_cantidadHerramientasEnKit int,
+	@_id_Herramienta int
 as
 begin
     set nocount on;
 
 	declare @estadoKit int;
     declare @nuevoIdAlquiler int;
+    DECLARE @idHerramientasKit INT;
+    DECLARE @_cantidadAlquilarEnKit INT;
+    DECLARE @nuevoIdCliente INT;
 
     -- Verificar si el kit ya existe 
     select @estadoKit = Id_Estado
     from Kit
     where codigo_Kit = @_codigo_Kit;
+
+	select 
+		@idHerramientasKit = Id_Herramienta 
+	from KitHerramienta 
+	where Id_Herramienta = @_id_Herramienta;
+
+	select @_cantidadAlquilarEnKit = cantidad_Herramientas 
+	from KitHerramienta
+	where Id_Herramienta = @_id_Herramienta;
+
+	select @nuevoIdCliente = id_Cliente
+	from CLIENTE 
+	where id_Cliente = @_Id_cliente 
+
+	
+    IF @nuevoIdCliente IS NULL
+    BEGIN
+        PRINT 'Ese cliente no existe.';
+        RETURN;
+    END
 
     if @estadoKit is null
     begin
@@ -133,9 +153,21 @@ begin
 
 	if @estadoKit != 1
     begin
-        print 'El kit ya esta alquilado.';
+        print 'El kit no está disponible.';
         return;
     end
+
+	if @idHerramientasKit is null 
+	BEGIN
+        PRINT 'Esa herramienta no pertenece a ese kit.';
+        RETURN;
+    END
+
+	if @_cantidadHerramientasEnKit > @_cantidadAlquilarEnKit
+	BEGIN
+        PRINT 'No hay suficientes herramientas en el kit';
+        RETURN;
+    END
 
     -- Insertar el alquiler (ID autogenerado)
     insert into Alquiler(fecha_Inicio, fecha_Dev, tarifa_Total_Diaria, deposito_Garantia, estado_Contrato, Id_cliente)
@@ -145,13 +177,19 @@ begin
     set @nuevoIdAlquiler = SCOPE_IDENTITY();
 
     -- Insertar en la tabla intermedia (Sin ID autogenerado)
-    insert into AlquilerKit(codigo_kit, num_Contrato)
-    values (@_codigo_kit, @nuevoIdAlquiler);
+    insert into AlquilerKit(codigo_kit, num_Contrato, cantidadHerramientasEnKit)
+    values (@_codigo_kit, @nuevoIdAlquiler, @_cantidadHerramientasEnKit);
 
     -- Cambiar el estado del kit a "no disponible"
     update Kit
     set Id_Estado = 2
     where codigo_kit = @_codigo_kit;
+
+	
+    -- Actualizar el stock
+    UPDATE Herramienta
+    SET Stock_Herramientas = Stock_Herramientas - @_cantidadAlquilarEnKit
+    WHERE Id_Herramienta = @_id_Herramienta;
 
     print 'Alquiler y estado de kit registrados correctamente.';
 end
@@ -163,5 +201,11 @@ exec sp_RegistrarAlquileresConKits
     @_tarifa_Total_Diaria = 20000,
     @_deposito_Garantia = 15000,
     @_estado_Contrato = 'activo',
-    @_Id_cliente = 3,
-	@_codigo_Kit = 3
+    @_Id_cliente = 19,
+	@_codigo_Kit = 1, 
+	@_cantidadHerramientasEnKit = 2,
+	@_id_Herramienta = 5
+
+select * from kit
+select * from Herramienta
+select * from KitHerramienta
