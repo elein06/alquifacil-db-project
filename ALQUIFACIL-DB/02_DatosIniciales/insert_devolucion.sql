@@ -1,6 +1,9 @@
+--insert de devoluciones
+--Proyecto ALQUIFACIL
+
+----proceso almacenado para ingresar una devolucion de herramienta
 USE ALQUIFACIL
 GO
-
 CREATE OR ALTER PROCEDURE sp_RegistrarDevolucionConHerramienta
     @_estado VARCHAR(50),
     @_costo_reparacion MONEY,

@@ -65,7 +65,7 @@ use ALQUIFACIL
 go
 ALTER TABLE CondicionFisica
 ADD CONSTRAINT CK_CondicionFisica_Validar_Nombre
-CHECK (Nombre_Condicion IN ('Excelente', 'Buena', 'Regular', 'Defectuosa'))
+CHECK (Nombre_Condicion IN ('Excelente', 'Buena', 'Regular', 'Defectuosa', 'Daño irreparable'))
 go
 
 -- Condición física por defecto 'Excelente'

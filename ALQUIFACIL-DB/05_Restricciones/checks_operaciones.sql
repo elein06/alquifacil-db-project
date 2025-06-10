@@ -71,3 +71,28 @@ ALTER TABLE AlquilerHerramienta
 ADD CONSTRAINT CK_Cantidad_Herramientas
 CHECK (cantidadHerramientas > 0)
 go
+
+------Checks de la tabla devolucion 
+--validar que el costo de reparación no sea negativo 
+USE ALQUIFACIL
+GO
+ALTER TABLE Devolucion
+ADD CONSTRAINT CK_Devolucion_CostoReparacionPositivo
+CHECK (costo_Reparacion IS NULL OR costo_Reparacion >= 0);
+GO
+
+--validar que los cargos por dia de atraso no sean negativos 
+USE ALQUIFACIL
+GO
+ALTER TABLE Devolucion
+ADD CONSTRAINT CK_Devolucion_CargosAtrasoPositivos
+CHECK (cargos_Por_Dia_Atraso IS NULL OR cargos_Por_Dia_Atraso >= 0);
+GO
+
+-- CHECK para validar que la cantidad de herramientas sea mayor a 0 (si no es NULL)
+USE ALQUIFACIL
+GO
+ALTER TABLE DevolucionHerramienta
+ADD CONSTRAINT CK_DevolucionHerramienta_CantidadPositiva
+CHECK (cantidad_Herramientas IS NULL OR cantidad_Herramientas > 0)
+GO
