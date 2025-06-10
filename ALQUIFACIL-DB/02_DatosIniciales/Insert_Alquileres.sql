@@ -125,10 +125,9 @@ begin
     from Kit
     where codigo_Kit = @_codigo_Kit;
 
-	select 
-		@idHerramientasKit = Id_Herramienta 
+	select @idHerramientasKit = Id_Herramienta 
 	from KitHerramienta 
-	where Id_Herramienta = @_id_Herramienta;
+	where codigo_Kit = @_codigo_Kit;
 
 	select @_cantidadAlquilarEnKit = cantidad_Herramientas 
 	from KitHerramienta
@@ -163,9 +162,15 @@ begin
         RETURN;
     END
 
-	if @_cantidadHerramientasEnKit > @_cantidadAlquilarEnKit
+	if @_id_Herramienta != @idHerramientasKit
 	BEGIN
-        PRINT 'No hay suficientes herramientas en el kit';
+        PRINT 'Esa herramienta no pertenece a ese kit.';
+        RETURN;
+    END
+
+	if @_cantidadHerramientasEnKit != @_cantidadAlquilarEnKit
+	BEGIN
+        PRINT 'Monto de herramientas invalido';
         RETURN;
     END
 
@@ -201,11 +206,13 @@ exec sp_RegistrarAlquileresConKits
     @_tarifa_Total_Diaria = 20000,
     @_deposito_Garantia = 15000,
     @_estado_Contrato = 'activo',
-    @_Id_cliente = 19,
-	@_codigo_Kit = 1, 
+    @_Id_cliente = 1,
+	@_codigo_Kit = 2, 
 	@_cantidadHerramientasEnKit = 2,
-	@_id_Herramienta = 5
+	@_id_Herramienta = 6
 
 select * from kit
+select * from AlquilerKit
 select * from Herramienta
 select * from KitHerramienta
+select * from Alquiler
