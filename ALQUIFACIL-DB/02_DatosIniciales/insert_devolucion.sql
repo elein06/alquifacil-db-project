@@ -20,8 +20,8 @@ BEGIN
     DECLARE @stockHerramientas INT;
     DECLARE @nContrato INT;
     DECLARE @estadoContrato varchar(29);
+	DECLARE @existeContrato INT;
 	
-    -- Verificar si la herramienta existe y obtener su estado
     SELECT @estadoHerramienta = Id_Estado
     FROM Herramienta
     WHERE Id_Herramienta = @_id_herramienta;
@@ -46,9 +46,25 @@ BEGIN
 	from CLIENTE 
 	where id_Cliente = @_Id_cliente 
 
+	SELECT @existeContrato = 1
+		FROM alquiler
+	WHERE num_Contrato = @_numContrato;
+
+	IF @existeContrato IS NULL
+	BEGIN
+		PRINT 'No existe este número de contrato';
+		RETURN;
+	END
+
 	if @estadoContrato = 'Finalizado'
 	BEGIN
         PRINT 'Ese contrato ya fue cancelado.';
+        RETURN;
+    END
+
+	if @nContrato = null
+	BEGIN
+        PRINT 'No existe este numero de contrato';
         RETURN;
     END
 
@@ -109,16 +125,21 @@ EXEC sp_RegistrarDevolucionConHerramienta
     @_estado = 'Devuelto en buen estado',
     @_costo_reparacion = 0,
     @_cargos_por_dia_atraso = 26.000,
-    @_id_cliente = 20,
+    @_id_cliente = 1,
     @_id_herramienta = 16,
     @_cantidad_herramientas = 3,
-	@_numContrato = 11
+	@_numContrato = 1
 
 select * from Herramienta
 go
 select * from alquiler
 go
-
+select * from AlquilerHerramienta
+go
+select * from Devolucion
+go
+select * from DevolucionHerramienta
+go
 
 -- Devolucion de un kit
 USE ALQUIFACIL
@@ -142,6 +163,7 @@ BEGIN
 	DECLARE @cantidadHerramientasAlquiladas INT;
 	DECLARE @_id_herramienta INT;
 	DECLARE @_verificarClienteAlquiler INT
+	DECLARE @existeContrato INT
 
     -- Verificar si la herramienta existe y obtener su estado
     SELECT @_id_herramienta = Id_Herramienta
@@ -163,6 +185,16 @@ BEGIN
 	SELECT @cantidadHerramientasAlquiladas = cantidadHerramientasEnKit
     FROM AlquilerKit
     WHERE num_contrato = @_num_Contrat;
+
+	SELECT @existeContrato = 1
+		FROM alquiler
+	WHERE num_Contrato = @_num_Contrat;
+
+	IF @existeContrato IS NULL
+	BEGIN
+		PRINT 'No existe este número de contrato';
+		RETURN;
+	END
 
     IF @nuevoIdCliente IS NULL
     BEGIN
