@@ -140,16 +140,21 @@ BEGIN
     DECLARE @nuevoIdDevolucionKit INT;	
     DECLARE @nuevoIdCliente INT;
 	DECLARE @cantidadHerramientasAlquiladas INT;
+	DECLARE @_id_herramienta INT;
+	DECLARE @_verificarClienteAlquiler INT
 
     -- Verificar si la herramienta existe y obtener su estado
-    SELECT @estadoKit = Id_Estado
-    FROM Kit
+    SELECT @_id_herramienta = Id_Herramienta
+    FROM KitHerramienta
     WHERE codigo_Kit = @_codigo_Kit;
 
-	select 
-		@idHerramientasKit = Id_Herramienta 
-	from KitHerramienta 
-	where Id_Herramienta = @_id_Herramienta;
+	SELECT @_verificarClienteAlquiler = Id_cliente
+    FROM Alquiler
+    WHERE num_Contrato = @_num_Contrat;
+
+	SELECT @estadoKit = Id_Estado
+    FROM Kit
+    WHERE codigo_Kit = @_codigo_Kit;
 
 	select @nuevoIdCliente = id_Cliente
 	from CLIENTE 
@@ -162,6 +167,12 @@ BEGIN
     IF @nuevoIdCliente IS NULL
     BEGIN
         PRINT 'Ese cliente no existe.';
+        RETURN;
+    END
+
+	IF @_verificarClienteAlquiler != @_id_cliente
+    BEGIN
+        PRINT 'Este cliente no ha realizado un alquiler.';
         RETURN;
     END
 
@@ -199,10 +210,10 @@ BEGIN
     SET Id_Estado = 1
     WHERE codigo_Kit = @_codigo_Kit;
 
-    UPDATE Herramienta
+	UPDATE Herramienta
     SET Stock_Herramientas = Stock_Herramientas + @_cantidadDevolucionHerramientas
-    WHERE Id_Herramienta = @_id_Herramienta;
-    PRINT 'Devolución registrada correctamente';
+    WHERE Id_Herramienta = @_id_herramienta;
+
 END
 GO
 
@@ -210,10 +221,14 @@ EXEC sp_RegistrarKitDevolucion
     @_estado = 'Devuelto en mal estado',
     @_costo_reparacion = 0,
     @_cargos_por_dia_atraso = 12.000,
-    @_id_cliente = 4,
+    @_id_cliente = 1,
     @_codigo_Kit = 1,
-    @_num_Contrat = 21,
+    @_num_Contrat = 12,
 	@_cantidadDevolucionHerramientas = 2;
 
 select * from alquiler
 go
+select * from AlquilerKit
+select * from Herramienta
+select * from KitHerramienta
+select * from Alquiler
