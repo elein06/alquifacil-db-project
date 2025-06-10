@@ -48,7 +48,7 @@ use ALQUIFACIL
 go
 ALTER TABLE Estado
 ADD CONSTRAINT CK_EstadoActual_Validar_Nombre
-CHECK (nombreEstado IN ('Disponible', 'Alquilada', 'En mantenimiento', 'Dada de baja'))
+CHECK (nombreEstado IN ('Disponible', 'Alquilada', 'En mantenimiento', 'Dada de baja', 'No disponible'))
 go
 
 -- Estado por defecto en Disponible

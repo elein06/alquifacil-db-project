@@ -1,22 +1,17 @@
 -- Triggers para filegroup devolucion
-
--- trigger para cambiar el estado de las herramientas a 'Disponible'
--- una vez que se ha registrado una actualización en su proceso de devolución.
-
+--Finalizado
 use ALQUIFACIL
 go
 
-CREATE TRIGGER trg_AfterUpdateDevolucionHerramienta_UpdateEstadoHerramienta
-	ON DevolucionHerramienta 
-	AFTER UPDATE
-AS
-BEGIN
-    
-    UPDATE Herramienta
-    SET Id_Estado = 1		 -- Establece el estado de la herramienta a 'Disponible'
-    FROM Herramienta
-    INNER JOIN INSERTED AS I ON Herramienta.Id_Herramienta = I.Id_Herramienta
-    WHERE Herramienta.Id_Estado = 2; 
-END;
+create or alter trigger trg_InsertDevolucion_UpdateEstadoContrato
+	on Devolucion
+	after insert
+as
+begin
+	update Alquiler
+    set estado_Contrato = 'Finalizado'
+    from Alquiler as A
+					inner join inserted as I on A.num_Contrato = I.numero_contrato_alquiler;
+end;
 go
-
+select * from Devolucion

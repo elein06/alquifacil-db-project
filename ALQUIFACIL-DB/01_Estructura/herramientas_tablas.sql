@@ -166,11 +166,11 @@ use ALQUIFACIL
 GO
 CREATE TABLE Kit
 (
-codigo_Kit INT IDENTITY(1,1) NOT NULL,
-nombre VARCHAR(50) NOT NULL,
-tarifa_Diaria_Especial MONEY NOT NULL,
-id_Categoria INT NOT NULL,
-Id_Estado int not null
+	codigo_Kit INT IDENTITY(1,1) NOT NULL,
+	nombre VARCHAR(50) NOT NULL,
+	tarifa_Diaria_Especial MONEY NOT NULL,
+	id_Categoria INT NOT NULL,
+	Id_Estado int not null
 )
 On HERRAMIENTAS
 GO
@@ -209,10 +209,10 @@ use ALQUIFACIL
 go
 create table KitHerramienta
 (
-id_KitHerramienta INT IDENTITY(1,1) NOT NULL,
-codigo_Kit INT NOT NULL,
-Id_Herramienta INT NOT NULL,
-cantidad_Herramientas INT NOT NULL
+	id_KitHerramienta INT IDENTITY(1,1) NOT NULL,
+	codigo_Kit INT NOT NULL,
+	Id_Herramienta INT NOT NULL,
+	cantidad_Herramientas INT NOT NULL
 )
 on HERRAMIENTAS
 go

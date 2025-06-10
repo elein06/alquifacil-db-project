@@ -156,6 +156,5 @@ go
 exec sp_ingresoMantenimiento 12000, '2025-05-28', 'Externo', 'Revisión de conexiones y estado de batería.', 1, 2204, 6;
 go
 
-
 select * from Mantenimiento
 go

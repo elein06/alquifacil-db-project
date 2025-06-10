@@ -2,7 +2,7 @@
 -- Proyecto ALQUIFÁCIL
 
 
---procedimiento almacenado para insertar categorias
+--								procedimiento almacenado para insertar categorias
 
 USE ALQUIFACIL
 GO
@@ -26,7 +26,7 @@ AS
 		end
 GO
 
---insertas las 3 categorias
+--								insertas las 3 categorias
 
 EXEC sp_InsertarCategoria 1, 'Construccion'
 GO
@@ -37,7 +37,7 @@ GO
 EXEC sp_InsertarCategoria 3, 'Hogar'
 GO
 
---Procedimiento almacenado para agregar Estado
+--								Procedimiento almacenado para agregar Estado
 
 use ALQUIFACIL
 go
@@ -62,7 +62,7 @@ begin
 end
 go
 
---Ingreso de Estado 
+--									Ingreso de Estado 
 
 exec sp_ingresoEstado 1, 'Disponible'
 go
@@ -76,7 +76,12 @@ go
 exec sp_ingresoEstado 4, 'Dada de baja'
 go 
 
---Procedimiento almacenado para agregar Tipo
+exec sp_ingresoEstado 5, 'No disponible'
+go 
+
+
+
+--								Procedimiento almacenado para agregar Tipo
 
 use ALQUIFACIL
 go
@@ -101,7 +106,7 @@ AS
 go
 
 
---Ingreso de Tipo 
+--								Ingreso de Tipo 
 
 exec sp_ingresoTipo 1, 'Eléctrica'
 go
@@ -114,7 +119,8 @@ go
 
 
 
---Procedimiento almacenado para agregar Condicion Fisica
+
+--								Procedimiento almacenado para agregar Condicion Fisica
 
 use ALQUIFACIL
 go
@@ -138,7 +144,7 @@ begin
 end
 go
 
---Ingreso de Condicion FIsica 
+--									Ingreso de Condicion FIsica 
 
 exec sp_ingresoCondicionFisica 1, 'Excelente'
 go
@@ -156,7 +162,7 @@ exec sp_ingresoCondicionFisica 5, 'Daño irreparable'
 go 
 
 
---Procedimiento Almacenado para agregar Herramientas
+--									Procedimiento Almacenado para agregar Herramientas
 
 use ALQUIFACIL
 go
@@ -180,10 +186,7 @@ AS
 PRINT 'LA HERRAMIENTA SE HA INGRESADO CORRECTAMENTE'
 go
 
---Creacion de Herraminetas
-
-exec sp_ingresoHerramienta 'AC11', 2020, 25000, 5, 'Patito', 'Martillo', 1, 2, 2, 1
-go
+--										Creacion de Herraminetas
 
 exec sp_ingresoHerramienta 'BD12', 2021, 45000, 3, 'Thruper', 'Podadora', 2, 1, 1, 2
 go
