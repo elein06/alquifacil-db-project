@@ -2,7 +2,7 @@
 -- Proyecto ALQUIFÁCIL
 
 -- Consulta de herramientas devueltas en mal estado
-use ALQUIFACIL;
+use ALQUIFACIL
 go
 	create or alter procedure sp_VerReporteDevolucionesMalEstado
 	as
@@ -10,13 +10,13 @@ go
 		set nocount on
 
 			select 
-				Devolucion.Id_Devolucion,
-				Cliente.id_Cliente,
-				Herramienta.Id_Herramienta,
-				DevolucionHerramienta.cantidad_Herramientas,
-				Devolucion.estado as estado_Devolucion,
-				Devolucion.costo_Reparacion,
-				Devolucion.cargos_Por_Dia_Atraso
+				Devolucion.Id_Devolucion as 'ID de la devolución',
+				Cliente.id_Cliente as 'ID del cliente',
+				Herramienta.Id_Herramienta as 'ID de la herramienta',
+				DevolucionHerramienta.cantidad_Herramientas as 'Cantidad de herramientas',
+				Devolucion.estado as 'Estado al ser devuelta',
+				Devolucion.costo_Reparacion as 'Costo de la reparación',
+				Devolucion.cargos_Por_Dia_Atraso as 'Cargos por día de atraso'
 
 			from Devolucion
 
@@ -24,12 +24,11 @@ go
 				inner join DevolucionHerramienta on Devolucion.Id_Devolucion = DevolucionHerramienta.Id_Devolucion
 				inner join Herramienta on DevolucionHerramienta.Id_Herramienta = Herramienta.Id_Herramienta
 
-			-- Cambiar por estado 'malo' de la herramienta
-			where Devolucion.estado = 'Devuelto en buen estado'
+			where Devolucion.estado = 'Devuelto en mal estado'
 
 		print 'Reporte generado correctamente'
 	end
 go
 
-exec sp_ReporteDevolucionesMalEstado
+exec sp_VerReporteDevolucionesMalEstado
 go

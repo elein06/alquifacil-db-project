@@ -189,7 +189,7 @@ GO
 --ingresar una devolucion de herramienta
 EXEC sp_RegistrarDevolucionConHerramienta
 	@_fecha_revisionTecnica = '2025-09-07',
-    @_estado = 'Devuelto en buen estado',
+    @_estado = 'Devuelto en mal estado',
     @_costo_reparacion = 0,
     @_cargos_por_dia_atraso = 2000,
     @_id_cliente = 2,

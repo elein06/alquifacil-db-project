@@ -8,18 +8,18 @@ CREATE OR ALTER PROCEDURE sp_ReporteKitsPorTemporada
 AS
 BEGIN
     SELECT 
-    k.codigo_Kit,
-    k.nombre AS Nombre_Kit,
-    COUNT(ak.codigo_Kit) AS Cantidad_Kits
+    kit.codigo_Kit as 'Código del kit',
+    kit.nombre AS 'Nombre del kit',
+    COUNT(AlquilerKit.codigo_Kit) AS 'Cantidad de kits alquilados'
    FROM
-    AlquilerKit ak
-    INNER JOIN kit k ON ak.codigo_Kit = k.codigo_Kit
+    AlquilerKit
+    INNER JOIN kit ON AlquilerKit.codigo_Kit = kit.codigo_Kit
     WHERE
-    ak.codigo_Kit IS NOT NULL
+    AlquilerKit.codigo_Kit IS NOT NULL
     GROUP BY
-    k.codigo_Kit, k.nombre
+    kit.codigo_Kit, kit.nombre
     ORDER BY
-    Cantidad_Kits DESC;
+    'Cantidad de kits alquilados' DESC;
     
 END
 GO

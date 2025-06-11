@@ -1,21 +1,22 @@
-USE ALQUIFACIL;
-GO
+--Reporte de Cantidad de mantenimientos que ha tenido la herramienta
 
-CREATE PROCEDURE sp_VerCantidadMantenimientos
+USE ALQUIFACIL
+GO
+CREATE OR ALTER PROCEDURE sp_VerCantidadMantenimientos
 AS
 BEGIN
   SELECT
-    Id_Herramienta,
-    COUNT(Id_Herramienta) AS Cantidad_Mantenimientos
+    Herramienta.Id_Herramienta AS 'ID de la herramienta',
+    Herramienta.Modelo AS 'Herramienta',
+    COUNT(Mantenimiento.Id_Herramienta) AS 'Cantidad de mantenimientos'
   FROM
     Mantenimiento
-  WHERE
-    Id_Herramienta IS NOT NULL
+    INNER JOIN Herramienta ON Mantenimiento.Id_Herramienta = Herramienta.Id_Herramienta
   GROUP BY
-    Id_Herramienta
+    Herramienta.Id_Herramienta, Herramienta.Modelo
   ORDER BY
-    Cantidad_Mantenimientos DESC;
+    'Cantidad de mantenimientos' DESC
 END;
 GO
 
-EXEC sp_VerCantidadMantenimientos;
+EXEC sp_VerCantidadMantenimientos
