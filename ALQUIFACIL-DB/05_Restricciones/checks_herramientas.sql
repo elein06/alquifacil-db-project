@@ -76,21 +76,9 @@ ADD CONSTRAINT DF_CondicionFisica_Nombre
 DEFAULT 'Excelente' FOR Nombre_Condicion
 go
 
-
-
-
 -- Tabla Kit
 
 --Checks
-
--- Validar que codigo_Kit sea positivo
-use ALQUIFACIL
-go
-ALTER TABLE Kit
-ADD CONSTRAINT CK_Kit_Codigo_Positivo
-CHECK (codigo_Kit > 0)
-go
-
 
 -- Validar que nombre no sea una cadena vacía
 use ALQUIFACIL
@@ -100,7 +88,6 @@ ADD CONSTRAINT CK_Kit_Validar_Nombre
 CHECK (LTRIM(RTRIM(nombre)) <> '')
 go
 
-
 -- Validar que tarifa_Diaria_Especial sea mayor o igual a 0
 use ALQUIFACIL
 go
@@ -108,7 +95,6 @@ ALTER TABLE Kit
 ADD CONSTRAINT CK_Kit_Validar_Tarifa
 CHECK (tarifa_Diaria_Especial >= 0)
 go
-
 
 -- Validar que id_Categoria sea válido
 use ALQUIFACIL
@@ -119,6 +105,7 @@ CHECK (id_Categoria > 0)
 go
 
 --Fin Checks
+
 
 
 --Defaults 
@@ -146,32 +133,6 @@ DEFAULT 0.00 FOR tarifa_Diaria_Especial
 
 --Checks
 
--- Validar que el id de KitHerramienta es positivo
-use ALQUIFACIL
-go
-ALTER TABLE KitHerramienta
-ADD CONSTRAINT CK_KitHerramienta_Id_Positivo
-CHECK (id_KitHerramienta > 0)
-go
-
-
--- Validar que el código de Kit sea positivo
-use ALQUIFACIL
-go
-ALTER TABLE KitHerramienta
-ADD CONSTRAINT CK_KitHerramienta_codigo_Kit_Positivo
-CHECK (codigo_Kit > 0)
-go
-
-
--- Validar que el id de Herramienta sea positivo
-use ALQUIFACIL
-go
-ALTER TABLE KitHerramienta
-ADD CONSTRAINT CK_KitHerramienta_Id_Herramienta_Positivo
-CHECK (Id_Herramienta > 0)
-go
-
 -- Validar que la cantidad de herramientas sea positiva 
 use ALQUIFACIL
 go
@@ -192,7 +153,6 @@ DEFAULT 1 FOR cantidad_Herramientas
 go
 
 --Fin Defaults
-
 
 ----CHECKS TABLA CATEGORIA
 

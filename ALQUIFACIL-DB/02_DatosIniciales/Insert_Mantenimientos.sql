@@ -12,9 +12,19 @@ CREATE PROCEDURE sp_ingresoPersonaResponsable (@_Id_Persona_Responsable int,
 											@_apellido1 varchar(50), 
 											@_apellido2 varchar(50))
 AS
-	insert into Persona_Responsable (Id_Persona_Responsable, nombre, apellido1, apellido2)
-  							 Values (@_Id_Persona_Responsable, @_nombre, @_apellido1, @_apellido2)
-PRINT 'EL REGISTRO SE HA INGRESADO CORRECTAMENTE'
+	BEGIN TRY
+        BEGIN TRANSACTION;
+			insert into Persona_Responsable (Id_Persona_Responsable, nombre, apellido1, apellido2)
+  			Values (@_Id_Persona_Responsable, @_nombre, @_apellido1, @_apellido2)
+
+COMMIT TRANSACTION;
+        PRINT 'EL REGISTRO SE HA INGRESADO CORRECTAMENTE';
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        PRINT 'Error: ' + ERROR_MESSAGE();
+    END CATCH
 GO
 
 exec sp_ingresoPersonaResponsable '2201','Jose Daniel','Nuñez','Villalobos'
@@ -42,10 +52,19 @@ CREATE PROCEDURE sp_InsertarTipoMantenimiento (
 	@nombre_tipo_mantenimiento VARCHAR(50)
 )
 AS
-	INSERT INTO tipo_mantenimiento (Id_Tipo_Mantenimiento, nombre_tipo_mantenimiento)
-	VALUES (@Id_Tipo_Mantenimiento, @nombre_tipo_mantenimiento);
+	BEGIN TRY
+        BEGIN TRANSACTION;
+			INSERT INTO tipo_mantenimiento (Id_Tipo_Mantenimiento, nombre_tipo_mantenimiento)
+			VALUES (@Id_Tipo_Mantenimiento, @nombre_tipo_mantenimiento);
 
-	PRINT 'TIPO DE MANTENIMIENTO REGISTRADO CORRECTAMENTE';
+	COMMIT TRANSACTION;
+        PRINT 'TIPO DE MANTENIMIENTO REGISTRADO CORRECTAMENTE';
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        PRINT 'Error: ' + ERROR_MESSAGE();
+    END CATCH
 GO
 
 
@@ -74,26 +93,35 @@ CREATE PROCEDURE sp_ingresoMantenimiento (
 										  @_Id_Persona_Responsable int,
 										  @_Id_Herramienta int)
 AS
-	insert into Mantenimiento	(
-								 Costo,
-								 Fecha_Mantenimiento,
-								 Modalidad_Servicio,
-								 Observaciones,
-								 Id_Tipo_Mantenimiento,
-								 Id_Persona_Responsable,
-								 Id_Herramienta)
+	BEGIN TRY
+        BEGIN TRANSACTION;
+			insert into Mantenimiento	(
+										 Costo,
+										 Fecha_Mantenimiento,
+										 Modalidad_Servicio,
+										 Observaciones,
+										 Id_Tipo_Mantenimiento,
+										 Id_Persona_Responsable,
+										 Id_Herramienta)
 
-  						Values  (
-								 @_Costo,
-								 @_Fecha_Mantenimiento,
-						   	     @_Modalidad_Servicio,
-								 @_Observaciones,
-								 @_Id_Tipo_Mantenimiento,
-								 @_Id_Persona_Responsable,
-								 @_Id_Herramienta
-								)
+  									Values  (
+										 @_Costo,
+										 @_Fecha_Mantenimiento,
+						   				 @_Modalidad_Servicio,
+										 @_Observaciones,
+										 @_Id_Tipo_Mantenimiento,
+										 @_Id_Persona_Responsable,
+										 @_Id_Herramienta
+										)
 
-PRINT 'SE HA INGRESADO CORRECTAMENTE UN NUEVO MANTENIMIENTO'
+	COMMIT TRANSACTION;
+        PRINT 'SE HA INGRESADO CORRECTAMENTE UN NUEVO MANTENIMIENTO';
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        PRINT 'Error: ' + ERROR_MESSAGE();
+    END CATCH
 GO
 
 
@@ -151,7 +179,6 @@ go
 
 exec sp_ingresoMantenimiento 12000, '2025-05-28 14:00:00', 'Interno', 'Revisión de conexiones y estado de batería.', 1, 2204, 10;
 go
-
 
 exec sp_ingresoMantenimiento 12000, '2025-05-28', 'Externo', 'Revisión de conexiones y estado de batería.', 1, 2204, 6;
 go
