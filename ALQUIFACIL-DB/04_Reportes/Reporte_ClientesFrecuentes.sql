@@ -5,8 +5,8 @@ USE ALQUIFACIL
 GO
 CREATE PROCEDURE sp_verClientesFrecuentes
 AS
-    SELECT 
-        CLIENTE.id_Cliente,
+    SELECT TOP 10
+        CLIENTE.id_Cliente as 'ID del cliente',
         CASE 
             WHEN ClienteFisico.id_Cliente IS NOT NULL THEN 'Físico'
             WHEN ClienteJuridico.id_Cliente IS NOT NULL THEN 'Jurídico'
@@ -23,7 +23,8 @@ AS
         ClienteFisico.nombre, ClienteFisico.apellido1, ClienteFisico.apellido2, 
         ClienteJuridico.razon_social, 
         ClienteFisico.id_Cliente, ClienteJuridico.id_Cliente
-    ORDER BY 'Cantidad de alquileres' DESC;
+    ORDER BY 'Cantidad de alquileres' DESC
 GO
 
 EXEC sp_verClientesFrecuentes;
+go

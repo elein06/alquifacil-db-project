@@ -14,7 +14,6 @@ GO
 
 USE ALQUIFACIL
 GO
-
 -- CHECK para validar que la cantidad de herramientas sea mayor a 0 (si no es NULL)
 ALTER TABLE DevolucionHerramienta
 ADD CONSTRAINT CK_DevolucionHerramienta_CantidadPositiva

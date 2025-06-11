@@ -4,7 +4,7 @@
 USE ALQUIFACIL
 GO
 
-CREATE OR ALTER PROCEDURE ReporteKitsPorTemporada
+CREATE OR ALTER PROCEDURE sp_ReporteKitsPorTemporada
 AS
 BEGIN
     SELECT 
@@ -24,4 +24,4 @@ BEGIN
 END
 GO
 
-EXEC ReporteKitsPorTemporada;
+EXEC sp_ReporteKitsPorTemporada;

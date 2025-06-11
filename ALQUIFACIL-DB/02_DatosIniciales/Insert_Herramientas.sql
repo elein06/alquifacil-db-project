@@ -1,7 +1,6 @@
 -- Insert Herramientas
 -- Proyecto ALQUIFÁCIL
 
-
 --								procedimiento almacenado para insertar categorias
 
 USE ALQUIFACIL
@@ -14,16 +13,16 @@ AS
 	-- Validar si ya existe una Categoria con el mismo Id
 		IF EXISTS (SELECT 1 FROM Categoria WHERE id_Categoria = @id_Categoria)
 		begin
-			  PRINT 'Error Ya existe una Categoria con ese ID. El registro no se insertó.'
+			PRINT 'Error Ya existe una Categoria con ese ID. El registro no se insertó.'
 		end
 
 		ELSE
 		begin
-				INSERT INTO Categoria (id_Categoria, nombre_categoria)
-				VALUES (@id_Categoria, @nombre_categoria)
+			INSERT INTO Categoria (id_Categoria, nombre_categoria)
+			VALUES (@id_Categoria, @nombre_categoria)
 
-				PRINT 'LA CATEGORÍA SE HA REGISTRADO CORRECTAMENTE'
-		end
+			PRINT 'LA CATEGORÍA SE HA REGISTRADO CORRECTAMENTE'
+		END
 GO
 
 --								insertas las 3 categorias
@@ -158,6 +157,8 @@ go
 exec sp_ingresoCondicionFisica 4, 'Defectuosa'
 go 
 
+exec sp_ingresoCondicionFisica 5, 'Daño irreparable'
+go 
 
 
 --									Procedimiento Almacenado para agregar Herramientas
@@ -198,7 +199,7 @@ go
 exec sp_ingresoHerramienta 'JK15', 2016, 15000, 6, 'Thruper', 'Taladro', 3, 1, 4, 1
 go
 
-exec sp_ingresoHerramienta 'GD16', 2016, 15000, 6, 'Thruper', 'Bonba Fumigadora', 4, 3, 4, 2
+exec sp_ingresoHerramienta 'GD16', 2016, 15000, 6, 'Thruper', 'Bomba Fumigadora', 4, 3, 4, 2
 go
 
 
@@ -234,7 +235,7 @@ exec sp_ingresoHerramienta 'ELHOGAR07', 2020, 45000, 4, 'Black+Decker', 'Sierra 
 go
 
 -- Herramienta manual de construcción (dada de baja)
-exec sp_ingresoHerramienta 'MANCON08', 2017, 10000, 0, 'Bellota', 'Nivel de Burbuja 60cm', 4, 2, 4, 1
+exec sp_ingresoHerramienta 'MANCON08', 2017, 10000, 0, 'Bellota', 'Nivel de Burbuja 60cm', 4, 2, 5, 1
 go
 
 -- Herramienta eléctrica de jardinería (en mantenimiento)
@@ -243,6 +244,9 @@ go
 
 -- Herramienta eléctrica de jardinería (disponible, en mal estado)
 exec sp_ingresoHerramienta 'JERUNDIO', 2025, 130000, 3, 'Greenworks', 'Soplador viejas mayores', 1, 1, 4, 2
+go
+
+exec sp_ingresoHerramienta 'MQSLD06', 2016, 175000, 2, 'Thruper', 'Maquina para soldar', 4, 2, 5, 1
 go
 
 
