@@ -1,5 +1,6 @@
-# Proyecto Final del curso Implementación y Diseño de Bases de Datos.
-# I Ciclo 2025. Universidad Nacional De Costa Rica
+## Proyecto Final del curso Implementación y Diseño de Bases de Datos.
+## I Ciclo 2025. Universidad Nacional De Costa Rica
+
 
 ## Proyecto - Base de datos ALQUIFÁCIL
 
