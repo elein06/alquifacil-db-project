@@ -1,13 +1,14 @@
+--Reporte de la cantidad de herramientas alquiladas
+
 USE ALQUIFACIL;
 GO
-
 CREATE OR ALTER PROCEDURE sp_VerCantidadAlquiladas
 AS
 BEGIN
   SELECT
-    Id_Herramienta,
-    COUNT(Id_Herramienta) AS Veces_Alquiladas,
-    SUM(cantidadHerramientas) AS Total_Herramientas_Alquiladas
+    Id_Herramienta as 'ID de la herramienta',
+    COUNT(Id_Herramienta) AS 'Veces alquilada',
+    SUM(cantidadHerramientas) AS 'Total de herramientas alquiladas'
   FROM
     AlquilerHerramienta
   WHERE
@@ -15,9 +16,8 @@ BEGIN
   GROUP BY
     Id_Herramienta
   ORDER BY
-    Total_Herramientas_Alquiladas DESC;
+    [Total de herramientas alquiladas] DESC;
 END;
 GO
-
 
 EXEC sp_VerCantidadAlquiladas;

@@ -1,8 +1,8 @@
 -- Reporte HerramientasRotacion
 -- Proyecto ALQUIFÁCIL
+
 USE ALQUIFACIL;
 GO
-
 CREATE OR ALTER PROCEDURE sp_VerCantidadDevoluciones
 AS
 BEGIN
@@ -20,12 +20,12 @@ BEGIN
     h.Id_Herramienta
   ORDER BY
     Total_Herramientas_Devueltas DESC;
-END;
+END
 GO
+
 
 USE ALQUIFACIL;
 GO
-
 CREATE OR ALTER PROCEDURE sp_VerReporteRotacionHerramientas
     @FechaInicio DATETIME = NULL,
     @FechaFin DATETIME = NULL,
@@ -50,6 +50,7 @@ BEGIN
 
     CREATE TABLE #TempMantenimientos (
         Id_Herramienta INT,
+		Herramienta varchar(50),
         Cantidad_Mantenimientos INT
     );
 
@@ -86,7 +87,7 @@ BEGIN
         -- Índice de rotación suma de los tres indicadores
         (ISNULL(a.Veces_Alquiladas, 0) + 
          ISNULL(m.Cantidad_Mantenimientos, 0) + 
-         ISNULL(d.Cantidad_Devoluciones, 0)) AS 'Índice de Rotación'
+         ISNULL(d.Cantidad_Devoluciones, 0)) AS 'Indice de Rotación'
     FROM 
         Herramienta h
     LEFT JOIN 
@@ -106,7 +107,7 @@ BEGIN
     WHERE
         (@IdCategoria IS NULL OR h.Id_Categoria = @IdCategoria)
     ORDER BY 
-        'Índice de Rotación' DESC;
+        [Indice de Rotación] DESC;
 
 END;
 GO

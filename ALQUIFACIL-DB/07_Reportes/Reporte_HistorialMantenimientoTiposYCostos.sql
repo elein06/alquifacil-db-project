@@ -5,7 +5,7 @@ use ALQUIFACIL
 go
 create procedure sp_VerMantenimientosPorTipo
 as
-	select Modalidad_Servicio, count (*) as 'Mantenimientos realizados', sum(Costo) as 'Total por modalidad'
+	select Modalidad_Servicio as 'Modalidad del servicio', count (*) as 'Mantenimientos realizados', sum(Costo) as 'Total por modalidad'
 	from Mantenimiento
 	group by Modalidad_Servicio
 go
