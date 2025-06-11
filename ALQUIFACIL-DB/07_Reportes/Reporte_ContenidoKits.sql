@@ -1,3 +1,5 @@
+
+
 CREATE PROCEDURE sp_ObtenerKitHerramientaPorCodigo
     @CodigoKit INT
 AS
@@ -8,9 +10,10 @@ BEGIN
         KH.Id_Herramienta,
         KH.cantidad_Herramientas
     FROM 
-        KitHerramienta KH
+        dbo.KitHerramienta KH
     WHERE 
         KH.codigo_Kit = @CodigoKit;
 END;
+GO
 
 EXEC sp_ObtenerKitHerramientaPorCodigo @CodigoKit = 1;
