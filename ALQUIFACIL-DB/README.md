@@ -1,11 +1,15 @@
-# ALQUIFÁCIL Database Project
+## Proyecto - Base de datos ALQUIFÁCIL
 
-Relational database project for ALQUIFÁCIL, a tool and equipment rental company. Built with SQL Server.
-Includes filegroup architecture, DDL scripts, initial data, security module, and reporting queries.
+Proyecto de base de datos relacional para ALQUIFÁCIL, una empresa de alquiler de herramientas y kits.
+Desarrollado con SQL Server. Incluye arquitectura con filegroups, scripts DDL para la creación de la base de datos,
+sus tablas y sus restricciones, datos iniciales de ejemplo, módulo de seguridad (roles, permisos, auditoría básica),
+y consultas para reportes e informes
 
 ## Folder Structure
-- `00_CreateDatabase.sql`: Create database and filegroups.
-- `01_Estructura/`: Tables by filegroup.
-- `02_DatosIniciales/`: Insert sample data.
-- `03_Seguridad/`: User roles and permissions.
-- `04_Reportes/`: Reporting queries.
+- `00_Base/`: Crea la base de datos y los filegroups.
+- `01_Estructura/`: Tablas según filegroups.
+- `02_Restricciones/`: Restricciones para las tablas.
+- `03_Triggers/`: Triggers para las tablas.
+- `04_DatosIniciales/`: Insert de datos iniciales de ejemplo.
+- `05_Reportes/`: Consultas para reportes.
+- `06_Seguridad/`: Roles de usuarios con sus permisos y backup de la base de datos.
