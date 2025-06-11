@@ -22,3 +22,19 @@ BEGIN
         AND H.Id_Estado <> 5; -- Para evitar sobrescribir si ya estaba en 5
 END;
 GO
+
+
+use ALQUIFACIL
+go
+
+create trigger trg_InsertDevolucion_UpdateEstadoContrato
+	on devolucion
+	after insert
+as
+begin
+	update Alquiler
+    set estado_Contrato = 'Finalizado'		-- 3 es el Id_Estado para 'En Mantenimiento'
+    from Alquiler as alq
+				inner join inserted as I on alq.num_Contrato = I.numero_contrato_alquiler;
+end;
+go

@@ -225,7 +225,12 @@ BEGIN
 			DECLARE @costo_alquiler money;
 			DECLARE @tipo_cliente int;
 			DECLARE @codigo_kit int;
+			DECLARE @estadoContrato varchar(20);
 
+			
+			SELECT @estadoContrato = estado_Contrato
+			from Alquiler
+			where num_Contrato = @_num_Contrat;
 
 			SELECT @codigo_kit = codigo_kit
 			from AlquilerKit
@@ -254,6 +259,15 @@ BEGIN
 			SELECT @existeContrato = 1
 			FROM alquiler
 			WHERE num_Contrato = @_num_Contrat;
+
+
+
+			IF @estadoContrato = 'Finalizado'
+			BEGIN
+				PRINT 'Ese contrato ya esta finalizado. ';
+				ROLLBACK TRANSACTION;
+				RETURN;
+			END
 
 			IF @tipo_cliente = 2 AND @costo_alquiler >= 5000
 			BEGIN
@@ -302,9 +316,6 @@ BEGIN
 			INSERT INTO Devolucion(fecha_revisionTecnica, estado, costo_Reparacion, cargos_Por_Dia_Atraso, total_a_pagar, id_Cliente, numero_contrato_alquiler)
 			VALUES (@_fecha_revisionTecnica, @_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @costo_alquiler, @_id_cliente, @_num_Contrat);
 
-			-- Insertar la devolución (ID autogenerado)
-			INSERT INTO Devolucion(estado, costo_Reparacion, cargos_Por_Dia_Atraso, id_Cliente, numero_contrato_alquiler)
-			VALUES (@_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @_id_cliente, @_num_Contrat);
 
 			-- Obtener el nuevo ID de devolución
 			SET @nuevoIdDevolucionKit = SCOPE_IDENTITY();
@@ -351,12 +362,12 @@ EXEC sp_RegistrarKitDevolucion
     @_estado = 'Devuelto en mal estado',
     @_costo_reparacion = 0,
     @_cargos_por_dia_atraso = 2000,
-    @_id_cliente = 4,
-    @_codigo_Kit = 1,
-    @_num_Contrat = 1
+    @_id_cliente = 8,
+    @_codigo_Kit = 2,
+    @_num_Contrat = 8
 
 select * from alquiler
-
+select * from Devolucion
 select * from herramienta
-
-select * from kit
+select * from CLIENTE
+select * from AlquilerKit
