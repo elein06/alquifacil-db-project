@@ -87,7 +87,6 @@ create table AlquilerKit
 	id_AlquilerKit int IDENTITY(1,1) not null,
 	codigo_kit int not null,
 	num_contrato int not null,
-	cantidadHerramientasEnKit int not null
 )
 on OPERACIONES
 go
