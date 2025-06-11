@@ -124,6 +124,7 @@ use ALQUIFACIL
 go
 create table Devolucion(
 	Id_Devolucion int IDENTITY (1,1) not null,
+	fecha_revisionTecnica date null,
 	estado varchar(50) null,
 	costo_Reparacion money null,
 	cargos_Por_Dia_Atraso money null,
