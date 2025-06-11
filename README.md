@@ -10,10 +10,10 @@ sus tablas y sus restricciones, datos iniciales de ejemplo, módulo de seguridad
 y consultas para reportes e informes
 
 ## Folder Structure
-- `00_Base.sql`: Crea la base de datos y los filegroups.
+- `00_Base/`: Crea la base de datos y los filegroups.
 - `01_Estructura/`: Tablas según filegroups.
-- `02_Restricciones.sql`: Restricciones para las tablas.
-- `03_Triggers.sql`: Triggers para las tablas.
+- `02_Restricciones/`: Restricciones para las tablas.
+- `03_Triggers/`: Triggers para las tablas.
 - `04_DatosIniciales/`: Insert de datos iniciales de ejemplo.
 - `05_Reportes/`: Consultas para reportes.
 - `06_Seguridad/`: Roles de usuarios con sus permisos y backup de la base de datos.
