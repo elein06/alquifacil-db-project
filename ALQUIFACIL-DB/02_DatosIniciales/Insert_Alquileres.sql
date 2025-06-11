@@ -140,9 +140,7 @@ create or alter procedure sp_RegistrarAlquileresConKits
     @_estado_Contrato varchar(50),
     @_Id_cliente int,
 	-- kit
-	@_codigo_Kit int,
-	@_cantidadHerramientasEnKit int,
-	@_id_Herramienta int
+	@_codigo_Kit int
 as
 begin
     set nocount on;
@@ -151,22 +149,13 @@ begin
         BEGIN TRANSACTION;
 			declare @estadoKit int;
 			declare @nuevoIdAlquiler int;
-			DECLARE @idHerramientasKit INT;
-			DECLARE @_cantidadAlquilarEnKit INT;
 			DECLARE @nuevoIdCliente INT;
 
-			-- Verificar si el kit ya existe 
+
 			select @estadoKit = Id_Estado
 			from Kit
 			where codigo_Kit = @_codigo_Kit;
 
-			select @idHerramientasKit = Id_Herramienta 
-			from KitHerramienta 
-			where codigo_Kit = @_codigo_Kit;
-
-			select @_cantidadAlquilarEnKit = cantidad_Herramientas 
-			from KitHerramienta
-			where Id_Herramienta = @_id_Herramienta;
 
 			select @nuevoIdCliente = id_Cliente
 			from CLIENTE 
@@ -194,26 +183,6 @@ begin
 				return;
 			end
 
-			if @idHerramientasKit is null 
-			BEGIN
-				PRINT 'Esa herramienta no pertenece a ese kit.';
-				ROLLBACK TRANSACTION;
-				RETURN;
-			END
-
-			if @_id_Herramienta != @idHerramientasKit
-			BEGIN
-				PRINT 'Esa herramienta no pertenece a ese kit.';
-				ROLLBACK TRANSACTION;
-				RETURN;
-			END
-
-			if @_cantidadHerramientasEnKit != @_cantidadAlquilarEnKit
-			BEGIN
-				PRINT 'Monto de herramientas invalido';
-				ROLLBACK TRANSACTION;
-				RETURN;
-			END
 
 			-- Insertar el alquiler (ID autogenerado)
 			insert into Alquiler(fecha_Inicio, fecha_Dev, tarifa_Total_Diaria, deposito_Garantia, costo_alquiler, estado_Contrato, Id_cliente)
@@ -223,8 +192,8 @@ begin
 			set @nuevoIdAlquiler = SCOPE_IDENTITY();
 
 			-- Insertar en la tabla intermedia (Sin ID autogenerado)
-			insert into AlquilerKit(codigo_kit, num_Contrato, cantidadHerramientasEnKit)
-			values (@_codigo_kit, @nuevoIdAlquiler, @_cantidadHerramientasEnKit);
+			insert into AlquilerKit(codigo_kit, num_Contrato)
+			values (@_codigo_kit, @nuevoIdAlquiler);
 
 	
     -- Actualizar el stock
@@ -233,9 +202,12 @@ begin
     WHERE Id_Herramienta = @_id_Herramienta;
 
 			-- Actualizar el stock
-			UPDATE Herramienta
-			SET Stock_Herramientas = Stock_Herramientas - @_cantidadAlquilarEnKit
-			WHERE Id_Herramienta = @_id_Herramienta;
+			UPDATE H
+			SET H.Stock_Herramientas = H.Stock_Herramientas - K.cantidad_Herramientas
+			FROM Herramienta H
+			INNER JOIN kitherramienta K ON H.Id_Herramienta = K.id_Herramienta
+			WHERE K.codigo_Kit = @_codigo_Kit;
+	
 
 			COMMIT TRANSACTION;
         PRINT 'Alquiler y estado de kit registrados correctamente.';
@@ -248,6 +220,20 @@ begin
 end
 go
 
+SELECT 
+    KH.id_KitHerramienta,
+    KH.codigo_Kit,
+    KH.Id_Herramienta,
+    KH.cantidad_Herramientas
+FROM 
+    KitHerramienta KH
+WHERE 
+    KH.codigo_Kit = 1;
+
+	select * from kitherramienta
+	select * from herramienta
+	select * from alquiler
+
 --ingreso de un alquiler de un kit
 exec sp_RegistrarAlquileresConKits
     @_fecha_Inicio = '2025-07-24',
@@ -257,6 +243,4 @@ exec sp_RegistrarAlquileresConKits
 	@_costo_alquiler = 20000,
     @_estado_Contrato = 'activo',
     @_Id_cliente = 4,
-	@_codigo_Kit = 3, 
-	@_cantidadHerramientasEnKit = 3,
-	@_id_Herramienta = 2
+	@_codigo_Kit = 1
