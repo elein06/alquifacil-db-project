@@ -138,8 +138,6 @@ GO
 
 EXEC sp_InsertarClienteJuridico '101010101', 'Editorial Costa Rica', '22224444', 'contacto@editorialcr.com', 2
 GO
-
-
 select * from CLIENTE
 select * from ClienteFisico
 select * from ClienteJuridico

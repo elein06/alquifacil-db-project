@@ -1,3 +1,6 @@
+use ALQUIFACIL
+go
+
 CREATE OR ALTER PROCEDURE sp_IngresarKitConHerramientas
     @_nombre VARCHAR(50),
     @_tarifa_Diaria_Especial MONEY,
@@ -21,6 +24,24 @@ BEGIN
 		DECLARE @verificarHerramienta1 INT;
 		DECLARE @verificarHerramienta2 INT;
 		DECLARE @verificarHerramienta3 INT;
+		DECLARE @herramientas TABLE (id INT);
+
+    -- Insertar herramientas recibidas al "array" simulado
+		INSERT INTO @herramientas (id)
+		VALUES (@_Id_Herramienta1),
+			   (@_Id_Herramienta2),
+			   (@_Id_Herramienta3);
+
+		IF EXISTS (
+		SELECT 1
+			FROM @herramientas h
+				JOIN Herramienta he ON h.id = he.Id_Herramienta
+			WHERE he.Id_Categoria <> @_id_Categoria
+		)
+		BEGIN
+			ROLLBACK TRANSACTION;
+			RETURN;
+		END
 
 		select @verificarHerramienta1 = id_herramienta
 		from herramienta
@@ -130,12 +151,24 @@ END
 GO
 
 EXEC sp_IngresarKitConHerramientas
-  @_nombre = 'Kit Carpintería Avanzada',
-  @_tarifa_Diaria_Especial = 15000,
-  @_id_Categoria = 1,
+  @_nombre = 'Kit de Jardineria',
+  @_tarifa_Diaria_Especial = 25000,
+  @_id_Categoria = 2,
   @_Id_Estado = 1,
-  @_Id_Herramienta1 = 1, @_cantidad_Herramientas1 = 2,   
-  @_Id_Herramienta2 = 2, @_cantidad_Herramientas2 = 2,   
-  @_Id_Herramienta3 = 3, @_cantidad_Herramientas3 = 2  
+  @_Id_Herramienta1 = 5, @_cantidad_Herramientas1 = 2,   
+  @_Id_Herramienta2 = 7, @_cantidad_Herramientas2 = 2,   
+  @_Id_Herramienta3 = 11, @_cantidad_Herramientas3 = 10 
 GO
 
+EXEC sp_IngresarKitConHerramientas
+  @_nombre = 'Kit de Construccion',
+  @_tarifa_Diaria_Especial = 25000,
+  @_id_Categoria = 2,
+  @_Id_Estado = 1,
+  @_Id_Herramienta1 = 5, @_cantidad_Herramientas1 = 2,   
+  @_Id_Herramienta2 = 7, @_cantidad_Herramientas2 = 2,   
+  @_Id_Herramienta3 = 11, @_cantidad_Herramientas3 = 10 
+GO
+select * from Categoria
+select * from herramienta
+select * from kit

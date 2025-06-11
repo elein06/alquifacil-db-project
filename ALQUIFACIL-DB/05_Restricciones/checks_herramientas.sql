@@ -127,6 +127,13 @@ DEFAULT 0.00 FOR tarifa_Diaria_Especial
 
 --Fin Defaults 
 
+-- nombres de kits validos
+use ALQUIFACIL
+go
+ALTER TABLE Kit
+ADD CONSTRAINT CK_Kit_Nombre_Valido
+CHECK (nombre LIKE '%Jardineria%' or nombre LIKE '%Hogar%' or nombre LIKE '%Construccion%');
+go
 
 
 --Tabla KitHerramienta

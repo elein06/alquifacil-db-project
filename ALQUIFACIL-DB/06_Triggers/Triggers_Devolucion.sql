@@ -1,5 +1,5 @@
 -- Triggers para filegroup devolucion
---Finalizado
+-- estado Finalizado
 use ALQUIFACIL
 go
 

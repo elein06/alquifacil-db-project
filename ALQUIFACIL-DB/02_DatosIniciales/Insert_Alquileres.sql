@@ -200,12 +200,6 @@ begin
 			set Id_Estado = 2
 			where codigo_kit = @_codigo_kit;
 
-			-- Actualizar el stock
-			UPDATE H
-			SET H.Stock_Herramientas = H.Stock_Herramientas - K.cantidad_Herramientas
-			FROM Herramienta H
-			INNER JOIN kitherramienta K ON H.Id_Herramienta = K.id_Herramienta
-			WHERE K.codigo_Kit = @_codigo_Kit;
 	
 
 			COMMIT TRANSACTION;
@@ -241,5 +235,7 @@ exec sp_RegistrarAlquileresConKits
     @_deposito_Garantia = 10000,
 	@_costo_alquiler = 20000,
     @_estado_Contrato = 'activo',
-    @_Id_cliente = 4,
-	@_codigo_Kit = 1
+    @_Id_cliente = 8,
+	@_codigo_Kit = 2
+
+	select * from kit
