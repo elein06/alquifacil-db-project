@@ -98,10 +98,7 @@ exec sp_IngresarKitConHerramientas
 GO
 
 select * from KitHerramienta
-go
 select * from Kit
-go
-
 select * from Herramienta
 go
 select * from Estado
