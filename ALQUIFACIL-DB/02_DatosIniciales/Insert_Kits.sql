@@ -58,7 +58,7 @@ BEGIN
 			END
 
 			INSERT INTO Kit (nombre, tarifa_Diaria_Especial, id_Categoria, Id_Estado)
-			VALUES			(@_nombre, @_tarifa_Diaria_Especial, @_id_Categoria, @_Id_Estado);
+			VALUES(@_nombre, @_tarifa_Diaria_Especial, @_id_Categoria, @_Id_Estado);
 
 			SET @nuevoIdKit = SCOPE_IDENTITY();
 
@@ -97,8 +97,19 @@ exec sp_IngresarKitConHerramientas
   @_cantidad_Herramientas = 10
 GO
 
+exec sp_IngresarKitConHerramientas
+  @_nombre = 'Kit de Pensionados',
+  @_tarifa_Diaria_Especial = 50000,
+  @_id_Categoria = 3,
+  @_Id_Estado = 1,
+  @_Id_Herramienta = 2,
+  @_cantidad_Herramientas = 3
+GO
+
 select * from KitHerramienta
+go
 select * from Kit
+go
 select * from Herramienta
 go
 select * from Estado

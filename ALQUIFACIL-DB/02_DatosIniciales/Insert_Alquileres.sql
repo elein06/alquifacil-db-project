@@ -66,9 +66,9 @@ BEGIN
 				RETURN;
 			END
 
-    -- Insertar contrato de alquiler
-    INSERT INTO Alquiler(fecha_Inicio, fecha_Dev, tarifa_Total_Diaria, deposito_Garantia, costo_alquiler, estado_Contrato, Id_cliente)
-    VALUES (@_fecha_Inicio, @_fecha_Dev, @_tarifa_Total_Diaria, @_deposito_Garantia, @_costo_alquiler, @_estado_Contrato, @_Id_cliente);
+			-- Insertar contrato de alquiler
+			INSERT INTO Alquiler(fecha_Inicio, fecha_Dev, tarifa_Total_Diaria, deposito_Garantia, costo_alquiler, estado_Contrato, Id_cliente)
+			VALUES (@_fecha_Inicio, @_fecha_Dev, @_tarifa_Total_Diaria, @_deposito_Garantia, @_costo_alquiler, @_estado_Contrato, @_Id_cliente);
 
 			SET @nuevoIdAlquiler = SCOPE_IDENTITY();
 
@@ -110,6 +110,7 @@ exec sp_RegistrarAlquileresConHerramientas
     @_fecha_Dev = '2025-09-23',
     @_tarifa_Total_Diaria = 7500,
     @_deposito_Garantia = 15000,
+	@_costo_alquiler = 15000,
     @_estado_Contrato = 'Activo',
     @_Id_cliente = 4,
 	@_id_Herramienta = 11,
@@ -120,6 +121,7 @@ exec sp_RegistrarAlquileresConHerramientas
     @_fecha_Dev = '2025-12-14',
     @_tarifa_Total_Diaria = 2000,
     @_deposito_Garantia = 6000,
+	@_costo_alquiler = 15000,
     @_estado_Contrato = 'Activo',
     @_Id_cliente = 8,
 	@_id_Herramienta = 8,
@@ -213,9 +215,9 @@ begin
 				RETURN;
 			END
 
-    -- Insertar el alquiler (ID autogenerado)
-    insert into Alquiler(fecha_Inicio, fecha_Dev, tarifa_Total_Diaria, deposito_Garantia, costo_alquiler, estado_Contrato, Id_cliente)
-    values (@_fecha_Inicio, @_fecha_Dev, @_tarifa_Total_Diaria, @_deposito_Garantia, @_costo_alquiler, @_estado_Contrato, @_Id_cliente);
+			-- Insertar el alquiler (ID autogenerado)
+			insert into Alquiler(fecha_Inicio, fecha_Dev, tarifa_Total_Diaria, deposito_Garantia, costo_alquiler, estado_Contrato, Id_cliente)
+			values (@_fecha_Inicio, @_fecha_Dev, @_tarifa_Total_Diaria, @_deposito_Garantia, @_costo_alquiler, @_estado_Contrato, @_Id_cliente);
 
 			-- Obtener el nuevo ID de alquiler
 			set @nuevoIdAlquiler = SCOPE_IDENTITY();
@@ -248,12 +250,12 @@ go
 --ingreso de un alquiler de un kit
 exec sp_RegistrarAlquileresConKits
     @_fecha_Inicio = '2025-07-24',
-    @_fecha_Dev = '2025-06-07',
+    @_fecha_Dev = '2025-08-07',
     @_tarifa_Total_Diaria = 20000,
     @_deposito_Garantia = 10000,
 	@_costo_alquiler = 20000,
     @_estado_Contrato = 'activo',
-    @_Id_cliente = 1,
-	@_codigo_Kit = 1, 
-	@_cantidadHerramientasEnKit = 2,
-	@_id_Herramienta = 6
+    @_Id_cliente = 4,
+	@_codigo_Kit = 3, 
+	@_cantidadHerramientasEnKit = 3,
+	@_id_Herramienta = 2

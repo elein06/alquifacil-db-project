@@ -19,208 +19,170 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-    DECLARE @estadoHerramienta INT;
-    DECLARE @nuevoIdDevolucion INT;
-	DECLARE @cantidadHerramientasAlquiladas INT;	
-    DECLARE @nuevoIdCliente INT;
-    DECLARE @stockHerramientas INT;
-    DECLARE @nContrato INT;
-    DECLARE @estadoContrato varchar(29);
-	DECLARE @existeContrato INT;
-	DECLARE @costo_alquiler money;
-	DECLARE @tipo_cliente int;
-	DECLARE @_verificarClienteAlquiler INT;
-	DECLARE @id_herramienta int;
+	BEGIN TRY
+        BEGIN TRANSACTION;
+
+		DECLARE @estadoHerramienta INT;
+		DECLARE @nuevoIdDevolucion INT;
+		DECLARE @cantidadHerramientasAlquiladas INT;	
+		DECLARE @nuevoIdCliente INT;
+		DECLARE @stockHerramientas INT;
+		DECLARE @nContrato INT;
+		DECLARE @estadoContrato varchar(29);
+		DECLARE @existeContrato INT;
+		DECLARE @costo_alquiler money;
+		DECLARE @tipo_cliente int;
+		DECLARE @_verificarClienteAlquiler INT;
+		DECLARE @id_herramienta int;
 
 
-	SELECT @id_herramienta = id_Herramienta
-	from AlquilerHerramienta
-	where num_Contrato = @_numContrato;
+		SELECT @id_herramienta = id_Herramienta
+		from AlquilerHerramienta
+		where num_Contrato = @_numContrato;
 
-	SELECT @tipo_cliente = tipo_cliente
-	from CLIENTE
-	where id_Cliente = @_id_cliente;
+		SELECT @tipo_cliente = tipo_cliente
+		from CLIENTE
+		where id_Cliente = @_id_cliente;
 
-	SELECT @costo_alquiler = costo_alquiler
-	from Alquiler
-	where num_Contrato = @_numContrato;
+		SELECT @costo_alquiler = costo_alquiler
+		from Alquiler
+		where num_Contrato = @_numContrato;
 	
-    SELECT @estadoHerramienta = Id_Estado
-    FROM Herramienta
-    WHERE Id_Herramienta = @_id_herramienta;
+		SELECT @estadoHerramienta = Id_Estado
+		FROM Herramienta
+		WHERE Id_Herramienta = @_id_herramienta;
 	
-    SELECT @nContrato = num_Contrato
-    FROM alquilerherramienta
-    WHERE id_Herramienta = @_id_herramienta;
+		SELECT @nContrato = num_Contrato
+		FROM alquilerherramienta
+		WHERE id_Herramienta = @_id_herramienta;
 
-	SELECT @_verificarClienteAlquiler = Id_cliente
-    FROM Alquiler
-    WHERE num_Contrato = @_numContrato;
+		SELECT @_verificarClienteAlquiler = Id_cliente
+		FROM Alquiler
+		WHERE num_Contrato = @_numContrato;
 	
-    SELECT @estadoContrato = estado_Contrato
-    FROM alquiler
-    WHERE num_Contrato = @_numContrato;
-	
-    SELECT @stockHerramientas = Stock_Herramientas
-    FROM Herramienta
-    WHERE Id_Herramienta = @_id_herramienta;
-
-	SELECT @cantidadHerramientasAlquiladas = cantidadHerramientas
-    FROM AlquilerHerramienta
-    WHERE Id_Herramienta = @_id_herramienta;
-
-	select @nuevoIdCliente = id_Cliente
-	from CLIENTE 
-	where id_Cliente = @_Id_cliente 
-
-	SELECT @existeContrato = 1
+		SELECT @estadoContrato = estado_Contrato
 		FROM alquiler
-	WHERE num_Contrato = @_numContrato;
-
-	IF @existeContrato IS NULL
-	BEGIN
-		PRINT 'No existe este número de contrato';
-		RETURN;
-	END
-
-	IF @id_herramienta != @_id_herramienta
-	BEGIN
-		PRINT 'Esta herramienta no se encuentra en este alquiler';
-		RETURN;
-	END
+		WHERE num_Contrato = @_numContrato;
 	
-	IF @_verificarClienteAlquiler != @_id_cliente
-    BEGIN
-        PRINT 'Este cliente no ha realizado un alquiler.';
-        RETURN;
-    END
+		SELECT @stockHerramientas = Stock_Herramientas
+		FROM Herramienta
+		WHERE Id_Herramienta = @_id_herramienta;
 
-	IF @tipo_cliente = 2 AND @costo_alquiler >= 5000
-	BEGIN
-		set @costo_alquiler = @costo_alquiler - 5000
-	END
+		SELECT @cantidadHerramientasAlquiladas = cantidadHerramientas
+		FROM AlquilerHerramienta
+		WHERE Id_Herramienta = @_id_herramienta;
 
-	SET @costo_alquiler = @costo_alquiler + @_cargos_por_dia_atraso;
+		select @nuevoIdCliente = id_Cliente
+		from CLIENTE 
+		where id_Cliente = @_Id_cliente 
 
-	if @estadoContrato = 'Finalizado'
-	BEGIN
-        PRINT 'Ese contrato ya fue cancelado.';
-        RETURN;
-    END
+		SELECT @existeContrato = 1
+			FROM alquiler
+		WHERE num_Contrato = @_numContrato;
 
-	if @nContrato = null
-	BEGIN
-        PRINT 'No existe este numero de contrato';
-        RETURN;
-    END
-
-	if @nContrato != @_numContrato
-	BEGIN
-        PRINT 'Ese contrato no corresponde a ese alquiler.';
-        RETURN;
-    END
-
-    IF @nuevoIdCliente IS NULL
-    BEGIN
-        PRINT 'Ese cliente no existe.';
-        RETURN;
-    END
-
-    IF @estadoHerramienta IS NULL
-    BEGIN
-        PRINT 'Herramienta no existe.';
-        RETURN;
-    END
-
-	  IF @_cantidad_herramientas != @cantidadHerramientasAlquiladas
-    BEGIN
-        PRINT 'Cantidad de herramientas incorrecta';
-        RETURN;
-    END
-
-	if @stockHerramientas = 0
+		IF @existeContrato IS NULL
 		BEGIN
-			UPDATE Herramienta
-			SET Id_Estado = 1
-			WHERE Id_Herramienta = @_id_herramienta;
+			PRINT 'No existe este número de contrato';
+			ROLLBACK TRANSACTION;
+			RETURN;
+		END
 
-    -- Insertar la devolución (ID autogenerado)
-    INSERT INTO Devolucion (fecha_revisionTecnica, estado, costo_Reparacion, cargos_Por_Dia_Atraso, total_a_pagar, id_Cliente, numero_contrato_alquiler)
-    VALUES (@_fecha_revisionTecnica, @_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @costo_alquiler, @_id_cliente, @_numContrato);
-
-			select @nuevoIdCliente = id_Cliente
-			from CLIENTE 
-			where id_Cliente = @_Id_cliente 
-
-			if @estadoContrato = 'Finalizado'
-			BEGIN
-				PRINT 'Ese contrato ya fue cancelado.';
+		IF @id_herramienta != @_id_herramienta
+		BEGIN
+			PRINT 'Esta herramienta no se encuentra en este alquiler';
 				ROLLBACK TRANSACTION;
-				RETURN;
+			RETURN;
+		END
+	
+		IF @_verificarClienteAlquiler != @_id_cliente
+		BEGIN
+			PRINT 'Este cliente no ha realizado un alquiler.';
+				ROLLBACK TRANSACTION;
+			RETURN;
+		END
+
+		IF @tipo_cliente = 2 AND @costo_alquiler >= 5000
+		BEGIN
+			set @costo_alquiler = @costo_alquiler - 5000
+			ROLLBACK TRANSACTION;
+		END
+
+		SET @costo_alquiler = @costo_alquiler + @_cargos_por_dia_atraso;	-- REVISAR
+
+		if @estadoContrato = 'Finalizado'
+		BEGIN
+			PRINT 'Ese contrato ya fue cancelado.';
+			ROLLBACK TRANSACTION;
+			RETURN;
+		END
+
+		if @nContrato = null
+		BEGIN
+			PRINT 'No existe este numero de contrato';
+			ROLLBACK TRANSACTION;
+			RETURN;
+		END
+
+		if @nContrato != @_numContrato
+		BEGIN
+			PRINT 'Ese contrato no corresponde a ese alquiler.';
+			ROLLBACK TRANSACTION;
+			RETURN;
+		END
+
+		IF @nuevoIdCliente IS NULL
+		BEGIN
+			PRINT 'Ese cliente no existe.';
+			ROLLBACK TRANSACTION;
+			RETURN;
+		END
+
+		IF @estadoHerramienta IS NULL
+		BEGIN
+			PRINT 'Herramienta no existe.';
+			ROLLBACK TRANSACTION;
+			RETURN;
+		END
+
+		  IF @_cantidad_herramientas != @cantidadHerramientasAlquiladas
+		BEGIN
+			PRINT 'Cantidad de herramientas incorrecta';
+			ROLLBACK TRANSACTION;
+			RETURN;
+		END
+
+		if @stockHerramientas = 0
+			BEGIN
+				UPDATE Herramienta
+				SET Id_Estado = 1
+				WHERE Id_Herramienta = @_id_herramienta;
+				ROLLBACK TRANSACTION;
 			END
 
-			if @nContrato != @_numContrato
-			BEGIN
-				PRINT 'Ese contrato no corresponde a ese alquiler.';
-				ROLLBACK TRANSACTION;
-				RETURN;
-			END
+		-- Insertar la devolución (ID autogenerado)
+		INSERT INTO Devolucion (fecha_revisionTecnica, estado, costo_Reparacion, cargos_Por_Dia_Atraso, total_a_pagar, id_Cliente, numero_contrato_alquiler)
+		VALUES (@_fecha_revisionTecnica, @_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @costo_alquiler, @_id_cliente, @_numContrato);
 
-			IF @nuevoIdCliente IS NULL
-			BEGIN
-				PRINT 'Ese cliente no existe.';
-				ROLLBACK TRANSACTION;
-				RETURN;
-			END
+		-- Obtener el nuevo ID de devolución
+		SET @nuevoIdDevolucion = SCOPE_IDENTITY();
 
-			IF @estadoHerramienta IS NULL
-			BEGIN
-				PRINT 'Herramienta no existe.';
-				ROLLBACK TRANSACTION;
-				RETURN;
-			END
+		-- Insertar en la tabla intermedia (ID también autogenerado)
+		INSERT INTO DevolucionHerramienta (Id_Herramienta, Id_Devolucion, cantidad_Herramientas)
+		VALUES (@_id_herramienta, @nuevoIdDevolucion, @_cantidad_herramientas);
 
-			  IF @_cantidad_herramientas != @cantidadHerramientasAlquiladas
-			BEGIN
-				PRINT 'Cantidad de herramientas incorrecta';
-				ROLLBACK TRANSACTION;
-				RETURN;
-			END
+		Update Herramienta
+		SET Stock_Herramientas = Stock_Herramientas + @cantidadHerramientasAlquiladas
+		WHERE Id_Herramienta = @_id_herramienta;
 
-			if @stockHerramientas = 0
-				BEGIN
-					UPDATE Herramienta
-					SET Id_Estado = 1
-					WHERE Id_Herramienta = @_id_herramienta;
-					ROLLBACK TRANSACTION;
-				END
-
-			-- Insertar la devolución (ID autogenerado)
-			INSERT INTO Devolucion (estado, costo_Reparacion, cargos_Por_Dia_Atraso, id_Cliente, numero_contrato_alquiler)
-			VALUES (@_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @_id_cliente, @_numContrato);
-
-			-- Obtener el nuevo ID de devolución
-			SET @nuevoIdDevolucion = SCOPE_IDENTITY();
-
-			-- Insertar en la tabla intermedia (ID también autogenerado)
-			INSERT INTO DevolucionHerramienta (Id_Herramienta, Id_Devolucion, cantidad_Herramientas)
-			VALUES (@_id_herramienta, @nuevoIdDevolucion, @_cantidad_herramientas);
-
-			-- Cambiar el estado de la herramienta a "disponible"
-    
-
-			Update Herramienta
-			SET Stock_Herramientas = Stock_Herramientas + @cantidadHerramientasAlquiladas
-			WHERE Id_Herramienta = @_id_herramienta;
-
-			COMMIT TRANSACTION;
-		PRINT 'Devolución registrada correctamente y estado de herramienta actualizado.';
+		COMMIT TRANSACTION;
+		PRINT 'Devolucion de herramienta registrada correctamente.';
     END TRY
 
     BEGIN CATCH
         ROLLBACK TRANSACTION;
         PRINT 'Error: ' + ERROR_MESSAGE();
     END CATCH
+			
 END
 GO
 
@@ -251,33 +213,36 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @estadoKit INT;
-    DECLARE @nuevoIdDevolucionKit INT;	
-    DECLARE @nuevoIdCliente INT;
-	DECLARE @cantidadHerramientasAlquiladas INT;
-	DECLARE @_id_herramienta INT;
-	DECLARE @_verificarClienteAlquiler INT
-	DECLARE @existeContrato INT
-	DECLARE @costo_alquiler money;
-	DECLARE @tipo_cliente int;
-	DECLARE @codigo_kit int;
+	BEGIN TRY
+        BEGIN TRANSACTION;
+
+			DECLARE @estadoKit INT;
+			DECLARE @nuevoIdDevolucionKit INT;	
+			DECLARE @nuevoIdCliente INT;
+			DECLARE @cantidadHerramientasAlquiladas INT;
+			DECLARE @_id_herramienta INT;
+			DECLARE @_verificarClienteAlquiler INT
+			DECLARE @existeContrato INT
+			DECLARE @costo_alquiler money;
+			DECLARE @tipo_cliente int;
+			DECLARE @codigo_kit int;
 
 
-	SELECT @codigo_kit = codigo_kit
-	from AlquilerKit
-	where num_contrato = @_num_Contrat;
+			SELECT @codigo_kit = codigo_kit
+			from AlquilerKit
+			where num_contrato = @_num_Contrat;
 
-    SELECT @tipo_cliente = tipo_cliente
-	from CLIENTE
-	where id_Cliente = @_id_cliente;
+			SELECT @tipo_cliente = tipo_cliente
+			from CLIENTE
+			where id_Cliente = @_id_cliente;
 
-	SELECT @costo_alquiler = costo_alquiler
-	from Alquiler
-	where num_Contrato = @_num_Contrat;
+			SELECT @costo_alquiler = costo_alquiler
+			from Alquiler
+			where num_Contrato = @_num_Contrat;
 	
-    SELECT @_id_herramienta = Id_Herramienta
-    FROM KitHerramienta
-    WHERE codigo_Kit = @_codigo_Kit;
+			SELECT @_id_herramienta = Id_Herramienta
+			FROM KitHerramienta
+			WHERE codigo_Kit = @_codigo_Kit;
 
 			SELECT @_verificarClienteAlquiler = Id_cliente
 			FROM Alquiler
@@ -295,38 +260,27 @@ BEGIN
 			FROM AlquilerKit
 			WHERE num_contrato = @_num_Contrat;
 
-	SELECT @existeContrato = 1
-		FROM alquiler
-	WHERE num_Contrato = @_num_Contrat;
+			SELECT @existeContrato = 1
+			FROM alquiler
+			WHERE num_Contrato = @_num_Contrat;
 
-	IF @tipo_cliente = 2 AND @costo_alquiler >= 5000
-	BEGIN
-		set @costo_alquiler = @costo_alquiler - 5000
-	END
-
-	SET @costo_alquiler = @costo_alquiler + @_cargos_por_dia_atraso;
-
-	IF @existeContrato IS NULL
-	BEGIN
-		PRINT 'No existe este número de contrato';
-		RETURN;
-	END
-
-	IF @_codigo_Kit != @codigo_kit 
-	BEGIN
-		PRINT 'Este kit no se encuentra en el alquiler registrado';
-		RETURN;
-	END
-
-    IF @nuevoIdCliente IS NULL
-    BEGIN
-        PRINT 'Ese cliente no existe.';
-        RETURN;
-    END
-
-			if @estadoContrato = 'Finalizado'				-- R E V I S A R
+			IF @tipo_cliente = 2 AND @costo_alquiler >= 5000
 			BEGIN
-				PRINT 'Ese contrato ya fue cancelado.';
+				set @costo_alquiler = @costo_alquiler - 5000
+			END
+
+			SET @costo_alquiler = @costo_alquiler + @_cargos_por_dia_atraso;
+
+			IF @existeContrato IS NULL
+			BEGIN
+				PRINT 'No existe este número de contrato';
+				ROLLBACK TRANSACTION;
+				RETURN;
+			END
+
+			IF @_codigo_Kit != @codigo_kit 
+			BEGIN
+				PRINT 'Este kit no se encuentra en el alquiler registrado';
 				ROLLBACK TRANSACTION;
 				RETURN;
 			END
@@ -352,16 +306,16 @@ BEGIN
 				RETURN;
 			END
 
-    -- Insertar la devolución (ID autogenerado)
-    INSERT INTO Devolucion(fecha_revisionTecnica, estado, costo_Reparacion, cargos_Por_Dia_Atraso, total_a_pagar, id_Cliente, numero_contrato_alquiler)
-    VALUES (@_fecha_revisionTecnica, @_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @costo_alquiler, @_id_cliente, @_num_Contrat);
-
-			  IF @_cantidadDevolucionHerramientas != @cantidadHerramientasAlquiladas
+			IF @_cantidadDevolucionHerramientas != @cantidadHerramientasAlquiladas
 			BEGIN
 				PRINT 'Cantidad de herramientas incorrecta';
 				ROLLBACK TRANSACTION;
 				RETURN;
 			END
+
+			-- Insertar la devolución (ID autogenerado)
+			INSERT INTO Devolucion(fecha_revisionTecnica, estado, costo_Reparacion, cargos_Por_Dia_Atraso, total_a_pagar, id_Cliente, numero_contrato_alquiler)
+			VALUES (@_fecha_revisionTecnica, @_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @costo_alquiler, @_id_cliente, @_num_Contrat);
 
 			-- Insertar la devolución (ID autogenerado)
 			INSERT INTO Devolucion(estado, costo_Reparacion, cargos_Por_Dia_Atraso, id_Cliente, numero_contrato_alquiler)
@@ -374,7 +328,7 @@ BEGIN
 			INSERT INTO DevolucionKit (codigo_Kit, id_Devolucion, cantidadDevolucionHerramientas)
 			VALUES (@_codigo_Kit, @nuevoIdDevolucionKit, @_cantidadDevolucionHerramientas);
 
-			-- Cambiar el estado de la herramienta a "disponible"
+			-- Cambiar el estado del kit a "disponible"
 			UPDATE Kit
 			SET Id_Estado = 1
 			WHERE codigo_Kit = @_codigo_Kit;
@@ -383,12 +337,8 @@ BEGIN
 			SET Stock_Herramientas = Stock_Herramientas + @_cantidadDevolucionHerramientas
 			WHERE Id_Herramienta = @_id_herramienta;
 
-			UPDATE Alquiler
-			SET estado_Contrato = 'Finalizado'				-- R E V I S A R
-			WHERE num_Contrato = @_numContrato;
-
-	COMMIT TRANSACTION;
-		PRINT 'Devolución registrada correctamente y estado de kit actualizado.';
+			COMMIT TRANSACTION;
+		PRINT 'Devolucion registrada correctamente.';
     END TRY
 
     BEGIN CATCH
@@ -403,7 +353,7 @@ EXEC sp_RegistrarKitDevolucion
     @_estado = 'Devuelto en mal estado',
     @_costo_reparacion = 0,
     @_cargos_por_dia_atraso = 2000,
-    @_id_cliente = 1,
-    @_codigo_Kit = 1,
-    @_num_Contrat = 2,
-	@_cantidadDevolucionHerramientas = 2;
+    @_id_cliente = 4,
+    @_codigo_Kit = 3,
+    @_num_Contrat = 5,
+	@_cantidadDevolucionHerramientas = 3;
