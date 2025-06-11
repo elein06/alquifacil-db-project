@@ -207,8 +207,7 @@ CREATE OR ALTER PROCEDURE sp_RegistrarKitDevolucion
     @_cargos_por_dia_atraso MONEY,
     @_id_cliente INT,
     @_codigo_Kit INT,
-	@_num_Contrat int,
-	@_cantidadDevolucionHerramientas int
+	@_num_Contrat int
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -239,10 +238,6 @@ BEGIN
 			SELECT @costo_alquiler = costo_alquiler
 			from Alquiler
 			where num_Contrato = @_num_Contrat;
-	
-			SELECT @_id_herramienta = Id_Herramienta
-			FROM KitHerramienta
-			WHERE codigo_Kit = @_codigo_Kit;
 
 			SELECT @_verificarClienteAlquiler = Id_cliente
 			FROM Alquiler
@@ -255,10 +250,6 @@ BEGIN
 			select @nuevoIdCliente = id_Cliente
 			from CLIENTE 
 			where id_Cliente = @_Id_cliente
-
-			SELECT @cantidadHerramientasAlquiladas = cantidadHerramientasEnKit
-			FROM AlquilerKit
-			WHERE num_contrato = @_num_Contrat;
 
 			SELECT @existeContrato = 1
 			FROM alquiler
@@ -306,12 +297,6 @@ BEGIN
 				RETURN;
 			END
 
-			IF @_cantidadDevolucionHerramientas != @cantidadHerramientasAlquiladas
-			BEGIN
-				PRINT 'Cantidad de herramientas incorrecta';
-				ROLLBACK TRANSACTION;
-				RETURN;
-			END
 
 			-- Insertar la devolución (ID autogenerado)
 			INSERT INTO Devolucion(fecha_revisionTecnica, estado, costo_Reparacion, cargos_Por_Dia_Atraso, total_a_pagar, id_Cliente, numero_contrato_alquiler)
@@ -325,17 +310,19 @@ BEGIN
 			SET @nuevoIdDevolucionKit = SCOPE_IDENTITY();
 
 			-- Insertar en la tabla intermedia (ID también autogenerado)
-			INSERT INTO DevolucionKit (codigo_Kit, id_Devolucion, cantidadDevolucionHerramientas)
-			VALUES (@_codigo_Kit, @nuevoIdDevolucionKit, @_cantidadDevolucionHerramientas);
+			INSERT INTO DevolucionKit (codigo_Kit, id_Devolucion)
+			VALUES (@_codigo_Kit, @nuevoIdDevolucionKit);
 
 			-- Cambiar el estado del kit a "disponible"
 			UPDATE Kit
 			SET Id_Estado = 1
 			WHERE codigo_Kit = @_codigo_Kit;
 
-			UPDATE Herramienta
-			SET Stock_Herramientas = Stock_Herramientas + @_cantidadDevolucionHerramientas
-			WHERE Id_Herramienta = @_id_herramienta;
+			UPDATE H
+			SET H.Stock_Herramientas = H.Stock_Herramientas + K.cantidad_Herramientas
+			FROM Herramienta H
+			INNER JOIN kitherramienta K ON H.Id_Herramienta = K.id_Herramienta
+			WHERE K.codigo_Kit = @_codigo_Kit;
 
 			COMMIT TRANSACTION;
 		PRINT 'Devolucion registrada correctamente.';
@@ -348,12 +335,28 @@ BEGIN
 END
 GO
 
+
+SELECT 
+    KH.id_KitHerramienta,
+    KH.codigo_Kit,
+    KH.Id_Herramienta,
+    KH.cantidad_Herramientas
+FROM 
+    KitHerramienta KH
+WHERE 
+    KH.codigo_Kit = 1;
+
 EXEC sp_RegistrarKitDevolucion
 	@_fecha_revisionTecnica = '2025-09-07',
     @_estado = 'Devuelto en mal estado',
     @_costo_reparacion = 0,
     @_cargos_por_dia_atraso = 2000,
     @_id_cliente = 4,
-    @_codigo_Kit = 3,
-    @_num_Contrat = 5,
-	@_cantidadDevolucionHerramientas = 3;
+    @_codigo_Kit = 1,
+    @_num_Contrat = 1
+
+select * from alquiler
+
+select * from herramienta
+
+select * from kit
