@@ -1,74 +1,124 @@
--- Insert Kits
--- Proyecto ALQUIFÁCIL
-
---Proceso almacenado para agregar un kit con herramientas
-use ALQUIFACIL
-go
-
 CREATE OR ALTER PROCEDURE sp_IngresarKitConHerramientas
-
     @_nombre VARCHAR(50),
     @_tarifa_Diaria_Especial MONEY,
     @_id_Categoria INT,
     @_Id_Estado INT,
-    @_Id_Herramienta INT,
-    @_cantidad_Herramientas INT
+    @_Id_Herramienta1 INT,
+    @_cantidad_Herramientas1 INT,
+    @_Id_Herramienta2 INT,
+    @_cantidad_Herramientas2 INT,
+    @_Id_Herramienta3 INT,
+    @_cantidad_Herramientas3 INT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-	BEGIN TRY
+    BEGIN TRY
         BEGIN TRANSACTION;
-			DECLARE @stockDisponible INT;
-			DECLARE @estadoHerramienta INT;
-			DECLARE @nuevoIdKit INT;
 
-		-- Obtener stock y estado actual 
-			SELECT 
-				@stockDisponible = Stock_Herramientas
-				FROM Herramienta
-				where @_Id_Herramienta = Id_Herramienta
+        DECLARE @nuevoIdKit INT;
+        DECLARE @stockDisponible INT;
+		DECLARE @verificarHerramienta1 INT;
+		DECLARE @verificarHerramienta2 INT;
+		DECLARE @verificarHerramienta3 INT;
 
-			IF @_cantidad_Herramientas > @stockDisponible 
-			BEGIN
-				PRINT 'No hay suficientes herramientas en inventario';
-				ROLLBACK TRANSACTION;
-				RETURN;
-			END
+		select @verificarHerramienta1 = id_herramienta
+		from herramienta
+		where @_Id_Herramienta1 = id_herramienta
 
-			   IF @_Id_Estado = 2
-			BEGIN
-				PRINT 'El kit no puede registrarse como alquilado. No se puede registrar el kit.';
-				ROLLBACK TRANSACTION;
-				RETURN;
-			END
+		select @verificarHerramienta2 = id_herramienta
+		from herramienta
+		where @_Id_Herramienta2 = id_herramienta
 
-			IF @_Id_Estado = 3
-			BEGIN
-				PRINT 'El kit no puede registrarse como en mantenimiento. No se puede registrar el kit.';
-				ROLLBACK TRANSACTION;
-				RETURN;
-			END
+		select @verificarHerramienta3 = id_herramienta
+		from herramienta
+		where @_Id_Herramienta3 = id_herramienta
 
-			IF @_Id_Estado = 4
-			BEGIN
-				PRINT 'El kit no puede registrarse como dado de baja. No se puede registrar el kit.';
-				ROLLBACK TRANSACTION;
-				RETURN;
-			END
+		-- Validaciones de herramienta en stock
+		IF @verificarHerramienta1 is null
+        BEGIN
+            PRINT 'La herramienta no 1 existe';
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
 
-			INSERT INTO Kit (nombre, tarifa_Diaria_Especial, id_Categoria, Id_Estado)
-			VALUES(@_nombre, @_tarifa_Diaria_Especial, @_id_Categoria, @_Id_Estado);
+		IF @verificarHerramienta2 is null
+        BEGIN
+            PRINT 'La herramienta 2 no existe';
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
 
-			SET @nuevoIdKit = SCOPE_IDENTITY();
+		IF @verificarHerramienta3 is null
+        BEGIN
+            PRINT 'La herramienta 3 no existe';
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
 
-			INSERT INTO KitHerramienta (codigo_Kit, Id_Herramienta, cantidad_Herramientas)
-			VALUES						(@nuevoIdKit, @_Id_Herramienta, @_cantidad_Herramientas);
+        -- Validaciones de estado del Kit
+        IF @_Id_Estado IN (2, 3, 4)
+        BEGIN
+            PRINT 'El kit no puede registrarse con este estado.';
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
 
-			UPDATE Herramienta
-			SET Stock_Herramientas = Stock_Herramientas - @_cantidad_Herramientas
-			WHERE Id_Herramienta = @_id_Herramienta; 
-			COMMIT TRANSACTION;
+        -- Insertar Kit
+        INSERT INTO Kit (nombre, tarifa_Diaria_Especial, id_Categoria, Id_Estado)
+        VALUES (@_nombre, @_tarifa_Diaria_Especial, @_id_Categoria, @_Id_Estado);
+
+        SET @nuevoIdKit = SCOPE_IDENTITY();
+
+        -- Procedimiento para insertar cada herramienta
+        DECLARE @i INT = 1;
+
+        WHILE @i <= 3
+        BEGIN
+            DECLARE @idHerramienta INT;
+            DECLARE @cantidad INT;
+
+            IF @i = 1
+            BEGIN
+                SET @idHerramienta = @_Id_Herramienta1;
+                SET @cantidad = @_cantidad_Herramientas1;
+            END
+            ELSE IF @i = 2
+            BEGIN
+                SET @idHerramienta = @_Id_Herramienta2;
+                SET @cantidad = @_cantidad_Herramientas2;
+            END
+            ELSE IF @i = 3
+            BEGIN
+                SET @idHerramienta = @_Id_Herramienta3;
+                SET @cantidad = @_cantidad_Herramientas3;
+            END
+
+            -- Verificar stock disponible
+            SELECT @stockDisponible = Stock_Herramientas
+            FROM Herramienta
+            WHERE Id_Herramienta = @idHerramienta;
+
+            IF @cantidad > @stockDisponible
+            BEGIN
+                PRINT 'No hay suficientes herramientas en inventario para Id: ' + CAST(@idHerramienta AS VARCHAR);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+
+            -- Insertar en KitHerramienta
+            INSERT INTO KitHerramienta (codigo_Kit, Id_Herramienta, cantidad_Herramientas)
+            VALUES (@nuevoIdKit, @idHerramienta, @cantidad);
+
+            -- Actualizar stock
+            UPDATE Herramienta
+            SET Stock_Herramientas = Stock_Herramientas - @cantidad
+            WHERE Id_Herramienta = @idHerramienta;
+
+            SET @i = @i + 1;
+        END
+
+        COMMIT TRANSACTION;
         PRINT 'El kit se ha registrado correctamente.';
     END TRY
 
@@ -77,40 +127,15 @@ BEGIN
         PRINT 'Error: ' + ERROR_MESSAGE();
     END CATCH
 END
-go
+GO
 
-exec sp_IngresarKitConHerramientas
-  @_nombre = 'Kit de Construccion',
-  @_tarifa_Diaria_Especial = 12000,
+EXEC sp_IngresarKitConHerramientas
+  @_nombre = 'Kit Carpintería Avanzada',
+  @_tarifa_Diaria_Especial = 15000,
   @_id_Categoria = 1,
   @_Id_Estado = 1,
-  @_Id_Herramienta = 6,
-  @_cantidad_Herramientas = 2
- GO
-
-exec sp_IngresarKitConHerramientas
-  @_nombre = 'Kit de Abuelas',
-  @_tarifa_Diaria_Especial = 22000,
-  @_id_Categoria = 2,
-  @_Id_Estado = 1,
-  @_Id_Herramienta = 11,
-  @_cantidad_Herramientas = 10
+  @_Id_Herramienta1 = 1, @_cantidad_Herramientas1 = 2,   
+  @_Id_Herramienta2 = 2, @_cantidad_Herramientas2 = 2,   
+  @_Id_Herramienta3 = 3, @_cantidad_Herramientas3 = 2  
 GO
 
-exec sp_IngresarKitConHerramientas
-  @_nombre = 'Kit de Pensionados',
-  @_tarifa_Diaria_Especial = 50000,
-  @_id_Categoria = 3,
-  @_Id_Estado = 1,
-  @_Id_Herramienta = 2,
-  @_cantidad_Herramientas = 3
-GO
-
-select * from KitHerramienta
-go
-select * from Kit
-go
-select * from Herramienta
-go
-select * from Estado
-go
