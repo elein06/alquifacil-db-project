@@ -15,20 +15,27 @@ CREATE PROCEDURE sp_InsertarClienteFisico (
     @_correo VARCHAR(50),
     @_tipo_cliente INT)
 AS
-    -- Insertar en la tabla CLIENTE
-    INSERT INTO CLIENTE (telefono, correo, tipo_cliente)
-    VALUES (@_telefono, @_correo, @_tipo_cliente)
+BEGIN TRY
+        BEGIN TRANSACTION;
+			-- Insertar en la tabla CLIENTE
+			INSERT INTO CLIENTE (telefono, correo, tipo_cliente)
+			VALUES (@_telefono, @_correo, @_tipo_cliente)
 
-    DECLARE @nuevoId INT = SCOPE_IDENTITY() -- esta línea guarda el id generado en CLIENTE en la variable @nuevoId
+			DECLARE @nuevoId INT = SCOPE_IDENTITY() -- esta línea guarda el id generado en CLIENTE en la variable @nuevoId
 
-    -- Insertar en ClienteFisico
-    INSERT INTO ClienteFisico (id_Cliente, ced_fisica, nombre, apellido1, apellido2)
-    VALUES (@nuevoId, @_ced_fisica, @_nombre, @_apellido1, @_apellido2)
+			-- Insertar en ClienteFisico
+			INSERT INTO ClienteFisico (id_Cliente, ced_fisica, nombre, apellido1, apellido2)
+			VALUES (@nuevoId, @_ced_fisica, @_nombre, @_apellido1, @_apellido2)
 
-    PRINT 'EL CLIENTE FÍSICO SE HA REGISTRADO CORRECTAMENTE'
+			COMMIT TRANSACTION;
+        PRINT 'EL CLIENTE FÍSICO SE HA REGISTRADO CORRECTAMENTE.';
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        PRINT 'Error: ' + ERROR_MESSAGE();
+    END CATCH
 GO
-
-
 
 --										agregar 10 clientes físicos a la tabla clienteFisico
 
@@ -77,17 +84,26 @@ CREATE PROCEDURE sp_InsertarClienteJuridico (
     @_correo VARCHAR(50),
     @_tipo_cliente INT)
 AS
-    -- Insertar en la tabla CLIENTE
-    INSERT INTO CLIENTE (telefono, correo, tipo_cliente)
-    VALUES (@_telefono, @_correo, @_tipo_cliente)
+BEGIN TRY
+        BEGIN TRANSACTION;
+			-- Insertar en la tabla CLIENTE
+			INSERT INTO CLIENTE (telefono, correo, tipo_cliente)
+			VALUES (@_telefono, @_correo, @_tipo_cliente)
 
-    DECLARE @nuevoId INT = SCOPE_IDENTITY()-- obtener el id generado
+			DECLARE @nuevoId INT = SCOPE_IDENTITY()-- obtener el id generado
 
-    -- Insertar en ClienteJuridico
-    INSERT INTO ClienteJuridico (id_Cliente, ced_juridica, razon_social)
-    VALUES (@nuevoId, @_ced_juridica, @_razon_social);
+			-- Insertar en ClienteJuridico
+			INSERT INTO ClienteJuridico (id_Cliente, ced_juridica, razon_social)
+			VALUES (@nuevoId, @_ced_juridica, @_razon_social);
 
-    PRINT 'EL CLIENTE JURÍDICO SE HA REGISTRADO CORRECTAMENTE';
+		COMMIT TRANSACTION;
+     PRINT 'EL CLIENTE JURÍDICO SE HA REGISTRADO CORRECTAMENTE';
+END TRY
+
+ BEGIN CATCH
+     ROLLBACK TRANSACTION;
+     PRINT 'Error: ' + ERROR_MESSAGE();
+END CATCH
 GO
 
 

@@ -2,14 +2,6 @@
 
 -- Tabla Alquiler
 
--- Numero de contrato mayor a 0
-use ALQUIFACIL
-go
-ALTER TABLE Alquiler
-ADD CONSTRAINT CK_Alquiler_Num_Contrato_Positivo
-CHECK (num_Contrato > 0)
-go
-
 -- Que fecha de devolucion no sea menor a la de inicio
 use ALQUIFACIL
 go

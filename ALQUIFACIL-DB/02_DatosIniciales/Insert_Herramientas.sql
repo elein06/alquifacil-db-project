@@ -1,7 +1,6 @@
 -- Insert Herramientas
 -- Proyecto ALQUIFÁCIL
 
-
 --								procedimiento almacenado para insertar categorias
 
 USE ALQUIFACIL
@@ -14,16 +13,16 @@ AS
 	-- Validar si ya existe una Categoria con el mismo Id
 		IF EXISTS (SELECT 1 FROM Categoria WHERE id_Categoria = @id_Categoria)
 		begin
-			  PRINT 'Error Ya existe una Categoria con ese ID. El registro no se insertó.'
+			PRINT 'Error Ya existe una Categoria con ese ID. El registro no se insertó.'
 		end
 
 		ELSE
 		begin
-				INSERT INTO Categoria (id_Categoria, nombre_categoria)
-				VALUES (@id_Categoria, @nombre_categoria)
+			INSERT INTO Categoria (id_Categoria, nombre_categoria)
+			VALUES (@id_Categoria, @nombre_categoria)
 
-				PRINT 'LA CATEGORÍA SE HA REGISTRADO CORRECTAMENTE'
-		end
+			PRINT 'LA CATEGORÍA SE HA REGISTRADO CORRECTAMENTE'
+		END
 GO
 
 --								insertas las 3 categorias
