@@ -188,7 +188,7 @@ begin
 	
     -- Actualizar el stock
     UPDATE Herramienta
-    SET Stock_Herramientas = Stock_Herramientas - @_cantidadAlquilarEnKit
+    SET Stock_Herramientas = Stock_Herramientas - @_cantidadHerramientasEnKit
     WHERE Id_Herramienta = @_id_Herramienta;
 
     print 'Alquiler y estado de kit registrados correctamente.';
@@ -205,6 +205,7 @@ exec sp_RegistrarAlquileresConKits
 	@_codigo_Kit = 1, 
 	@_cantidadHerramientasEnKit = 2,
 	@_id_Herramienta = 5
+go
 
 select * from kit
 select * from Herramienta

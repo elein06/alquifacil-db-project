@@ -140,6 +140,7 @@ BEGIN
     DECLARE @nuevoIdDevolucionKit INT;	
     DECLARE @nuevoIdCliente INT;
 	DECLARE @cantidadHerramientasAlquiladas INT;
+	declare @idHerramientas int;
 
     -- Verificar si la herramienta existe y obtener su estado
     SELECT @estadoKit = Id_Estado
@@ -147,9 +148,9 @@ BEGIN
     WHERE codigo_Kit = @_codigo_Kit;
 
 	select 
-		@idHerramientasKit = Id_Herramienta 
-	from KitHerramienta 
-	where Id_Herramienta = @_id_Herramienta;
+		@idHerramientas = Id_Herramienta 
+	from AlquilerKit 
+	where num_contrato = @_num_Contrat;
 
 	select @nuevoIdCliente = id_Cliente
 	from CLIENTE 
