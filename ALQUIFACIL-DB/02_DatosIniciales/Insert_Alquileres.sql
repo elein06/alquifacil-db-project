@@ -93,9 +93,7 @@ BEGIN
 END;
 GO
 
-select * from Herramienta
-
-
+--ingreso de alquiler de herramienta
 exec sp_RegistrarAlquileresConHerramientas
     @_fecha_Inicio = '2025-10-04',
     @_fecha_Dev = '2025-11-16',
@@ -128,7 +126,6 @@ exec sp_RegistrarAlquileresConHerramientas
 	@_cantidadHerramientas = 3
 
 -- Proceso almacenado para agregar un Alquiler de un Kit
-
 use ALQUIFACIL
 go
 create or alter procedure sp_RegistrarAlquileresConKits
@@ -248,6 +245,7 @@ begin
 end
 go
 
+--ingreso de un alquiler de un kit
 exec sp_RegistrarAlquileresConKits
     @_fecha_Inicio = '2025-07-24',
     @_fecha_Dev = '2025-06-07',
@@ -259,9 +257,3 @@ exec sp_RegistrarAlquileresConKits
 	@_codigo_Kit = 1, 
 	@_cantidadHerramientasEnKit = 2,
 	@_id_Herramienta = 6
-
-select * from kit
-select * from AlquilerKit
-select * from Herramienta
-select * from KitHerramienta
-select * from Alquiler
