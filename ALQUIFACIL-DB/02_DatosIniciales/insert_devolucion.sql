@@ -1,7 +1,13 @@
-USE ALQUIFACIL
+--INSERT DEVOLUCIONES
+-- Correccion para formatos de fechas
+SET DATEFORMAT YMD;
 GO
 
+--procedimiento almacenado para registrar una devolucion de una herramienta
+USE ALQUIFACIL
+GO
 CREATE OR ALTER PROCEDURE sp_RegistrarDevolucionConHerramienta
+	@_fecha_revisionTecnica date,
     @_estado VARCHAR(50),
     @_costo_reparacion MONEY,
     @_cargos_por_dia_atraso MONEY,
@@ -140,8 +146,8 @@ BEGIN
 		END
 
     -- Insertar la devolución (ID autogenerado)
-    INSERT INTO Devolucion (estado, costo_Reparacion, cargos_Por_Dia_Atraso, total_a_pagar, id_Cliente, numero_contrato_alquiler)
-    VALUES (@_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @costo_alquiler, @_id_cliente, @_numContrato);
+    INSERT INTO Devolucion (fecha_revisionTecnica, estado, costo_Reparacion, cargos_Por_Dia_Atraso, total_a_pagar, id_Cliente, numero_contrato_alquiler)
+    VALUES (@_fecha_revisionTecnica, @_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @costo_alquiler, @_id_cliente, @_numContrato);
 
     -- Obtener el nuevo ID de devolución
     SET @nuevoIdDevolucion = SCOPE_IDENTITY();
@@ -161,21 +167,23 @@ BEGIN
 END
 GO
 
+--ingresar una devolucion de herramienta
 EXEC sp_RegistrarDevolucionConHerramienta
+	@_fecha_revisionTecnica = '2025-09-07',
     @_estado = 'Devuelto en buen estado',
     @_costo_reparacion = 0,
     @_cargos_por_dia_atraso = 2000,
     @_id_cliente = 2,
-    @_id_herramienta = 6,
+    @_id_herramienta = 16,
     @_cantidad_herramientas = 3,
-	@_numContrato = 3
+	@_numContrato = 1
 
--- Devolucion de un kit
+--procedimiento almacenado para registrar una devolucion de un kit
 USE ALQUIFACIL
 GO
-
 CREATE OR ALTER PROCEDURE sp_RegistrarKitDevolucion
-    @_estado VARCHAR(50),
+    @_fecha_revisionTecnica date,
+	@_estado VARCHAR(50),
     @_costo_reparacion MONEY,
     @_cargos_por_dia_atraso MONEY,
     @_id_cliente INT,
@@ -284,8 +292,8 @@ BEGIN
     END
 
     -- Insertar la devolución (ID autogenerado)
-    INSERT INTO Devolucion(estado, costo_Reparacion, cargos_Por_Dia_Atraso, total_a_pagar, id_Cliente, numero_contrato_alquiler)
-    VALUES (@_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @costo_alquiler, @_id_cliente, @_num_Contrat);
+    INSERT INTO Devolucion(fecha_revisionTecnica, estado, costo_Reparacion, cargos_Por_Dia_Atraso, total_a_pagar, id_Cliente, numero_contrato_alquiler)
+    VALUES (@_fecha_revisionTecnica, @_estado, @_costo_reparacion, @_cargos_por_dia_atraso, @costo_alquiler, @_id_cliente, @_num_Contrat);
 
     -- Obtener el nuevo ID de devolución
     SET @nuevoIdDevolucionKit = SCOPE_IDENTITY();
@@ -307,11 +315,11 @@ END
 GO
 
 EXEC sp_RegistrarKitDevolucion
+	@_fecha_revisionTecnica = '2025-09-07',
     @_estado = 'Devuelto en mal estado',
     @_costo_reparacion = 0,
     @_cargos_por_dia_atraso = 2000,
     @_id_cliente = 1,
     @_codigo_Kit = 1,
-    @_num_Contrat = 7,
+    @_num_Contrat = 2,
 	@_cantidadDevolucionHerramientas = 2;
-
