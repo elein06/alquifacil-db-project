@@ -103,7 +103,9 @@ exec sp_RegistrarAlquileresConHerramientas
     @_estado_Contrato = 'Activo',
     @_Id_cliente = 2,
 	@_id_Herramienta = 16,
-	@_cantidadHerramientas = 3
+	@_cantidadHerramientas = 12
+
+	select * from Herramienta
 
 	exec sp_RegistrarAlquileresConHerramientas
     @_fecha_Inicio = '2025-08-11',
@@ -236,6 +238,11 @@ exec sp_RegistrarAlquileresConKits
 	@_costo_alquiler = 20000,
     @_estado_Contrato = 'activo',
     @_Id_cliente = 8,
-	@_codigo_Kit = 2
+	@_codigo_Kit = 1
 
+
+	select * from Herramienta
+
+	select * from Alquiler
 	select * from kit
+	select * from AlquilerKit
