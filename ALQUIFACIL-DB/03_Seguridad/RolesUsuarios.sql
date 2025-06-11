@@ -8,7 +8,7 @@ GO
 use ALQUIFACIL
 GO
 
--- Se crean los Login's
+-- Se crean los Logins
 CREATE LOGIN adminAlquifacil WITH PASSWORD = 'Admin123!';
 go
 
