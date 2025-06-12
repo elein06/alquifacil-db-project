@@ -1,5 +1,5 @@
 -- Reporte HerramientasDevueltasEnMalEstado
--- Proyecto ALQUIFÁCIL
+-- Proyecto ALQUIFÁCIL 
 
 -- Consulta de herramientas devueltas en mal estado
 use ALQUIFACIL

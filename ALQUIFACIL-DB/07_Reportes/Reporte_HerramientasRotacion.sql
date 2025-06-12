@@ -1,5 +1,5 @@
 -- Reporte HerramientasRotacion
--- Proyecto ALQUIFÁCIL
+-- Proyecto ALQUIFÁCIL 
 
 USE ALQUIFACIL;
 GO

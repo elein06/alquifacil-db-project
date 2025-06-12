@@ -1,4 +1,4 @@
---Creación de los filegroups: HERRAMIENTAS, CLIENTES, OPERACIONES, MANTENIMIENTO
+--Creación de los filegroups: HERRAMIENTAS, CLIENTES, OPERACIONES, MANTENIMIENTO 
 
 -- Filegroup : Herramientas (herramientas, categoria, estado, tipo, kit)
 USE MASTER

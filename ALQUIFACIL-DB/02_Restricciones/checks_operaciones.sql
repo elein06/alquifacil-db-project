@@ -1,4 +1,4 @@
--- Checks para filegroup operaciones
+-- Checks para filegroup operaciones 
 
 -- Tabla Alquiler
 

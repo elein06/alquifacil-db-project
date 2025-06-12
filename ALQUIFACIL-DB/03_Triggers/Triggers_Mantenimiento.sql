@@ -1,4 +1,4 @@
--- Triggers para filegroup Mantenimiento
+-- Triggers para filegroup Mantenimiento 
 
 use ALQUIFACIL
 go

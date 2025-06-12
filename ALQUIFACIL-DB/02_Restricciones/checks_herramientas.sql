@@ -1,4 +1,4 @@
--- Checks para filegroup herramientas 
+-- Checks para filegroup herramientas  
 
 --TABLA HERRAMIENTA
 

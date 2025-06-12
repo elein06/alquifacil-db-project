@@ -1,4 +1,4 @@
--- TABLAS DEL FILEGROUP MANTENIMIENTO
+-- TABLAS DEL FILEGROUP MANTENIMIENTO 
 
 -- Tabla de mantenimiento
 use alquifacil

@@ -1,4 +1,4 @@
---Reporte de Cantidad de mantenimientos que ha tenido la herramienta
+--Reporte de Cantidad de mantenimientos que ha tenido la herramienta 
 
 USE ALQUIFACIL
 GO

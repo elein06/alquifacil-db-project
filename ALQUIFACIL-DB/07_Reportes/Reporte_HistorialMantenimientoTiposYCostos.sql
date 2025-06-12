@@ -1,5 +1,5 @@
--- Reporte de mantenimientos realizados de tipo interno vs externo + costos.
--- Proyecto ALQUIFÁCIL
+-- Reporte de mantenimientos realizados de tipo interno vs externo + costos
+-- Proyecto ALQUIFÁCIL 
 
 use ALQUIFACIL
 go

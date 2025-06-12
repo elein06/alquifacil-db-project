@@ -1,7 +1,7 @@
 -- Creación de la base de datos
 -- Proyecto ALQUIFÁCIL
 
-USE MASTER
+/*USE MASTER
 GO
 IF EXISTS (SELECT name FROM sys.databases WHERE name = 'ALQUIFACIL')
 BEGIN
@@ -15,9 +15,10 @@ BEGIN
 	DROP DATABASE ALQUIFACIL;
 	
 END
-go
+go*/
 
-
+USE MASTER
+GO
 CREATE DATABASE ALQUIFACIL
 ON PRIMARY --archivo primario
 (

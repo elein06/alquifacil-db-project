@@ -1,5 +1,5 @@
 -- Insert Herramientas
--- Proyecto ALQUIFÁCIL
+-- Proyecto ALQUIFÁCIL 
 
 --								procedimiento almacenado para insertar categorias
 

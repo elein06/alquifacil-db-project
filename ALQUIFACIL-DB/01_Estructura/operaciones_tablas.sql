@@ -1,4 +1,4 @@
--- TABLAS DEL FILEGROUP OPERACIONES
+-- TABLAS DEL FILEGROUP OPERACIONES 
 
 -- Crear tabla Alquiler
 use alquifacil

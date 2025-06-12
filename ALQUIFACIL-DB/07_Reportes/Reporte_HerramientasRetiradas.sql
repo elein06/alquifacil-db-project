@@ -1,5 +1,5 @@
 -- Reporte de  Herramientas Retiradas por daño irreparable
--- Proyecto ALQUIFÁCIL
+-- Proyecto ALQUIFÁCIL 
 
 USE ALQUIFACIL;
 GO

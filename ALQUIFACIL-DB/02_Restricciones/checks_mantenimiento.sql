@@ -1,4 +1,4 @@
--- Checks de filegroup mantenimietno 
+-- Checks de filegroup mantenimiento  
 
 
 ---------------CHECKS TABLA MANTENIMIENTO
