@@ -44,6 +44,18 @@ BEGIN
 			RETURN;
 		END
 
+		IF EXISTS (
+			SELECT 1
+			FROM @herramientas h
+				JOIN Herramienta he ON h.id = he.Id_Herramienta
+			WHERE he.Id_Estado <> 1
+		)
+		BEGIN
+			PRINT 'Una o más herramientas no están disponibles.';
+			ROLLBACK TRANSACTION;
+			RETURN;
+		END
+
 		select @verificarHerramienta1 = id_herramienta
 		from herramienta
 		where @_Id_Herramienta1 = id_herramienta
