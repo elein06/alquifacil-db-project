@@ -39,9 +39,6 @@ go
 exec sp_ingresoPersonaResponsable '2204','Pablito','Pablero','Poblado'
 go
 
-select * from Persona_Responsable
-go
-
 
 ----procedimiento almacenado para ingresar los tipos de mantenimiento
 
@@ -75,9 +72,6 @@ GO
 
 EXEC sp_InsertarTipoMantenimiento 2, 'Correctivo'
 GO
-
-select * from tipo_mantenimiento
-go
 
 
 
@@ -124,11 +118,13 @@ AS
     END CATCH
 GO
 
-
+SELECT Id_Persona_Responsable, (RTRIM(nombre)+' '+RTRIM(apellido1)+' '+RTRIM(apellido2)) as 'Persona Responsable' from Persona_Responsable
+SELECT Id_Tipo_mantenimiento, nombre_tipo_mantenimiento from tipo_mantenimiento
+SELECT id_estado, nombreEstado FROM Estado
+SELECT Id_Herramienta, Modelo, Id_Estado FROM Herramienta
 
 -- Insert Mantenimientos
-
-								  --AAAA-DD-MM
+								  --AAAA-DD-MM                                              --mant --PR --Herr
 exec sp_ingresoMantenimiento 20000, '2024-07-01', 'Interno', 'Lubricación completa y limpieza.', 1, 2202, 1;
 go
 
@@ -181,7 +177,4 @@ exec sp_ingresoMantenimiento 12000, '2025-05-28 14:00:00', 'Interno', 'Revisión
 go
 
 exec sp_ingresoMantenimiento 12000, '2025-05-28', 'Externo', 'Revisión de conexiones y estado de batería.', 1, 2204, 6;
-go
-
-select * from Mantenimiento
 go

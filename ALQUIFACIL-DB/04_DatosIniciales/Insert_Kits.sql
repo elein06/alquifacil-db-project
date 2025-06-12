@@ -1,6 +1,7 @@
+--Inserts de kits
+
 use ALQUIFACIL
 go
-
 CREATE OR ALTER PROCEDURE sp_IngresarKitConHerramientas
     @_nombre VARCHAR(50),
     @_tarifa_Diaria_Especial MONEY,
@@ -151,6 +152,12 @@ BEGIN
 END
 GO
 
+SELECT Id_Categoria, nombre_categoria from Categoria
+SELECT Id_estado, nombreEstado from Estado
+SELECT * FROM vw_Herramienta;
+GO
+
+--ingresar kits
 EXEC sp_IngresarKitConHerramientas
   @_nombre = 'Kit de Jardineria',
   @_tarifa_Diaria_Especial = 25000,
@@ -210,7 +217,3 @@ EXEC sp_IngresarKitConHerramientas
   @_Id_Herramienta2 = 17, @_cantidad_Herramientas2 = 1,  
   @_Id_Herramienta3 = 21, @_cantidad_Herramientas3 = 1   
 GO
-
-select * from Categoria
-select * from herramienta
-select * from kit
