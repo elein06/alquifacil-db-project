@@ -15,5 +15,6 @@ y consultas para reportes e informes
 - `02_Restricciones/`: Restricciones para las tablas.
 - `03_Triggers/`: Triggers para las tablas.
 - `04_DatosIniciales/`: Insert de datos iniciales de ejemplo.
-- `05_Reportes/`: Consultas para reportes.
-- `06_Seguridad/`: Roles de usuarios con sus permisos y backup de la base de datos.
+- `06_Views/`: Vistas generales para las tablas principales.
+- `07_Reportes/`: Consultas para reportes.
+- `08_Seguridad/`: Roles de usuarios con sus permisos y backup de la base de datos.
