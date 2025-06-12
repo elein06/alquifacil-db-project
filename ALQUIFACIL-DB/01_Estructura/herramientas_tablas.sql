@@ -27,8 +27,6 @@ add constraint PK_Herramienta_Id
 primary key (Id_Herramienta)
 go
 
-exec sp_help herramienta
-go
 
 --------------Creación de tablas Estado, Tipo, Categoria y CondicionFisica
 
@@ -51,9 +49,6 @@ add constraint PK_Estado_id_Estado
 primary key (id_Estado)
 GO
 
-exec sp_help Estado
-go
-
 --Creacion de tabla Tipo
 use ALQUIFACIL
 go 
@@ -73,8 +68,6 @@ add constraint PK_Tipo_id_Tipo
 primary key (id_Tipo)
 GO
 
-exec sp_help Tipo
-go
 
 --Creacion de tabla Categoria
 use ALQUIFACIL
@@ -95,8 +88,6 @@ add constraint PK_Categoria_id
 primary key (id_Categoria)
 GO
 
-exec sp_help Categoria
-go
 
 --Creacion de tabla CondicionFisica
 use ALQUIFACIL
@@ -117,8 +108,6 @@ add constraint PK_CondicionFisica_Id
 primary key (Id_Condicion_Fisica)
 GO
 
-exec sp_help CondicionFisica
-go
 
 --------------Creacion de FKs de estas tablas en Herramineta
 
@@ -158,8 +147,6 @@ Foreign key (Id_Tipo)
 REFERENCES Tipo(id_Tipo)
 GO
 
-exec sp_help Herramienta
-go
 
 -- Creación tabla Kit
 use ALQUIFACIL
@@ -183,8 +170,6 @@ add constraint PK_Kit_codigo_Kit
 primary key (codigo_Kit)
 GO
 
-exec sp_help Kit
-go
 
 --FK de id_Estado a kit
 use ALQUIFACIL
@@ -240,7 +225,4 @@ alter table KitHerramienta
 add constraint FK_KitHerramienta_Id_Herramienta
 foreign key (Id_Herramienta)
 references Herramienta(Id_Herramienta)
-go
-
-exec sp_help KitHerramienta
 go
