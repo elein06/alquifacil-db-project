@@ -4,10 +4,9 @@
 USE master
 GO
 
+--VISTA  GENERAL DE HERRAMIENTAS
 USE ALQUIFACIL
 GO
-
---VISTA  GENERAL DE HERRAMIENTAS
 CREATE VIEW vw_Herramienta 
 AS
 SELECT 
@@ -29,8 +28,9 @@ SELECT * FROM vw_Herramienta;
 GO
 
 
-
 --VISTA GENERAL DE KITS
+USE ALQUIFACIL
+GO
 CREATE VIEW vw_Kits
 AS
 SELECT 
@@ -48,6 +48,8 @@ GO
 
 
 --VISTA CON LOS CLIENTES JURIDICOS
+USE ALQUIFACIL
+GO
 CREATE VIEW vw_ClienteJuridico
 AS
 SELECT 
@@ -55,12 +57,11 @@ SELECT
     c.telefono,
     c.correo,
     c.tipo_cliente,
-    cj.ced_juridica AS cedula,
-    CAST(NULL AS VARCHAR(150)) AS nombre_completo,
-    cj.razon_social,
-    'Juridico' AS tipo_cliente_nombre
+    cj.ced_juridica AS 'Cédula Jurídica',
+    cj.razon_social
 FROM Cliente c
 INNER JOIN ClienteJuridico cj ON c.id_Cliente = cj.id_Cliente;
+GO
 
 SELECT * FROM vw_ClienteJuridico;
 GO
@@ -68,38 +69,66 @@ GO
 
 
 --VISTA CON LOS CLIENTES FISICOS
+USE ALQUIFACIL
+GO
 CREATE VIEW vw_ClienteFisico 
 AS
 SELECT 
     c.id_Cliente,
+	cf.ced_fisica AS 'Cédula Física',
+    cf.nombre + ' ' + cf.apellido1 + ' ' + cf.apellido2 AS 'Nombre Completo',
+	c.tipo_cliente,
     c.telefono,
-    c.correo,
-    c.tipo_cliente,
-    cf.ced_fisica AS cedula,
-    cf.nombre + ' ' + cf.apellido1 + ' ' + cf.apellido2 AS nombre_completo,
-    CAST(NULL AS VARCHAR(100)) AS razon_social,
-    'Fisico' AS tipo_cliente_nombre
+	c.correo
 FROM Cliente c
 INNER JOIN ClienteFisico cf ON c.id_Cliente = cf.id_Cliente;
+GO
 
 SELECT * FROM vw_ClienteFisico;
 GO
 
 
 --VISTA GENERAL DE LA INFO DE LOS CLIENTES
-CREATE VIEW vw_ClienteGeneral
+USE ALQUIFACIL;
+GO
+CREATE VIEW vw_TodosClientes
 AS
-SELECT * FROM vw_ClienteFisico
-UNION
-SELECT * FROM vw_ClienteJuridico;
+SELECT 
+    c.id_Cliente,
+    c.telefono,
+    c.correo,
+    c.tipo_cliente,
+    'Físico' AS tipo_persona,
+    cf.ced_fisica AS cedula,
+    cf.nombre + ' ' + cf.apellido1 + ' ' + cf.apellido2 AS nombre_completo,
+    NULL AS razon_social
+FROM 
+    Cliente c
+    INNER JOIN ClienteFisico cf ON c.id_Cliente = cf.id_Cliente
+
+UNION ALL
+
+SELECT 
+    c.id_Cliente,
+    c.telefono,
+    c.correo,
+    c.tipo_cliente,
+    'Jurídico' AS tipo_persona,
+    cj.ced_juridica AS cedula,
+    NULL AS nombre_completo,
+    cj.razon_social
+FROM 
+    Cliente c
+    INNER JOIN ClienteJuridico cj ON c.id_Cliente = cj.id_Cliente;
 GO
 
-
-SELECT * FROM vw_ClienteGeneral
+SELECT * FROM vw_TodosClientes
 GO
 
 
 --VISTA GENERAL DE MANTENIMIENTO
+USE ALQUIFACIL
+GO
 CREATE VIEW vw_Mantenimiento
 AS
 SELECT 
@@ -120,6 +149,8 @@ GO
 
 
 --VISTA GENERAL DE ALQUILER
+USE ALQUIFACIL
+GO
 CREATE VIEW vw_Alquiler 
 AS
 SELECT 
