@@ -364,13 +364,5 @@ EXEC sp_RegistrarKitDevolucion
     @_costo_reparacion = 0,
     @_cargos_por_dia_atraso = 2000,
     @_id_cliente = 8,
-    @_codigo_Kit = 1,
+    @_codigo_Kit = 6,
     @_num_Contrat = 4
-
-
-select * from AlquilerKit
-select * from alquiler
-select * from Devolucion
-select * from herramienta
-select * from CLIENTE
-select * from AlquilerKit

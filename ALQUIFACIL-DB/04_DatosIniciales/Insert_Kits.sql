@@ -170,6 +170,29 @@ EXEC sp_IngresarKitConHerramientas
   @_Id_Herramienta2 = 8, @_cantidad_Herramientas2 = 1,   
   @_Id_Herramienta3 = 2, @_cantidad_Herramientas3 = 1
 GO
+
+
+EXEC sp_IngresarKitConHerramientas
+  @_nombre = 'Kit de Hogar',
+  @_tarifa_Diaria_Especial = 25000,
+  @_id_Categoria = 1,
+  @_Id_Estado = 1,
+  @_Id_Herramienta1 = 4, @_cantidad_Herramientas1 = 1,   
+  @_Id_Herramienta2 = 6, @_cantidad_Herramientas2 = 1,   
+  @_Id_Herramienta3 = 17, @_cantidad_Herramientas3 = 1
+GO
+
+
+EXEC sp_IngresarKitConHerramientas
+  @_nombre = 'Kit de Jardineria',
+  @_tarifa_Diaria_Especial = 25000,
+  @_id_Categoria = 2,
+  @_Id_Estado = 1,
+  @_Id_Herramienta1 = 1, @_cantidad_Herramientas1 = 1,   
+  @_Id_Herramienta2 = 5, @_cantidad_Herramientas2 = 1,   
+  @_Id_Herramienta3 = 16, @_cantidad_Herramientas3 = 1
+GO
+
 select * from Categoria
 select * from herramienta
 select * from kit

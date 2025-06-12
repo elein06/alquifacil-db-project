@@ -241,6 +241,17 @@ exec sp_RegistrarAlquileresConKits
 	@_codigo_Kit = 1
 
 
+--ingreso de un alquiler de un kit
+exec sp_RegistrarAlquileresConKits
+    @_fecha_Inicio = '2025-07-24',
+    @_fecha_Dev = '2025-08-07',
+    @_tarifa_Total_Diaria = 20000,
+    @_deposito_Garantia = 10000,
+	@_costo_alquiler = 20000,
+    @_estado_Contrato = 'activo',
+    @_Id_cliente = 8,
+	@_codigo_Kit = 6
+
 	select * from Herramienta
 
 	select * from Alquiler
