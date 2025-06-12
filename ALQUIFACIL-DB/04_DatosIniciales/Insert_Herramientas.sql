@@ -187,27 +187,26 @@ go
 
 --										Creacion de Herraminetas
 
-exec sp_ingresoHerramienta 'BD12', 2021, 45000, 3, 'Thruper', 'Podadora', 2, 1, 1, 2
+exec sp_ingresoHerramienta 'BD12', 2021, 45000, 8, 'Thruper', 'Podadora', 2, 1, 1, 2
 go
 
-exec sp_ingresoHerramienta 'CD13', 2022, 55000, 6, 'Thruper', 'Aspiradora', 3, 2, 2, 3
+exec sp_ingresoHerramienta 'CD13', 2022, 55000, 12, 'Thruper', 'Aspiradora', 3, 2, 2, 3
 go
 
-exec sp_ingresoHerramienta 'MD14', 2012, 10000, 4, 'Patito', 'Tijeras', 2, 2, 2, 1
+exec sp_ingresoHerramienta 'MD14', 2012, 10000, 10, 'Patito', 'Tijeras', 2, 2, 2, 1
 go
 
-exec sp_ingresoHerramienta 'JK15', 2016, 15000, 6, 'Thruper', 'Taladro', 3, 1, 4, 1
+exec sp_ingresoHerramienta 'JK15', 2016, 15000, 9, 'Thruper', 'Taladro', 3, 1, 4, 1
 go
 
-exec sp_ingresoHerramienta 'GD16', 2016, 15000, 6, 'Thruper', 'Bomba Fumigadora', 4, 3, 4, 2
+exec sp_ingresoHerramienta 'GD16', 2016, 15000, 8, 'Thruper', 'Bomba Fumigadora', 4, 3, 4, 2
 go
 
-
-exec sp_ingresoHerramienta 'AC11', 2020, 25000, 5, 'Patito', 'Martillo', 1, 2, 2, 1
+exec sp_ingresoHerramienta 'AC11', 2020, 25000, 7, 'Patito', 'Martillo', 1, 2, 2, 1
 go
 
 -- Herramienta eléctrica de jardinería
-exec sp_ingresoHerramienta 'ELJARD001', 2022, 120000, 3, 'Bosch', 'Podadora Eléctrica GX200', 1, 1, 1, 2
+exec sp_ingresoHerramienta 'ELJARD001', 2022, 120000, 8, 'Bosch', 'Podadora Eléctrica GX200', 1, 1, 1, 2
 go
 
 -- Herramienta manual para hogar
@@ -215,11 +214,11 @@ exec sp_ingresoHerramienta 'HOGARMAN02', 2019, 15000, 10, 'Truper', 'Set de Dest
 go
 
 -- Herramienta motorizada de construcción (en mantenimiento)
-exec sp_ingresoHerramienta 'MOTCON03', 2021, 500000, 1, 'Honda', 'Compactador de Placa HR500', 3, 3, 3, 1
+exec sp_ingresoHerramienta 'MOTCON03', 2021, 500000, 6, 'Honda', 'Compactador de Placa HR500', 3, 3, 3, 1
 go
 
 -- Herramienta eléctrica de construcción (alquilada)
-exec sp_ingresoHerramienta 'ELCON04', 2023, 85000, 2, 'DeWalt', 'Taladro Percutor DCD999', 2, 1, 1, 1
+exec sp_ingresoHerramienta 'ELCON04', 2023, 85000, 4, 'DeWalt', 'Taladro Percutor DCD999', 2, 1, 1, 1
 go
 
 -- Herramienta manual de jardinería (buena condición)
@@ -227,7 +226,7 @@ exec sp_ingresoHerramienta 'MANJARD05', 2018, 8000, 15, 'Fiskars', 'Tijera de Po
 go
 
 -- Herramienta motorizada de jardinería (disponible)
-exec sp_ingresoHerramienta 'MOTJARD06', 2024, 250000, 2, 'Stihl', 'Desbrozadora FS 250', 1, 3, 1, 2
+exec sp_ingresoHerramienta 'MOTJARD06', 2024, 250000, 22, 'Stihl', 'Desbrozadora FS 250', 1, 3, 1, 2
 go
 
 -- Herramienta eléctrica para hogar (regular)
@@ -239,15 +238,49 @@ exec sp_ingresoHerramienta 'MANCON08', 2017, 10000, 0, 'Bellota', 'Nivel de Burb
 go
 
 -- Herramienta eléctrica de jardinería (en mantenimiento)
-exec sp_ingresoHerramienta 'ELJARD09', 2021, 95000, 1, 'Greenworks', 'Soplador de Hojas G-MAX 40V', 3, 1, 3, 2
+exec sp_ingresoHerramienta 'ELJARD09', 2021, 95000, 2, 'Greenworks', 'Soplador de Hojas G-MAX 40V', 3, 1, 3, 2
 go
 
--- Herramienta eléctrica de jardinería (disponible, en mal estado)
-exec sp_ingresoHerramienta 'JERUNDIO', 2025, 130000, 3, 'Greenworks', 'Soplador viejas mayores', 1, 1, 4, 2
+-- Construcción, eléctrica, excelente
+exec sp_ingresoHerramienta 'CONEL01', 2023, 110000, 5, 'Makita', 'Rotomartillo HR2475', 1, 1, 1, 1
 go
 
-exec sp_ingresoHerramienta 'MQSLD06', 2016, 175000, 2, 'Thruper', 'Maquina para soldar', 4, 2, 5, 1
+-- Jardinería, motorizada, buena
+exec sp_ingresoHerramienta 'JARMOT02', 2022, 210000, 4, 'Husqvarna', 'Cortacésped LC 151', 1, 3, 2, 2
 go
+
+-- Hogar, manual, regular
+exec sp_ingresoHerramienta 'HOGMAN03', 2019, 7000, 15, 'Stanley', 'Cinta Métrica 8m', 1, 2, 3, 3
+go
+
+-- Construcción, motorizada, defectuosa
+exec sp_ingresoHerramienta 'CONMOT04', 2020, 420000, 1, 'Wacker Neuson', 'Apisonador BS60-4', 3, 3, 4, 1
+go
+
+-- Jardinería, eléctrica, excelente
+exec sp_ingresoHerramienta 'JAREL05', 2024, 125000, 2, 'Ryobi', 'Cortasetos RHT36C60R15', 1, 1, 1, 2
+go
+
+-- Hogar, eléctrica, buena
+exec sp_ingresoHerramienta 'HOGEL06', 2021, 52000, 6, 'Bosch', 'Lijadora GSS 23 AE', 1, 1, 2, 3
+go
+
+-- Construcción, manual, buena
+exec sp_ingresoHerramienta 'CONMAN07', 2018, 18000, 7, 'Tramontina', 'Pala cuadrada reforzada', 1, 2, 2, 1
+go
+
+-- Jardinería, manual, regular
+exec sp_ingresoHerramienta 'JARMAN08', 2017, 9500, 10, 'Bellota', 'Rastrillo metálico', 1, 2, 3, 2
+go
+
+-- Hogar, motorizada, defectuosa
+exec sp_ingresoHerramienta 'HOGMOT09', 2022, 160000, 1, 'Einhell', 'Mini compresor TH-AC 190', 3, 3, 4, 3
+go
+
+-- Construcción, eléctrica, daño irreparable
+exec sp_ingresoHerramienta 'CONEL10', 2015, 78000, 0, 'Black+Decker', 'Sierra circular CS1004', 4, 1, 5, 1
+go
+
 
 
 select * from Categoria
