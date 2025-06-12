@@ -218,6 +218,8 @@ go
 
 SELECT * FROM vw_TodosClientes
 SELECT * FROM vw_Kits
+exec sp_ObtenerKitHerramientaPorCodigo @codigoKit = 1 --para poder ver qué contiene el kit antes de alquilarlo
+go
 
 --ingreso de un alquiler de un kit
 exec sp_RegistrarAlquileresConKits
