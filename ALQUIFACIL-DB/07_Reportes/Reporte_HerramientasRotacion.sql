@@ -44,6 +44,7 @@ BEGIN
     -- Crear tablas temporales para almacenar los resultados de cada procedimiento
     CREATE TABLE #TempAlquiladas (
         Id_Herramienta INT,
+		Modelo varchar(50),
         Veces_Alquiladas INT,
         Total_Herramientas_Alquiladas INT
     );

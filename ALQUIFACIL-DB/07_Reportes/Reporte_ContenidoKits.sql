@@ -1,8 +1,9 @@
+--Reporte para ver el contenido de un kit
 
 use ALQUIFACIL
 go
 
-CREATE PROCEDURE sp_ObtenerKitHerramientaPorCodigo
+CREATE PROCEDURE sp_verKitHerramientaPorCodigo
     @CodigoKit INT
 AS
 BEGIN
@@ -18,5 +19,5 @@ BEGIN
 END;
 GO
 
-EXEC sp_ObtenerKitHerramientaPorCodigo @CodigoKit = 1;
+EXEC sp_verKitHerramientaPorCodigo @CodigoKit = 1;
 go

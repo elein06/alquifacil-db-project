@@ -6,15 +6,17 @@ CREATE OR ALTER PROCEDURE sp_VerCantidadAlquiladas
 AS
 BEGIN
   SELECT
-    Id_Herramienta as 'ID de la herramienta',
-    COUNT(Id_Herramienta) AS 'Veces alquilada',
-    SUM(cantidadHerramientas) AS 'Total de herramientas alquiladas'
+    AlquilerHerramienta.Id_Herramienta as 'ID de la herramienta',
+	Herramienta.Modelo as 'Herramienta',
+    COUNT(AlquilerHerramienta.id_Herramienta) AS 'Veces alquilada',
+    SUM(AlquilerHerramienta.cantidadHerramientas) AS 'Total de herramientas alquiladas'
   FROM
-    AlquilerHerramienta
+    AlquilerHerramienta inner join Herramienta ON Herramienta.Id_Herramienta = AlquilerHerramienta.id_Herramienta
   WHERE
-    Id_Herramienta IS NOT NULL
+    AlquilerHerramienta.id_Herramienta IS NOT NULL
   GROUP BY
-    Id_Herramienta
+    AlquilerHerramienta.id_Herramienta,
+	Herramienta.Modelo
   ORDER BY
     [Total de herramientas alquiladas] DESC;
 END;
