@@ -182,6 +182,8 @@ BEGIN
 END
 GO
 
+SELECT * FROM vw_Alquiler
+SELECT num_contrato, id_herramienta, cantidadHerramientas from AlquilerHerramienta
 
 --ingresar una devolucion de herramienta
 EXEC sp_RegistrarDevolucionConHerramienta
@@ -189,14 +191,12 @@ EXEC sp_RegistrarDevolucionConHerramienta
     @_estado = 'Devuelto en mal estado',
     @_costo_reparacion = 0,
     @_cargos_por_dia_atraso = 2000,
-    @_id_cliente = 2,
-    @_id_herramienta = 16,
-    @_cantidad_herramientas = 12,
-	@_numContrato = 6
+    @_id_cliente = 4,
+    @_id_herramienta = 11,
+    @_cantidad_herramientas = 1,
+	@_numContrato = 1
 
-select * from Herramienta
-select * from Alquiler
-select * from AlquilerHerramienta
+
 
 --procedimiento almacenado para registrar una devolucion de un kit
 USE ALQUIFACIL
@@ -347,16 +347,8 @@ BEGIN
 END
 GO
 
-
-SELECT 
-    KH.id_KitHerramienta,
-    KH.codigo_Kit,
-    KH.Id_Herramienta,
-    KH.cantidad_Herramientas
-FROM 
-    KitHerramienta KH
-WHERE 
-    KH.codigo_Kit = 1;
+SELECT * FROM vw_Alquiler
+SELECT num_contrato, codigo_kit from AlquilerKit
 
 EXEC sp_RegistrarKitDevolucion
 	@_fecha_revisionTecnica = '2025-09-07',
@@ -364,5 +356,5 @@ EXEC sp_RegistrarKitDevolucion
     @_costo_reparacion = 0,
     @_cargos_por_dia_atraso = 2000,
     @_id_cliente = 8,
-    @_codigo_Kit = 6,
-    @_num_Contrat = 4
+    @_codigo_Kit = 1,
+    @_num_Contrat = 3
