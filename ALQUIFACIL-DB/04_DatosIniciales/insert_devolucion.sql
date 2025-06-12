@@ -194,6 +194,29 @@ EXEC sp_RegistrarDevolucionConHerramienta
     @_id_herramienta = 23,
     @_cantidad_herramientas = 2,
 	@_numContrato = 8
+go
+
+EXEC sp_RegistrarDevolucionConHerramienta
+	@_fecha_revisionTecnica = '2025-06-25',
+    @_estado = 'Devuelto en mal estado',
+    @_costo_reparacion = 10000,
+    @_cargos_por_dia_atraso = 2000,
+    @_id_cliente = 1,
+    @_id_herramienta = 11,
+    @_cantidad_herramientas = 3,
+	@_numContrato = 3
+go
+
+EXEC sp_RegistrarDevolucionConHerramienta
+	@_fecha_revisionTecnica = '2025-06-15',
+    @_estado = 'Devuelto en buen estado',
+    @_costo_reparacion = 0,
+    @_cargos_por_dia_atraso = 0,
+    @_id_cliente = 15,
+    @_id_herramienta = 7,
+    @_cantidad_herramientas = 3,
+	@_numContrato = 6
+go
 
 
 --procedimiento almacenado para registrar una devolucion de un kit
@@ -357,3 +380,14 @@ EXEC sp_RegistrarKitDevolucion
     @_id_cliente = 8,
     @_codigo_Kit = 3,
     @_num_Contrat = 10
+go
+
+EXEC sp_RegistrarKitDevolucion
+	@_fecha_revisionTecnica = '2025-09-07',
+    @_estado = 'Devuelto en mal estado',
+    @_costo_reparacion = 20000,
+    @_cargos_por_dia_atraso = 500,
+    @_id_cliente = 8,
+    @_codigo_Kit = 1,
+    @_num_Contrat = 9
+go
