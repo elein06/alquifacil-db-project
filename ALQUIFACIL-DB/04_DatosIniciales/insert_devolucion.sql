@@ -349,7 +349,7 @@ GO
 
 SELECT * FROM vw_Alquiler
 SELECT num_contrato, codigo_kit from AlquilerKit
-exec sp_ObtenerKitHerramientaPorCodigo @codigoKit_aDevolver = 1 --para poder ver qué contiene el kit antes de devolverlo
+exec sp_verKitHerramientaPorCodigo @codigoKit_aDevolver = 1 --para poder ver qué contiene el kit antes de devolverlo
 go
 
 EXEC sp_RegistrarKitDevolucion

@@ -19,5 +19,5 @@ BEGIN
 END;
 GO
 
-EXEC sp_ObtenerKitHerramientaPorCodigo @CodigoKit = 1;
+EXEC sp_verKitHerramientaPorCodigo @CodigoKit = 1;
 go
