@@ -39,7 +39,8 @@ BEGIN
 			WHERE he.Id_Categoria <> @_id_Categoria
 		)
 		BEGIN
-			ROLLBACK TRANSACTION;
+            PRINT 'Las herramientas y el kit deben de tener la misma categoria';
+            ROLLBACK TRANSACTION;
 			RETURN;
 		END
 
@@ -163,11 +164,11 @@ GO
 EXEC sp_IngresarKitConHerramientas
   @_nombre = 'Kit de Construccion',
   @_tarifa_Diaria_Especial = 25000,
-  @_id_Categoria = 2,
+  @_id_Categoria = 3,
   @_Id_Estado = 1,
-  @_Id_Herramienta1 = 5, @_cantidad_Herramientas1 = 2,   
-  @_Id_Herramienta2 = 7, @_cantidad_Herramientas2 = 2,   
-  @_Id_Herramienta3 = 11, @_cantidad_Herramientas3 = 10 
+  @_Id_Herramienta1 = 13, @_cantidad_Herramientas1 = 1,   
+  @_Id_Herramienta2 = 8, @_cantidad_Herramientas2 = 1,   
+  @_Id_Herramienta3 = 2, @_cantidad_Herramientas3 = 1
 GO
 select * from Categoria
 select * from herramienta

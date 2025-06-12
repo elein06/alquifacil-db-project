@@ -1,4 +1,6 @@
 
+use ALQUIFACIL
+go
 
 CREATE PROCEDURE sp_ObtenerKitHerramientaPorCodigo
     @CodigoKit INT
@@ -17,3 +19,4 @@ END;
 GO
 
 EXEC sp_ObtenerKitHerramientaPorCodigo @CodigoKit = 1;
+go

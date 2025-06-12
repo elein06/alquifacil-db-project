@@ -25,3 +25,4 @@ END
 GO
 
 EXEC sp_ReporteKitsPorTemporada;
+go

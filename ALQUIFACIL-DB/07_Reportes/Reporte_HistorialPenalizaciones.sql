@@ -20,3 +20,4 @@ as
 go
 
 exec sp_VerHistorialDiasDeRetraso
+go
