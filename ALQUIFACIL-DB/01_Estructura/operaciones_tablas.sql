@@ -202,7 +202,6 @@ CREATE TABLE DevolucionKit (
     Id_Devolucion_Kit INT IDENTITY(1,1) NOT NULL,
     codigo_Kit INT NOT NULL,
     Id_Devolucion INT NOT NULL,
-	
 )
 ON OPERACIONES
 GO
