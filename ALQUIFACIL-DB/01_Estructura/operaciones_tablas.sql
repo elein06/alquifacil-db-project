@@ -34,8 +34,6 @@ go
 	references cliente(id_cliente)
 go
 
-exec sp_help alquiler
-go
 
 -- Tabla intermedia AlquilerHerramienta
 use alquifacil
@@ -76,8 +74,6 @@ go
 	references Alquiler(num_Contrato);
 go
 
-exec sp_help AlquilerHerramienta
-go
 
 -- Tabla intermedia AlquilerKit
 use alquifacil
@@ -114,9 +110,6 @@ add constraint FK_Alquilerkit_numContrato
 foreign key(num_contrato)
 references Alquiler(num_contrato)
 go
-
-exec sp_help alquilerKit
-
 
 ---------------------Tabla devolucion
 use ALQUIFACIL
@@ -159,8 +152,6 @@ add constraint FK_Devolucion_Alquiler
 foreign key (numero_contrato_alquiler) references Alquiler(num_Contrato)
 go
 
-exec sp_help Devolucion
-go
 
 -- Tabla intermedia devolucionHerramienta
 
@@ -201,8 +192,6 @@ add constraint FK_DevolucionHerramienta_Devolucion
 foreign key (Id_Devolucion) references Devolucion(Id_Devolucion)
 go
 
-exec sp_help DevolucionHerramienta
-go
 
 
 ----------------Devolucion Kit
@@ -242,7 +231,4 @@ ALTER TABLE DevolucionKit
 ADD CONSTRAINT FK_Kit_Devolucion_Devolucion
 FOREIGN KEY (Id_Devolucion)
 REFERENCES Devolucion(Id_Devolucion)
-GO
-
-EXEC sp_help DevolucionKit
 GO

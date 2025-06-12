@@ -25,8 +25,6 @@ add constraint PK_Mantenimiento_Id
 primary key (Id_Mantenimiento)
 go
 
-exec sp_help mantenimiento
-go
 
 ---------------------------creacion de tablas persona_responsable y tipo_mantenimiento
 
@@ -59,8 +57,6 @@ foreign key (Id_Persona_Responsable)
 references Persona_Responsable(Id_Persona_Responsable);
 go
 
-exec sp_help persona_responsable
-go
 
 -- Tabla tipo de mantenimiento
 use alquifacil
@@ -88,7 +84,4 @@ alter table Mantenimiento
 add constraint FK_Mantenimiento_TipoMantenimiento
 foreign key (Id_Tipo_Mantenimiento)
 references tipo_mantenimiento(Id_Tipo_Mantenimiento);
-go
-
-exec sp_help tipo_mantenimiento
 go

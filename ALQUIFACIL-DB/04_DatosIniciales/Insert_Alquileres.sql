@@ -93,6 +93,9 @@ BEGIN
 END;
 GO
 
+SELECT * from vw_TodosClientes
+SELECT * from vw_Herramienta
+
 --ingreso de alquiler de herramienta
 exec sp_RegistrarAlquileresConHerramientas
     @_fecha_Inicio = '2025-10-04',
@@ -104,8 +107,6 @@ exec sp_RegistrarAlquileresConHerramientas
     @_Id_cliente = 2,
 	@_id_Herramienta = 16,
 	@_cantidadHerramientas = 12
-
-	select * from Herramienta
 
 	exec sp_RegistrarAlquileresConHerramientas
     @_fecha_Inicio = '2025-08-11',
@@ -215,19 +216,8 @@ begin
 end
 go
 
-SELECT 
-    KH.id_KitHerramienta,
-    KH.codigo_Kit,
-    KH.Id_Herramienta,
-    KH.cantidad_Herramientas
-FROM 
-    KitHerramienta KH
-WHERE 
-    KH.codigo_Kit = 1;
-
-	select * from kitherramienta
-	select * from herramienta
-	select * from alquiler
+SELECT * FROM vw_TodosClientes
+SELECT * FROM vw_Kits
 
 --ingreso de un alquiler de un kit
 exec sp_RegistrarAlquileresConKits
@@ -251,9 +241,3 @@ exec sp_RegistrarAlquileresConKits
     @_estado_Contrato = 'activo',
     @_Id_cliente = 8,
 	@_codigo_Kit = 6
-
-	select * from Herramienta
-
-	select * from Alquiler
-	select * from kit
-	select * from AlquilerKit

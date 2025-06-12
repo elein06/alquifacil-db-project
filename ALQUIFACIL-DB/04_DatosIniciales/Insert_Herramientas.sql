@@ -248,10 +248,3 @@ go
 
 exec sp_ingresoHerramienta 'MQSLD06', 2016, 175000, 2, 'Thruper', 'Maquina para soldar', 4, 2, 5, 1
 go
-
-
-select * from Categoria
-Select * from Estado
-Select * from Tipo
-select * from CondicionFisica
-Select * from Herramienta

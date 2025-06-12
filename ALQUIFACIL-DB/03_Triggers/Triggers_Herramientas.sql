@@ -1,2 +1,0 @@
--- Triggers para filegroup Herramientas
-
