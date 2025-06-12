@@ -1,5 +1,5 @@
 -- Insert Clientes
--- Proyecto ALQUIFÁCIL
+-- Proyecto ALQUIFÁCIL 
 
 
 --						procedimiento almacenado para agregar cliente físico

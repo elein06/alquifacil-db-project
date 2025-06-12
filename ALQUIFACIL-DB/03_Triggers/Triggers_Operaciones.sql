@@ -1,6 +1,8 @@
+--Proyecto ALQUIFACIL
+--triggers del filegroup Operaciones
+
 USE ALQUIFACIL
 GO
-
 CREATE OR ALTER TRIGGER trg_CambiarEstadoHerramientaNoDisponible
 ON Herramienta 
 AFTER UPDATE

@@ -1,4 +1,4 @@
---Reporte de la cantidad de herramientas alquiladas
+--Reporte de la cantidad de herramientas alquiladas 
 
 USE ALQUIFACIL;
 GO

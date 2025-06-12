@@ -1,7 +1,7 @@
 -- Reporte de Clientes Frecuentes
 -- Proyecto ALQUIFÁCIL
 
-USE ALQUIFACIL
+USE ALQUIFACIL 
 GO
 CREATE PROCEDURE sp_verClientesFrecuentes
 AS

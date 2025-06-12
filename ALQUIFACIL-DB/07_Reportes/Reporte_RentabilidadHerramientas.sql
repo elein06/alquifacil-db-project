@@ -3,7 +3,6 @@
 
 USE ALQUIFACIL;
 GO
-
 CREATE OR ALTER PROCEDURE sp_VerReporteRentabilidadHerramientas
     @IdCategoria INT = NULL
 AS

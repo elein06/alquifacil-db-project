@@ -1,5 +1,5 @@
 --Reporte de Clientes que alquilan kits específicos con mayor frecuencia
--- Proyecto ALQUIFÁCIL
+-- Proyecto ALQUIFÁCIL 
 
 USE ALQUIFACIL
 GO

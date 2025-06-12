@@ -1,4 +1,4 @@
--- Insert Alquileres
+-- Insert Alquileres 
 -- Proyecto ALQUIFÁCIL
 
 -- Proceso almacenado para agregar Alquiler de una Herramienta
@@ -94,8 +94,8 @@ END;
 GO
 
 
-SELECT * from vw_TodosClientes
-SELECT * from vw_Herramienta
+SELECT id_cliente, tipo_cliente from CLIENTE
+SELECT id_herramienta, modelo, id_estado, stock_herramientas from Herramienta
 
 -- Ingreso de alquiler de herramienta
 
@@ -106,12 +106,11 @@ SELECT * from vw_Herramienta
     @_deposito_Garantia = 15000,
 	@_costo_alquiler = 15000,
     @_estado_Contrato = 'Activo',
-    @_Id_cliente = 4,
+    @_Id_cliente = 1,
     @_id_Herramienta = 8,
     @_cantidadHerramientas = 5
     go
     
--- Alquiler 1 - herramienta ID 16
 exec sp_RegistrarAlquileresConHerramientas
     @_fecha_Inicio = '2025-10-04',
     @_fecha_Dev = '2025-11-16',
@@ -119,25 +118,23 @@ exec sp_RegistrarAlquileresConHerramientas
     @_deposito_Garantia = 5000,
 	@_costo_alquiler = 15000,
     @_estado_Contrato = 'Activo',
-    @_Id_cliente = 2,
+    @_Id_cliente = 18,
 	@_id_Herramienta = 16,
-	@_cantidadHerramientas = 4
+	@_cantidadHerramientas = 3
   go
 
--- Alquiler 2 - herramienta ID 16
 exec sp_RegistrarAlquileresConHerramientas
-    @_fecha_Inicio = '2025-06-10',
+    @_fecha_Inicio = '2025-06-13',
     @_fecha_Dev = '2025-06-20',
     @_tarifa_Total_Diaria = 15000,
     @_deposito_Garantia = 10000,
     @_costo_alquiler = 150000,
     @_estado_Contrato = 'activo',
     @_Id_cliente = 1,
-    @_id_Herramienta = 25,
-    @_cantidadHerramientas = 2
+    @_id_Herramienta = 11,
+    @_cantidadHerramientas = 3
 go
 
--- Alquiler 3 - herramienta ID 12
 exec sp_RegistrarAlquileresConHerramientas
     @_fecha_Inicio = '2025-06-08',			-- Check para fecha actual
     @_fecha_Dev = '2025-07-08',
@@ -145,47 +142,47 @@ exec sp_RegistrarAlquileresConHerramientas
     @_deposito_Garantia = 12000,
     @_costo_alquiler = 900000,
     @_estado_Contrato = 'activo',
-    @_Id_cliente = 3,
+    @_Id_cliente = 8,
     @_id_Herramienta = 12,
-    @_cantidadHerramientas = 1
+    @_cantidadHerramientas = 5
 go
 
--- Alquiler 4 - herramienta ID 4
 exec sp_RegistrarAlquileresConHerramientas
-    @_fecha_Inicio = '2025-06-07',
+    @_fecha_Inicio = '2025-06-14',
     @_fecha_Dev = '2025-06-30',
     @_tarifa_Total_Diaria = 10000,
     @_deposito_Garantia = 8000,
     @_costo_alquiler = 240000,
     @_estado_Contrato = 'finalizado',
     @_Id_cliente = 2,
-    @_id_Herramienta = 4,
+    @_id_Herramienta = 6,
     @_cantidadHerramientas = 3
 go
 
--- Alquiler 5 - herramienta ID 5
 exec sp_RegistrarAlquileresConHerramientas
-    @_fecha_Inicio = '2025-06-05',
+    @_fecha_Inicio = '2025-06-13',
     @_fecha_Dev = '2025-06-15',
     @_tarifa_Total_Diaria = 25000,
     @_deposito_Garantia = 10000,
     @_costo_alquiler = 250000,
     @_estado_Contrato = 'activo',
-    @_Id_cliente = 5,
-    @_id_Herramienta = 5,
-    @_cantidadHerramientas = 1
+    @_Id_cliente = 15,
+    @_id_Herramienta = 7,
+    @_cantidadHerramientas = 3
 go
 
--- Alquiler 6 - herramienta ID 8
 exec sp_RegistrarAlquileresConHerramientas
-    @_fecha_Inicio = '2025-06-11',
+    @_fecha_Inicio = '2025-06-16',
     @_fecha_Dev = '2025-06-25',
     @_tarifa_Total_Diaria = 18000,
     @_deposito_Garantia = 5000,
     @_costo_alquiler = 252000,
     @_estado_Contrato = 'finalizado',
+	@_Id_cliente = 10,
+    @_id_Herramienta = 8,
+    @_cantidadHerramientas = 3
+go
 
--- Alquiler 7 - herramienta ID 15
 exec sp_RegistrarAlquileresConHerramientas
     @_fecha_Inicio = '2025-06-12',
     @_fecha_Dev = '2025-07-12',
@@ -193,8 +190,8 @@ exec sp_RegistrarAlquileresConHerramientas
     @_deposito_Garantia = 15000,
     @_costo_alquiler = 1200000,
     @_estado_Contrato = 'activo',
-    @_Id_cliente = 6,
-    @_id_Herramienta = 15,
+    @_Id_cliente = 16,
+    @_id_Herramienta = 23,
     @_cantidadHerramientas = 2
 go
 
@@ -285,10 +282,8 @@ begin
 end
 go
 
-SELECT * FROM vw_TodosClientes
-SELECT * FROM vw_Kits
-exec sp_verKitHerramientaPorCodigo @codigoKit = 1 --para poder ver qué contiene el kit antes de alquilarlo
-go
+SELECT codigo_kit, id_estado from kit
+SELECT codigo_kit, id_herramienta, cantidad_herramientas FROM kitHerramienta
 
 --ingreso de un alquiler de un kit
 exec sp_RegistrarAlquileresConKits
@@ -311,4 +306,4 @@ exec sp_RegistrarAlquileresConKits
 	@_costo_alquiler = 20000,
     @_estado_Contrato = 'activo',
     @_Id_cliente = 8,
-	@_codigo_Kit = 6
+	@_codigo_Kit = 3

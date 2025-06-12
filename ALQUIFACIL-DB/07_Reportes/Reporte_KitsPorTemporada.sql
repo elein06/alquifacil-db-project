@@ -1,5 +1,5 @@
 -- Reporte KitsPorTemporada
--- Proyecto ALQUIFÁCIL
+-- Proyecto ALQUIFÁCIL 
 
 USE ALQUIFACIL
 GO

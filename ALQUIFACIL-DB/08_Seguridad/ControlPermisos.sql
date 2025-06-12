@@ -1,5 +1,5 @@
 -- ControlPermisos
--- Proyecto ALQUIFÁCIL
+-- Proyecto ALQUIFÁCIL 
 
 
 USE master
@@ -7,7 +7,6 @@ GO
 
 use ALQUIFACIL
 GO
-
 -- RolAdministrativo: Tiene permisos para todo
 /*
 GRANT SELECT, INSERT, UPDATE, DELETE ON Cliente TO RolAdministrativo;

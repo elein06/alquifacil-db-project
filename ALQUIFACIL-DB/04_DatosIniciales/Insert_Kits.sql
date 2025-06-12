@@ -1,4 +1,4 @@
---Inserts de kits
+--Inserts de kits 
 
 use ALQUIFACIL
 go
@@ -166,66 +166,45 @@ GO
 
 SELECT Id_Categoria, nombre_categoria from Categoria
 SELECT Id_estado, nombreEstado from Estado
-SELECT * FROM vw_Herramienta;
-GO
+SELECT id_herramienta, modelo, id_estado, id_categoria, stock_herramientas FROM Herramienta
 
 --ingresar kits
 EXEC sp_IngresarKitConHerramientas
-  @_nombre = 'Kit de Jardineria',
+  @_nombre = 'Kit Hada Jardinera',
   @_tarifa_Diaria_Especial = 25000,
   @_id_Categoria = 2,
   @_Id_Estado = 1,
-  @_Id_Herramienta1 = 5, @_cantidad_Herramientas1 = 2,   
-  @_Id_Herramienta2 = 7, @_cantidad_Herramientas2 = 2,   
-  @_Id_Herramienta3 = 11, @_cantidad_Herramientas3 = 1
+  @_Id_Herramienta1 = 7, @_cantidad_Herramientas1 = 2,   
+  @_Id_Herramienta2 = 11, @_cantidad_Herramientas2 = 10,   
+  @_Id_Herramienta3 = 12, @_cantidad_Herramientas3 = 12
 GO
 
 EXEC sp_IngresarKitConHerramientas
-  @_nombre = 'Kit de Construccion',
-  @_tarifa_Diaria_Especial = 25000,
-  @_id_Categoria = 3,
-  @_Id_Estado = 1,
-  @_Id_Herramienta1 = 13, @_cantidad_Herramientas1 = 1,   
-  @_Id_Herramienta2 = 8, @_cantidad_Herramientas2 = 1,   
-  @_Id_Herramienta3 = 2, @_cantidad_Herramientas3 = 1
-GO
-
-EXEC sp_IngresarKitConHerramientas
-  @_nombre = 'Kit de Hogar',
+  @_nombre = 'Kit Bob el Constructor',
   @_tarifa_Diaria_Especial = 25000,
   @_id_Categoria = 1,
   @_Id_Estado = 1,
-  @_Id_Herramienta1 = 4, @_cantidad_Herramientas1 = 1,   
-  @_Id_Herramienta2 = 6, @_cantidad_Herramientas2 = 1,   
-  @_Id_Herramienta3 = 17, @_cantidad_Herramientas3 = 1
+  @_Id_Herramienta1 = 6, @_cantidad_Herramientas1 = 2,   
+  @_Id_Herramienta2 = 16, @_cantidad_Herramientas2 = 1,   
+  @_Id_Herramienta3 = 22, @_cantidad_Herramientas3 = 2
 GO
 
 EXEC sp_IngresarKitConHerramientas
-  @_nombre = 'Kit de Jardineria',
+  @_nombre = 'Kit Práctico de Hogar',
+  @_tarifa_Diaria_Especial = 25000,
+  @_id_Categoria = 3,
+  @_Id_Estado = 1,
+  @_Id_Herramienta1 = 8, @_cantidad_Herramientas1 = 2,   
+  @_Id_Herramienta2 = 13, @_cantidad_Herramientas2 = 1,   
+  @_Id_Herramienta3 = 18, @_cantidad_Herramientas3 = 5
+GO
+
+EXEC sp_IngresarKitConHerramientas
+  @_nombre = 'SuperKit de Jardineria',
   @_tarifa_Diaria_Especial = 25000,
   @_id_Categoria = 2,
   @_Id_Estado = 1,
-  @_Id_Herramienta1 = 1, @_cantidad_Herramientas1 = 1,   
-  @_Id_Herramienta2 = 5, @_cantidad_Herramientas2 = 1,   
-  @_Id_Herramienta3 = 11, @_cantidad_Herramientas3 = 2
-GO
-
-EXEC sp_IngresarKitConHerramientas
-  @_nombre = 'Kit de Construccion',
-  @_tarifa_Diaria_Especial = 40000,
-  @_id_Categoria = 3,
-  @_Id_Estado = 1,
-  @_Id_Herramienta1 = 2, @_cantidad_Herramientas1 = 1,
-  @_Id_Herramienta2 = 13, @_cantidad_Herramientas2 = 1,
-  @_Id_Herramienta3 = 20, @_cantidad_Herramientas3 = 1 
-GO
-
-EXEC sp_IngresarKitConHerramientas
-  @_nombre = 'Kit de Hogar',
-  @_tarifa_Diaria_Especial = 20000,
-  @_id_Categoria = 1,
-  @_Id_Estado = 1,
-  @_Id_Herramienta1 = 6, @_cantidad_Herramientas1 = 1, 
-  @_Id_Herramienta2 = 17, @_cantidad_Herramientas2 = 1,  
-  @_Id_Herramienta3 = 21, @_cantidad_Herramientas3 = 1   
+  @_Id_Herramienta1 = 17, @_cantidad_Herramientas1 = 1,   
+  @_Id_Herramienta2 = 20, @_cantidad_Herramientas2 = 1,   
+  @_Id_Herramienta3 = 23, @_cantidad_Herramientas3 = 2
 GO

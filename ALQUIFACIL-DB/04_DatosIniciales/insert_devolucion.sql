@@ -6,7 +6,6 @@ GO
 --procedimiento almacenado para registrar una devolucion de una herramienta
 USE ALQUIFACIL
 GO
-
 CREATE OR ALTER PROCEDURE sp_RegistrarDevolucionConHerramienta
 	@_fecha_revisionTecnica DATE,
     @_estado VARCHAR(50),
@@ -182,20 +181,19 @@ BEGIN
 END
 GO
 
-SELECT * FROM vw_Alquiler
+SELECT num_contrato, id_cliente, fecha_Dev, estado_Contrato FROM Alquiler
 SELECT num_contrato, id_herramienta, cantidadHerramientas from AlquilerHerramienta
 
 --ingresar una devolucion de herramienta
 EXEC sp_RegistrarDevolucionConHerramienta
-	@_fecha_revisionTecnica = '2025-09-07',
+	@_fecha_revisionTecnica = '2025-08-09',
     @_estado = 'Devuelto en mal estado',
-    @_costo_reparacion = 0,
-    @_cargos_por_dia_atraso = 2000,
-    @_id_cliente = 4,
-    @_id_herramienta = 11,
-    @_cantidad_herramientas = 1,
-	@_numContrato = 1
-
+    @_costo_reparacion = 5000,
+    @_cargos_por_dia_atraso = 1500,
+    @_id_cliente = 16,
+    @_id_herramienta = 23,
+    @_cantidad_herramientas = 2,
+	@_numContrato = 8
 
 
 --procedimiento almacenado para registrar una devolucion de un kit
@@ -347,16 +345,15 @@ BEGIN
 END
 GO
 
-SELECT * FROM vw_Alquiler
+SELECT num_contrato, id_cliente, fecha_Dev, estado_Contrato FROM Alquiler
 SELECT num_contrato, codigo_kit from AlquilerKit
-exec sp_verKitHerramientaPorCodigo @codigoKit_aDevolver = 1 --para poder ver qué contiene el kit antes de devolverlo
-go
+SELECT codigo_kit, id_herramienta, cantidad_herramientas FROM kitHerramienta
 
 EXEC sp_RegistrarKitDevolucion
-	@_fecha_revisionTecnica = '2025-09-07',
-    @_estado = 'Devuelto en mal estado',
+	@_fecha_revisionTecnica = '2025-08-08',
+    @_estado = 'Devuelto en buen estado',
     @_costo_reparacion = 0,
-    @_cargos_por_dia_atraso = 2000,
+    @_cargos_por_dia_atraso = 700,
     @_id_cliente = 8,
-    @_codigo_Kit = 1,
-    @_num_Contrat = 3
+    @_codigo_Kit = 3,
+    @_num_Contrat = 10
