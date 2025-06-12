@@ -21,3 +21,4 @@ END;
 GO
 
 EXEC sp_VerCantidadAlquiladas;
+go

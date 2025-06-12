@@ -20,3 +20,4 @@ END;
 GO
 
 EXEC sp_VerCantidadMantenimientos
+go

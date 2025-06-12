@@ -8,8 +8,8 @@ AS
 BEGIN
   SELECT
     h.Id_Herramienta,
-    COUNT(dh.Id_DevolucionHerramienta) AS Cantidad_Devoluciones,
-    SUM(dh.cantidad_Herramientas) AS Total_Herramientas_Devueltas
+    COUNT(dh.Id_DevolucionHerramienta) AS 'Cantidad_Devoluciones',
+    SUM(dh.cantidad_Herramientas) AS 'Total_Herramientas_Devueltas'
   FROM
     Herramienta h
   LEFT JOIN
