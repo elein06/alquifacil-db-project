@@ -14,6 +14,7 @@ CREATE PROCEDURE sp_ingresoPersonaResponsable (@_Id_Persona_Responsable int,
 AS
 	BEGIN TRY
         BEGIN TRANSACTION;
+
 			insert into Persona_Responsable (Id_Persona_Responsable, nombre, apellido1, apellido2)
   			Values (@_Id_Persona_Responsable, @_nombre, @_apellido1, @_apellido2)
 
@@ -78,7 +79,7 @@ GO
 -- Procedimiento almacenado para agregar Mantenimientos
 use ALQUIFACIL
 go
-CREATE PROCEDURE sp_ingresoMantenimiento (
+CREATE OR ALTER PROCEDURE sp_ingresoMantenimiento (
 										  @_Costo money,
 										  @_Fecha_Mantenimiento datetime,
 										  @_Modalidad_Servicio varchar(50),
@@ -89,6 +90,25 @@ CREATE PROCEDURE sp_ingresoMantenimiento (
 AS
 	BEGIN TRY
         BEGIN TRANSACTION;
+		
+		DECLARE @herramientas TABLE (id INT);
+
+		INSERT INTO @herramientas (id)
+		VALUES (@_Id_Herramienta);
+		
+		IF EXISTS (
+			SELECT 1
+			FROM @herramientas h
+				JOIN Herramienta he ON h.id = he.Id_Herramienta
+			WHERE he.Id_Estado <> 1
+		)
+		BEGIN
+			PRINT 'Una o más herramientas no están disponibles.';
+			ROLLBACK TRANSACTION;
+			RETURN;
+		END
+
+
 			insert into Mantenimiento	(
 										 Costo,
 										 Fecha_Mantenimiento,
@@ -174,7 +194,4 @@ exec sp_ingresoMantenimiento 75000, '2025-04-01 09:00:00', 'Externo', 'Reparaci�
 go
 
 exec sp_ingresoMantenimiento 12000, '2025-05-28 14:00:00', 'Interno', 'Revisión de conexiones y estado de batería.', 1, 2204, 10;
-go
-
-exec sp_ingresoMantenimiento 12000, '2025-05-28', 'Externo', 'Revisión de conexiones y estado de batería.', 1, 2204, 6;
 go
